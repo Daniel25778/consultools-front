@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300;
+  src: url('./assets/Montserrat-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./assets/Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./assets/Montserrat-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./assets/Montserrat-Bold.ttf') format('truetype');
+}
+
+* {
+  font-family: 'Montserrat';
+}
+
+html,
+body {
+  touch-action: manipulation;
+}
+
+html {
+  background-color: #ffffff;
+  color: #151519;
+}
+
+html[data-mode='dark'] {
+  background-color: #000000;
+}
+
+html[data-mode='dark'] .MuiAutocomplete.MuiPaper-root {
+  background-color: #444444 !important;
+  color: white;
+}
+
+html[data-mode='dark'] ::-webkit-scrollbar-thumb {
+  background-color: rgba(192, 192, 192, 0.35);
+}
+
+* {
+  scrollbar-color: '#00000063 transparent';
+  scrollbar-width: 'thin';
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-track {
+  margin: 2px 0px;
+  background-color: transparent;
+}
