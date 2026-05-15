@@ -16,7 +16,6 @@ const isExpired = (accessToken: string | null): boolean => {
   if (!accessToken || String(accessToken) === 'null') return true;
   try {
     const token = jwtDecode(accessToken ?? '') as JwtPayload | null;
-
     if (!token?.exp) return true;
     return !!(Date.now() >= token.exp * 1000);
   } catch {

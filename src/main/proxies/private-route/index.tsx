@@ -27,7 +27,6 @@ export const PrivateRoute: FC = () => {
 
     checkToken();
   }, [isExpired, accessToken, location, user, dispatch, navigate]);
-
   if (isExpired || !user) return null;
 
   return <Outlet />;

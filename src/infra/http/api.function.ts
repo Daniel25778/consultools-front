@@ -55,7 +55,7 @@ export const fetchApi = async <T>(params: ApiProps): Promise<T> => {
 
   const data = await response.json();
 
-  if (response.ok) return data;
+  if (response.ok) return data.payload;
 
   throw Object(data);
 };

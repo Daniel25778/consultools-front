@@ -8,16 +8,14 @@ interface PersistState {
   isLoading: boolean;
   theme: 'dark' | 'light';
   redirectPath: string | null;
-  yoloIdsSelected: string[];
 }
 
 const initialState: PersistState = {
   accessToken: null,
   isLoading: false,
   redirectPath: null,
-  theme: 'dark',
-  user: null as unknown as User,
-  yoloIdsSelected: []
+  theme: 'light',
+  user: null as unknown as User
 };
 
 const persistSlice = createSlice({
@@ -43,14 +41,11 @@ const persistSlice = createSlice({
     },
     setUser(state: PersistState, action: PayloadAction<User>) {
       state.user = action.payload;
-    },
-    setYoloIdsSelected(state: PersistState, action: PayloadAction<string[]>) {
-      state.yoloIdsSelected = action.payload;
     }
   }
 });
 
 export const {
   reducer: persistReducer,
-  actions: { setAuth, logout, setUser, setYoloIdsSelected, setTheme, setIsLoading, setRedirectPath }
+  actions: { setAuth, logout, setUser, setTheme, setIsLoading, setRedirectPath }
 } = persistSlice;

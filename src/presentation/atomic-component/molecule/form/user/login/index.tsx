@@ -1,11 +1,9 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useUserLogin } from 'data/use-case';
-import { paths } from 'main/config';
 import { FormButton, InputController } from 'presentation/atomic-component/atom';
 import { colors } from 'presentation/style';
 import { type FC, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 export const UserLoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,9 +26,9 @@ export const UserLoginForm: FC = () => {
         <InputController
           autoFocus
           control={control}
-          labelTop={'Nome de usuário'}
-          name={'username'}
-          placeholder={'Digite o nome de usuário'}
+          labelTop={'Email'}
+          name={'email'}
+          placeholder={'Digite o email'}
           required
         />
 
@@ -49,10 +47,6 @@ export const UserLoginForm: FC = () => {
         />
 
         <FormButton isSubmitting={isSubmitting} label={'Entrar'} loadingColor={colors.white} />
-
-        <Link to={paths.register} className={'mx-auto w-max'}>
-          <h3 className={'hover:underline underline-offset-4 font-bold'}>Registrar-se</h3>
-        </Link>
       </div>
     </form>
   );

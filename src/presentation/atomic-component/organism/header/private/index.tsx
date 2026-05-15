@@ -24,7 +24,7 @@ export const PrivateHeader: FC = () => {
       <div className={'flex items-center gap-6'}>
         <ToggleTheme />
         <div className={'text-primary dark:text-white flex items-center gap-1'}>
-          <p className={'font-semibold dark:font-bold'}>Olá, {user.username} </p>
+          <p className={'font-semibold dark:font-bold'}>Olá, {user.name} </p>
 
           <IconButton
             onClick={(): void => {

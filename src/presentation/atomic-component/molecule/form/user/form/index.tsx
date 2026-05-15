@@ -26,7 +26,7 @@ export const UserForm: FC<UserFormProps> = ({ user }) => {
 
   useEffect(() => {
     if (user) {
-      setValue('username', user.username, validate);
+      setValue('email', user.email, validate);
     }
   }, [setValue, user]);
 
@@ -42,10 +42,10 @@ export const UserForm: FC<UserFormProps> = ({ user }) => {
         <InputController
           autoFocus
           control={control}
-          labelTop={'Nome de usuário'}
+          labelTop={'Email'}
           inputProps={{ autoComplete: 'new-password' }}
-          name={'username'}
-          placeholder={'Digite o nome de usuário'}
+          name={'email'}
+          placeholder={'Digite o email'}
           required
         />
 
@@ -64,7 +64,7 @@ export const UserForm: FC<UserFormProps> = ({ user }) => {
           type={showPassword ? 'text' : 'password'}
         />
 
-        <FormButton isSubmitting={isSubmitting} label={'Cradastrar'} loadingColor={colors.white} />
+        <FormButton isSubmitting={isSubmitting} label={'Cadastrar'} loadingColor={colors.white} />
 
         <Link to={paths.login} className={'mx-auto w-max'}>
           <h3 className={'hover:underline underline-offset-4 font-bold'}>Voltar para login</h3>

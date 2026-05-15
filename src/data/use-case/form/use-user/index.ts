@@ -17,15 +17,14 @@ interface useUserProps {
 
 export const useUser = ({ user }: useUserProps): formReturn<UserRequest> => {
   const formData = useForm<UserRequest>({
-    resolver: yupResolver(userSchema),
+    resolver: yupResolver(userSchema)
   });
 
   const { navigate } = useBack();
 
   const onSubmit: SubmitHandler<UserRequest> = async (data) => {
     try {
-      if (user)
-        await api.put({ body: data, id: user.id, route: apiPaths.user });
+      if (user) await api.put({ body: data, id: user.id, route: apiPaths.user });
       else await api.post({ body: data, route: apiPaths.user });
 
       callToast.success(`${user ? 'Atualizado' : 'Cadastrado'} com sucesso`);

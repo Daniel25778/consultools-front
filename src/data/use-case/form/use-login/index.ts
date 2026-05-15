@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { LoginPayload, User } from 'domain/models';
+import type { LoginPayload } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { apiPaths, paths } from 'main/config';
@@ -15,7 +15,7 @@ import { loginSchema } from 'validation/schema';
 
 export const useUserLogin = (): formReturn<LoginRequest> => {
   const formData = useForm<LoginRequest>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(loginSchema)
   });
 
   const dispatch = useDispatch();
@@ -24,18 +24,17 @@ export const useUserLogin = (): formReturn<LoginRequest> => {
 
   const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
     try {
-      const { access_token } = await api.post<LoginPayload>({
+      const response = await api.post<LoginPayload>({
         body: data,
-        route: apiPaths.login,
+        route: apiPaths.login
       });
 
-      const user = await api.get<User>({
-        id: 'me',
-        route: apiPaths.user,
-        token: access_token,
-      });
-
-      dispatch(setAuth({ token: access_token, user }));
+      dispatch(
+        setAuth({
+          token: response.accessToken,
+          user: response.user
+        })
+      );
       navigate(redirectPath ?? paths.home);
     } catch (error) {
       resolverError(error);
