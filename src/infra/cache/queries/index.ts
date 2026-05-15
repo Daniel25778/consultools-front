@@ -1,3 +1,2 @@
-export * from './detection';
-export * from './user';
-export * from './yolo';
+export * from './default-query';
+

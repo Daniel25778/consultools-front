@@ -27,7 +27,7 @@ export const useFindQuery = <T>({
   refetchInterval,
   retry,
   limit,
-  route,
+  route
 }: queryProps): UseQueryResult<T, Error> =>
   useQuery<T, Error>({
     queryKey: [
@@ -35,14 +35,14 @@ export const useFindQuery = <T>({
       id,
       limit,
       page,
-      params ? Object.values(params) : null,
+      params ? Object.values(params) : null
     ],
     queryFn: async () =>
       api.get<T>({
         id: hideId ? undefined : id,
         queryParams: { limit, page, ...params },
-        route: apiRoute ?? apiPaths[route ?? 'default'],
+        route: apiRoute ?? apiPaths[route ?? 'default']
       }),
     refetchInterval,
-    retry,
+    retry
   });
