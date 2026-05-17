@@ -3,42 +3,42 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
-  src: url('./assets/Montserrat-Light.ttf') format('truetype');
+  src: url('./assets/Lato-Thin.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/Montserrat-Regular.ttf') format('truetype');
+  src: url('./assets/Lato-Light.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 500;
-  src: url('./assets/Montserrat-Medium.ttf') format('truetype');
+  src: url('./assets/Lato-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 600;
-  src: url('./assets/Montserrat-SemiBold.ttf') format('truetype');
+  src: url('./assets/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
-  src: url('./assets/Montserrat-Bold.ttf') format('truetype');
+  src: url('./assets/Lato-Black.ttf') format('truetype');
 }
 
 * {
-  font-family: 'Montserrat';
+  font-family: 'Lato';
 }
 
 html,

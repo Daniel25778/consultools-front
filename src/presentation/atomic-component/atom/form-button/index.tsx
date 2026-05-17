@@ -7,6 +7,7 @@ interface FormButtonProps {
   label: string;
   loadingText?: string;
   isSubmitting: boolean;
+  labelColor?: string;
   disabled?: boolean;
   color?: 'primary' | 'secondary';
   variant?: 'contained' | 'outlined';
@@ -21,6 +22,7 @@ export const FormButton: FC<FormButtonProps> = ({
   isSubmitting,
   loadingText,
   color,
+  labelColor,
   disabled,
   loadingColor,
   label,
@@ -54,6 +56,10 @@ export const FormButton: FC<FormButtonProps> = ({
       </span>
     ) : null}
 
-    {isSubmitting ? <span>{loadingText ?? ''}</span> : <span>{label}</span>}
+    {isSubmitting ? (
+      <span>{loadingText ?? ''}</span>
+    ) : (
+      <span className={`text-${labelColor ?? 'white'}`}>{label}</span>
+    )}
   </Button>
 );

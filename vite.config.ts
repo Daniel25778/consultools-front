@@ -28,8 +28,8 @@ export default defineConfig({
             type: 'image/png'
           }
         ],
-        name: 'AI Vision',
-        short_name: 'AI Vision',
+        name: 'Consultools',
+        short_name: 'Consultools',
         start_url: '/home',
         theme_color: '#151519'
       },

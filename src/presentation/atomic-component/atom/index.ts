@@ -1,3 +1,4 @@
+export * from './code-input';
 export * from './draggable-container';
 export * from './error-div';
 export * from './fetch-on-scroll';
@@ -26,8 +27,10 @@ export * from './sliding-container';
 export * from './success-div';
 export * from './table';
 export * from './tabs';
+export * from './terms';
 export * from './time-ago';
 export * from './title';
 export * from './toggle-menu';
 export * from './toggle-theme';
 export * from './validate-password';
+

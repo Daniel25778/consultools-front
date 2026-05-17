@@ -1,12 +1,7 @@
 import { ErrorOutline, WarningOutlined } from '@mui/icons-material';
 import type { InputBaseComponentProps, TextFieldProps } from '@mui/material';
 import { TextField } from '@mui/material';
-import type {
-  ChangeEventHandler,
-  FC,
-  FocusEventHandler,
-  ReactNode,
-} from 'react';
+import type { ChangeEventHandler, FC, FocusEventHandler, ReactNode } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface LabelInputProps extends Pick<
@@ -48,12 +43,8 @@ export interface LabelInputProps extends Pick<
   errorMessage?: string;
   EndIcon?: ReactNode;
   StartIcon?: ReactNode;
-  handleChange?:
-    | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-    | undefined;
-  onFocus?:
-    | FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
-    | undefined;
+  handleChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
   onFocusOut?: () => void;
 }
 
@@ -70,7 +61,20 @@ export const LabelInput: FC<LabelInputProps> = ({
   ...props
 }) => {
   const getElement = (): ReactNode => {
-    if (children) return children;
+    if (children) {
+      // allow children as render-prop to receive field props from InputController
+      if (typeof children === 'function') {
+        return (children as any)({
+          register,
+          onChange: props.onChange,
+          onBlur: props.onBlur,
+          value: props.value,
+          inputRef: props.inputRef
+        });
+      }
+
+      return children;
+    }
 
     const InputProps = {
       ...props.InputProps,
@@ -80,12 +84,11 @@ export const LabelInput: FC<LabelInputProps> = ({
       ) : props.error ? (
         <ErrorOutline color={'error'} />
       ) : null,
-      startAdornment: props.StartIcon ? props.StartIcon : null,
+      startAdornment: props.StartIcon ? props.StartIcon : null
     };
 
     const getPadding = (): string => {
-      if (props.variant === 'filled' || props.variant === 'standard')
-        return '14px 2px';
+      if (props.variant === 'filled' || props.variant === 'standard') return '14px 2px';
 
       if (props.multiline) return '3px';
 
@@ -96,8 +99,8 @@ export const LabelInput: FC<LabelInputProps> = ({
       ...props.inputProps,
       style: {
         padding: getPadding(),
-        textTransform: props.uppercase ? 'uppercase' : 'none',
-      },
+        textTransform: props.uppercase ? 'uppercase' : 'none'
+      }
     };
 
     return (
@@ -132,13 +135,7 @@ export const LabelInput: FC<LabelInputProps> = ({
           if (props.onKeyDown) props.onKeyDown(event);
 
           if (props.inputMode === 'decimal') {
-            const allowedKeys = [
-              'Backspace',
-              'Tab',
-              'ArrowLeft',
-              'ArrowRight',
-              'Delete',
-            ];
+            const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
             const isNumber = /^[0-9]$/u.test(event.key);
             const isDotOrComma = event.key === '.' || event.key === ',';
 
@@ -150,10 +147,7 @@ export const LabelInput: FC<LabelInputProps> = ({
             if (!isNumber && !isDotOrComma && !allowedKeys.includes(event.key))
               event.preventDefault();
 
-            if (
-              (event.key === '.' || event.key === ',') &&
-              (alreadyHasDot || alreadyHasComma)
-            )
+            if ((event.key === '.' || event.key === ',') && (alreadyHasDot || alreadyHasComma))
               event.preventDefault();
           }
         }}
@@ -169,13 +163,11 @@ export const LabelInput: FC<LabelInputProps> = ({
     <div
       className={'flex flex-col gap-1 w-full text-start no-break'}
       style={{
-        maxWidth,
+        maxWidth
       }}
     >
       {labelTop ? (
-        <span
-          className={`font-medium ${props.disabled ? 'text-gray-500' : ''}`}
-        >
+        <span className={`font-medium ${props.disabled ? 'text-gray-500' : ''}`}>
           {labelTop}
           {required ? <span className={'text-[#ff4747]'}> *</span> : ''}
         </span>

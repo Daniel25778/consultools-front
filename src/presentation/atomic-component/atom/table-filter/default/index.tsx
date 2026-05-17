@@ -23,7 +23,7 @@ export const TableFilter: FC<TableFilterProps> = ({
   mask,
   filterName,
   filterValue,
-  sortItem,
+  sortItem
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -53,17 +53,11 @@ export const TableFilter: FC<TableFilterProps> = ({
         }
         setIsOpen={setOpen}
       >
-        <div
-          className={
-            'bg-white flex flex-col gap-6 p-4 py-6 min-h-max laptop:min-w-[300px]'
-          }
-        >
+        <div className={'bg-white flex flex-col gap-6 p-4 py-6 min-h-max laptop:min-w-[300px]'}>
           <div className={'flex items-center justify-between w-full'}>
             <div className={'flex gap-3 items-center text-gray-500 font-bold'}>
               <span className={'text-base'}>ﾠ{title}</span>
-              {sortItem ? (
-                <SortFilter filterName={filterName} {...sortItem} />
-              ) : null}
+              {sortItem ? <SortFilter filterName={filterName} {...sortItem} /> : null}
             </div>
 
             <IconButton

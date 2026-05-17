@@ -24,9 +24,9 @@ export const InputController = <T extends FieldValues>({
       name={name}
       render={({
         field: { onChange, onBlur, value, ref },
-        fieldState: { error },
+        fieldState: { error }
       }): ReactElement => (
-        <div className={'gap-2 w-full'}>
+        <div className={'gap-2 w-full text-primary'}>
           <LabelInput
             disabled={disabled}
             error={!!error}
@@ -37,9 +37,7 @@ export const InputController = <T extends FieldValues>({
             {...props}
           />
 
-          {error?.message && showMessage ? (
-            <p className={'text-red-1'}>* {error.message}</p>
-          ) : null}
+          {error?.message && showMessage ? <p className={'text-red-1'}>* {error.message}</p> : null}
         </div>
       )}
     />

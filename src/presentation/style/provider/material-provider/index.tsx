@@ -37,7 +37,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             fontSize: '16px',
             fontWeight: '500 !important',
             padding: '7.5px 16px',
-            textTransform: 'capitalize'
+            textTransform: 'none'
           }
         },
         variants: [
@@ -92,6 +92,19 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             props: { size: 'large' },
             style: {
               minHeight: '48px'
+            }
+          },
+          {
+            props: { color: 'secondary' },
+            style: {
+              ':hover': {
+                backgroundColor: colors.gray[100],
+                borderColor: colors.gray[100],
+                color: colors.primary,
+                svg: { color: colors.white }
+              },
+              backgroundColor: colors.secondary,
+              color: colors.primary
             }
           },
           {
@@ -274,7 +287,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
       success: { main: colors.success },
       warning: { main: colors.warning }
     },
-    typography: { fontFamily: 'Montserrat' }
+    typography: { fontFamily: 'Lato' }
   });
 
   const DarkTheme = createTheme({
@@ -371,8 +384,10 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             props: { color: 'secondary' },
             style: {
               ':hover': {
-                backgroundColor: colors.gray[200],
-                borderColor: colors.gray[900]
+                backgroundColor: colors.success,
+                borderColor: colors.success,
+                color: colors.white,
+                svg: { color: colors.white }
               },
               backgroundColor: colors.white,
               borderColor: colors.gray[900],
@@ -547,7 +562,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
       warning: { main: colors.warning }
     },
     typography: {
-      fontFamily: 'Montserrat'
+      fontFamily: 'Lato'
     }
   });
 
