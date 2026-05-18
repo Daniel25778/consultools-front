@@ -18,8 +18,10 @@ const recoverySlice = createSlice({
       if (action.payload.email !== undefined) state.email = action.payload.email;
       if (action.payload.code !== undefined) state.code = action.payload.code;
     },
-    clearRecovery(state) {
+    clearEmailRecovery(state) {
       state.email = null;
+    },
+    clearCodeRecovery(state) {
       state.code = null;
     }
   }
@@ -27,14 +29,15 @@ const recoverySlice = createSlice({
 
 export const {
   reducer: recoveryReducer,
-  actions: { setRecoveryData, clearRecovery }
+  actions: { setRecoveryData, clearEmailRecovery, clearCodeRecovery }
 } = recoverySlice as typeof recoverySlice & {
   actions: {
     setRecoveryData: (payload: {
       email?: string | null;
       code?: string | null;
     }) => PayloadAction<{ email?: string | null; code?: string | null }>;
-    clearRecovery: () => PayloadAction<void>;
+    clearEmailRecovery: () => PayloadAction<void>;
+    clearCodeRecovery: () => PayloadAction<void>;
   };
 };
 export default recoveryReducer;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { LabelInput } from '../label-input';
@@ -36,10 +36,6 @@ export const CodeInput = <T extends FieldValues = FieldValues>({
   ...props
 }: CodeInputProps<T>) => {
   const refs = useRef<HTMLInputElement[]>([]);
-
-  useEffect(() => {
-    // optional autofocus handling could be added
-  }, []);
 
   const focusIndex = (i: number) => {
     const el = refs.current[i];
@@ -126,13 +122,13 @@ export const CodeInput = <T extends FieldValues = FieldValues>({
           onBlur={onBlur}
           inputMode={'numeric'}
           maxLength={length}
-          className={'w-full h-full text-center border rounded-md'}
-          style={{ width: '100%', height: 60, fontSize: 24 }}
+          className={'w-full h-[50px] text-2xl text-center border rounded-md tablet:h-[60px]'}
+          style={{ width: '100%', fontSize: 24 }}
         />
       );
     }
 
-    return <div className={`flex gap-3 ${className ?? ''}`}>{items}</div>;
+    return <div className={`flex gap-1 tablet:gap-3 ${className ?? ''}`}>{items}</div>;
   };
 
   const isControllerProps = (p: CodeInputProps<T>): p is ControllerProps<T> =>

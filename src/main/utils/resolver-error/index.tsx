@@ -6,5 +6,7 @@ export const resolverError = (err: unknown, message?: string): void => {
 
   const errorMessage = errorsList?.[error?.message as ''];
 
-  callToast.error(message ?? errorMessage ?? 'Erro na requisição');
+  console.log(error.message);
+
+  callToast.error(message ?? errorMessage ?? error.message ?? 'Erro na requisição');
 };

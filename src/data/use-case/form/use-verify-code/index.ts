@@ -5,13 +5,19 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from 'store/index';
 import { setRecoveryData } from 'store/recovery/slice';
 import type { VerifyCodeRequest } from 'validation/schema';
 import { verifyCodeSchema } from 'validation/schema';
 
 export const useVerifyCode = (): formReturn<VerifyCodeRequest> => {
+  const recoveryCode = useAppSelector((state) => state.recovery.code);
+
   const formData = useForm<VerifyCodeRequest>({
-    resolver: yupResolver(verifyCodeSchema)
+    resolver: yupResolver(verifyCodeSchema),
+    defaultValues: {
+      code: recoveryCode ?? undefined
+    }
   });
 
   const dispatch = useDispatch();
