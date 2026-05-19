@@ -3,3 +3,9 @@ export enum Role {
   COLABORATOR = 'COLABORATOR',
   CONSULTANT = 'CONSULTANT'
 }
+
+export const roleTranslate: Record<Role, string> = {
+  [Role.ADMIN]: 'Administrador',
+  [Role.COLABORATOR]: 'Colaborador',
+  [Role.CONSULTANT]: 'Consultor'
+};

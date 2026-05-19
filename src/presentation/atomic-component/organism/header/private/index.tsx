@@ -1,6 +1,8 @@
-import { Logout } from '@mui/icons-material';
+import { Logout, Person } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { ToggleMenu, ToggleTheme } from 'presentation/atomic-component/atom';
+import { roleTranslate } from 'domain/enums/role';
+import { Logo } from 'main/assets';
+import { SearchInput } from 'presentation/atomic-component/molecule/search-input';
 import type { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/index';
@@ -14,19 +16,25 @@ export const PrivateHeader: FC = () => {
   return (
     <header
       className={
-        'flex justify-between items-center p-4 border-b z-[9999] bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-600 sticky top-0 h-[70px] header'
+        'flex flex-row justify-between items-center z-[9999] top-0 header sticky tablet:flex  h-auto laptop: w-full'
       }
     >
-      <div className={'flex gap-3'}>
-        <ToggleMenu />
-      </div>
-
-      <div className={'flex items-center gap-6'}>
-        <ToggleTheme />
-        <div className={'text-primary dark:text-white flex items-center gap-1'}>
-          <p className={'font-semibold dark:font-bold'}>Olá, {user.name} </p>
+      <div className={'flex flex-col w-full'}>
+        <div
+          className={
+            'text-white w-full  bg-primary dark:text-white flex items-center justify-end gap-5 py-1 px-4 tablet:px-[150px]  tablet:items-center tablet:justify-end '
+          }
+        >
+          <div className={'flex gap-2 justify-center items-center'}>
+            <Person color={'inherit'} fontSize={'small'} />
+            <p className={'font-medium dark:font-bold'}>
+              {' '}
+              {roleTranslate[user.role]} - {user.name}{' '}
+            </p>
+          </div>
 
           <IconButton
+            className={'gap-3'}
             onClick={(): void => {
               dispatch(logout());
               dispatch(setSidebar(false));
@@ -34,7 +42,17 @@ export const PrivateHeader: FC = () => {
             color={'inherit'}
           >
             <Logout color={'inherit'} fontSize={'small'} />
+            <p className={'font-medium text-lg'}>Sair</p>
           </IconButton>
+        </div>
+        <div
+          style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
+          className={
+            'w-full h-full bg-white flex flex-col justify-between items-start p-8 px-4 tablet:flex-row tablet:px-[150px] tablet:items-center gap-6'
+          }
+        >
+          <img alt={'Logo'} className={'h-6 tablet:h-5'} src={Logo} />
+          <SearchInput />
         </div>
       </div>
     </header>

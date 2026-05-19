@@ -22,6 +22,7 @@ interface ModalProps {
   title?: ReactNode | string;
   openModalElement?: ReactNode;
   size?: ModalSize;
+  subtitle?: ReactNode | string;
   disableBackdrop?: boolean;
   disableEscapeKeyDown?: boolean;
   hideBackground?: boolean;
@@ -105,14 +106,19 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
 
             {props.title ? (
               <div
-                className={`flex items-center justify-between tablet:mt-0 ${props.hideCloseButton ? '' : 'mt-4'}`}
+                className={`flex flex-col gap-2 justify-between tablet:mt-0 ${props.hideCloseButton ? '' : 'mt-4'}`}
               >
                 {typeof props.title === 'string' ? (
-                  <h2 className={'font-medium text-2xl tablet:text-2xl capitalize'}>
+                  <h2 className={'font-semibold text-2xl text-primary tablet:text-2xl capitalize'}>
                     {props.title}
                   </h2>
                 ) : (
                   props.title
+                )}
+                {props.subtitle && typeof props.subtitle === 'string' ? (
+                  <p>{props.subtitle}</p>
+                ) : (
+                  props.subtitle
                 )}
               </div>
             ) : null}

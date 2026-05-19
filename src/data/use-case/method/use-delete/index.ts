@@ -1,8 +1,8 @@
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib/react-query';
 import { resolverError } from 'main/utils';
-import { toast } from 'react-toastify';
 import type { Dispatch, SetStateAction } from 'react';
+import { toast } from 'react-toastify';
 
 interface useDeleteProps {
   id: number | string;

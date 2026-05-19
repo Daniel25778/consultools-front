@@ -13,14 +13,10 @@ export const GenericCard: FC<GenericCardProps> = ({
   icon,
   bottomElement,
   endElement,
-  text,
+  text
 }) => {
   return (
-    <div
-      className={
-        'flex flex-col gap-3 border border-input-border-2 rounded p-4 w-full'
-      }
-    >
+    <div className={'flex flex-col gap-3 border border-input-border-2 rounded p-4 w-full'}>
       <div className={'flex flex-wrap items-center justify-between gap-4'}>
         <div className={'flex items-center justify-between gap-2'}>
           <span

@@ -1,16 +1,24 @@
-import { ToggleTheme } from 'presentation/atomic-component/atom';
+import { useModal } from 'data/hooks';
+import { RegisterConsultantModal } from 'presentation/atomic-component/molecule/modal/register-consultant';
+import { ConsultantList } from 'presentation/atomic-component/organism/consultant-list';
 import type { FC } from 'react';
 
 export const HomeContent: FC = () => {
+  const modal = useModal();
   return (
-    <div
-      className={
-        'w-full tablet:w-[380px] mx-auto bg-white dark:bg-gray-800 p-8 rounded-md relative'
-      }
-    >
-      <span className={'absolute right-4 top-4'}>
-        <ToggleTheme />
-      </span>
+    <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
+      <div className={'w-full flex items-center justify-between'}>
+        <h2 className={'text-primary text-2xl font-medium'}>Consultores</h2>
+        <RegisterConsultantModal
+          modal={{
+            ...modal,
+            closeModal() {
+              modal.closeModal();
+            }
+          }}
+        />
+      </div>
+      <ConsultantList setTotalElements={(): void => {}} />
     </div>
   );
 };

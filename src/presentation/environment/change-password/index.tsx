@@ -5,6 +5,7 @@ import type { FC } from 'react';
 export const ChangePasswordContent: FC = () => {
   return (
     <div
+      style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
       className={
         'w-full tablet:w-[600px] mx-auto bg-white dark:bg-gray-800 p-6 tablet:p-12 rounded-md flex flex-col gap-6 tablet:gap-10'
       }

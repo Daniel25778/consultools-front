@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { userFilterInitialState, type UserFilter } from 'domain/models/user';
 import type { Sort } from 'domain/protocol';
 
 export interface TableSortFilter {
@@ -9,16 +10,12 @@ export interface TableSortFilter {
 }
 
 export interface FilterSliceState {
-  [key: string]: {
-    page: number;
-    pageSize: number;
-    search: string;
-    sortBy: string | null;
-    sort: Sort;
-  };
+  user: UserFilter;
 }
 
-const initialState: FilterSliceState = {};
+const initialState: FilterSliceState = {
+  user: userFilterInitialState
+};
 
 export type FilterDataProps<T extends keyof FilterSliceState> = FilterSliceState[T];
 

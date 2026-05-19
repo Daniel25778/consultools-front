@@ -1,9 +1,10 @@
-import { DeleteOutlineOutlined } from '@mui/icons-material';
+import { Delete } from '@mui/icons-material';
 import { Button, CircularProgress, IconButton } from '@mui/material';
 import type { useModalProps } from 'data/hooks';
 import { useModal } from 'data/hooks';
 import { useDelete } from 'data/use-case';
 import { Modal } from 'presentation/atomic-component/atom/modal';
+import { colors } from 'presentation/style/palette';
 import { type FC, type ReactNode, useState } from 'react';
 
 interface DeleteConfirmationModalProps {
@@ -41,7 +42,7 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
   color = 'error',
   successMessage,
   openElement,
-  isPatch,
+  isPatch
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,7 +71,7 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
     queryName,
     route,
     setIsLoading,
-    successMessage,
+    successMessage
   });
 
   return (
@@ -84,26 +85,27 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
             {openElement}
           </div>
         ) : (
-          <IconButton onClick={openModal}>
-            <DeleteOutlineOutlined color={'error'} fontSize={'small'} />
+          <IconButton
+            style={{ backgroundColor: colors.lightRed, padding: '4px', borderRadius: '10%' }}
+            onClick={openModal}
+          >
+            <Delete color={'error'} fontSize={'medium'} />
           </IconButton>
         )
       }
       size={'small'}
     >
       <div className={'w-full h-full flex flex-col gap-6'}>
-        <h3 className={'text-xl font-semibold'}>{title}</h3>
+        <h3 className={'text-xl font-semibold text-primary'}>{title}</h3>
         <p>{text}</p>
 
         <div
-          className={
-            'flex flex-col mt-3 tablet:flex-row gap-4 tablet:max-w-[65%] ml-auto w-full'
-          }
+          className={'flex flex-col mt-3 tablet:flex-row gap-4 tablet:max-w-[65%] ml-auto w-full'}
         >
           {hideCancelButton ? null : (
             <Button
               className={'w-full'}
-              color={'info'}
+              color={'secondary'}
               disabled={isLoading}
               onClick={closeModal}
             >
@@ -111,17 +113,8 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
             </Button>
           )}
 
-          <Button
-            autoFocus
-            className={'w-full'}
-            color={color}
-            onClick={handleDelete}
-          >
-            {isLoading ? (
-              <CircularProgress size={24} />
-            ) : (
-              deleteText || 'Remover'
-            )}
+          <Button autoFocus className={'w-full'} color={color} onClick={handleDelete}>
+            {isLoading ? <CircularProgress size={24} /> : deleteText || 'Remover'}
           </Button>
         </div>
       </div>
