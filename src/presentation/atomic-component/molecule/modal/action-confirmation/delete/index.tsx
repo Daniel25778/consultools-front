@@ -114,7 +114,7 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
           )}
 
           <Button autoFocus className={'w-full'} color={color} onClick={handleDelete}>
-            {isLoading ? <CircularProgress size={24} /> : deleteText || 'Remover'}
+            {isLoading ? <CircularProgress color={'error'} size={24} /> : deleteText || 'Remover'}
           </Button>
         </div>
       </div>

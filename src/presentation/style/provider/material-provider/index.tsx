@@ -82,7 +82,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             props: { color: 'error' },
             style: {
               ':hover': {
-                backgroundColor: '#dfc7c7'
+                backgroundColor: '#fdc9c9'
               },
               backgroundColor: '#FFE5E5',
               color: '#FF0000'

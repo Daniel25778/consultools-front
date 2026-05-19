@@ -5,5 +5,5 @@ export enum Status {
 
 export const statusTranslate: Record<Status, string> = {
   [Status.ENABLED]: 'Habilitado',
-  [Status.DISABLED]: 'Deshabilitado'
+  [Status.DISABLED]: 'Desabilitado'
 };

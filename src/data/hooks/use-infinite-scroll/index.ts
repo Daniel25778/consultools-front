@@ -52,10 +52,12 @@ export const useInfiniteScroll = <T>({
       queryKey: [queryName, ...Object.values(filter)],
       queryFn: async ({ pageParam = 1 }) => fetchItems({ pageParam }),
       initialPageParam: 1,
-      getNextPageParam: (props: unknown) => {
-        const data = props as { page: number; total_pages: number };
-        if (data?.page < data?.total_pages) {
-          return data?.page + 1;
+      getNextPageParam: (_lastPage, pages) => {
+        const currentPage = pages.length;
+        const lastPage = _lastPage as any;
+        const totalPages = lastPage?.totalPages ?? lastPage?.total_pages;
+        if (currentPage < totalPages) {
+          return currentPage + 1;
         }
         return undefined;
       },

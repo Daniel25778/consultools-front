@@ -15,17 +15,16 @@ export const ConsultantList: FC<ConsultantListProps> = ({ setTotalElements }) =>
 
   const userQuery = useInfiniteScroll<User>({
     filters: {
-      status
+      statusEnum: status ? [status] : undefined
     },
-    limit: 20,
+    limit: 10,
     queryName: QueryName.user,
     route: apiPaths.user
   });
 
   useEffect(() => {
-    if (userQuery.pagination?.total_elements !== undefined)
-      setTotalElements(userQuery.pagination.total_elements);
-  }, [userQuery.pagination, setTotalElements]);
+    if (userQuery.data?.length !== undefined) setTotalElements(userQuery.data?.length);
+  }, [userQuery.data, setTotalElements]);
 
   return (
     <div className={'flex w-full flex-col'}>
@@ -35,7 +34,7 @@ export const ConsultantList: FC<ConsultantListProps> = ({ setTotalElements }) =>
           className={'grid gap-[18px]'}
         >
           {userQuery.data?.map((item) => (
-            <ConsultantCard name={item.name} email={item.email} status={item.status} />
+            <ConsultantCard id={item.id} name={item.name} email={item.email} status={item.status} />
           ))}
         </div>
       </FetchOnScroll>

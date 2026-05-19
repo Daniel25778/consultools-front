@@ -87,7 +87,7 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
           ) : null}
 
           <Box
-            className={`w-full gap-2 tablet:w-auto max-h-[90%] tablet:max-h-[95%] rounded-[8px] 
+            className={`w-full gap-8  tablet:w-auto max-h-[90%] tablet:max-h-[95%] rounded-[8px] 
               flex flex-col left-[50%] top-[50%] absolute translate-y-[-50%] translate-x-[-50%] 
               max-w-[94%] laptop:max-w-[98%] overflow-auto 
               ${props.hideBackground ? 'bg-transparent' : 'p-6 tablet:p-8 bg-white dark:bg-gray-700'}
@@ -106,7 +106,7 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
 
             {props.title ? (
               <div
-                className={`flex flex-col gap-2 justify-between tablet:mt-0 ${props.hideCloseButton ? '' : 'mt-4'}`}
+                className={`flex flex-col gap-2  justify-between tablet:mt-0 ${props.hideCloseButton ? '' : 'mt-4'}`}
               >
                 {typeof props.title === 'string' ? (
                   <h2 className={'font-semibold text-2xl text-primary tablet:text-2xl capitalize'}>
