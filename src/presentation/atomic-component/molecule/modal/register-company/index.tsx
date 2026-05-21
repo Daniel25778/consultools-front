@@ -1,14 +1,14 @@
 import { Add, Edit } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
-import { type useModalProps } from 'data/hooks';
+import { useSearch, type useModalProps } from 'data/hooks';
 import { Role } from 'domain/enums/role';
 import type { Company } from 'domain/models';
-import { QueryName, apiPaths } from 'main/config';
+import { setFilter } from 'main/utils/filter';
 import { Modal } from 'presentation/atomic-component/atom/modal';
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { getUser } from 'store/persist/selector';
 import { RegisterCompanyForm } from '../../form/company';
-import { SearchInput } from '../../search-input';
+import { SearchInputBase } from '../../search-input-base';
 
 interface RegisterCompanyModalProps {
   modal: useModalProps;
@@ -17,13 +17,28 @@ interface RegisterCompanyModalProps {
 
 export const RegisterCompanyModal: FC<RegisterCompanyModalProps> = ({ modal, company }) => {
   const { closeModal, isOpen, openModal } = modal;
+  const { search, setSearchDebounce, searchDebounce } = useSearch();
   const user = getUser();
+
+  useEffect(() => {
+    if (user.role === Role.ADMIN) {
+      setFilter('company', {
+        search
+      });
+    }
+  }, [search, user.role]);
 
   return (
     <Modal
       openModalElement={
         user.role === Role.ADMIN ? (
-          <SearchInput path={'/companies'} route={apiPaths.company} queryName={QueryName.company} />
+          <SearchInputBase
+            value={searchDebounce}
+            onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
+              setSearchDebounce(event.target.value)
+            }
+            placeholder={'Buscar empresas'}
+          />
         ) : company ? (
           <IconButton href={''} onClick={openModal} className={'gap-4'}>
             <Edit className={'hover:cursor-pointer text-primary'} />

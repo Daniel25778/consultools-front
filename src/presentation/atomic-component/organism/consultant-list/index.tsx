@@ -17,7 +17,7 @@ export const ConsultantList: FC<ConsultantListProps> = ({ setTotalElements }) =>
 
   const userQuery = useInfiniteScroll<User>({
     filters: {
-      statusEnum: status ? [status] : undefined
+      status: status ? [status] : undefined
     },
     limit: 10,
     queryName: QueryName.user,
@@ -25,7 +25,7 @@ export const ConsultantList: FC<ConsultantListProps> = ({ setTotalElements }) =>
   });
 
   useEffect(() => {
-    if (userQuery.data?.length !== undefined) setTotalElements(userQuery.data?.length);
+    setTotalElements(userQuery.data?.length ?? 0);
   }, [userQuery.data, setTotalElements]);
 
   return (

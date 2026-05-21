@@ -3,18 +3,24 @@ import { useModal } from 'data/hooks/use-modal';
 import { Status, statusTranslate } from 'domain/enums';
 import { useFindOneUserQuery } from 'infra/cache';
 import { apiPaths } from 'main/config/paths';
-import { formatCPF } from 'main/utils';
+import { formatCPF, setFilter } from 'main/utils';
 import { Breadcrumbs } from 'presentation/atomic-component/molecule';
 import { RegisterConsultantModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
 import { CompanyContent } from 'presentation/environment/company';
-import { type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const ConsultantContentDetails: FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const userQuery = useFindOneUserQuery({ id }).data;
   const modal = useModal();
+
+  useEffect(() => {
+    setFilter('company', {
+      userId: userQuery?.id ? userQuery.id : undefined
+    });
+  }, [userQuery?.id]);
 
   return (
     <div className={'flex w-full flex-col  gap-5 '}>

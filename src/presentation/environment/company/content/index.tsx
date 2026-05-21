@@ -25,11 +25,12 @@ export const CompanyContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-center justify-between'}>
-        <p className={'text-gray-500 dark:text-gray-400 tablet:block hidden'}>
+      <div className={'flex items-end justify-between'}>
+        <p className={'hidden tablet:block text-gray-500 dark:text-gray-400'}>
           Exibindo um total de {totalElements} resultado{totalElements > 1 ? 's' : ''}
         </p>
-        <p className={'text-gray-500 dark:text-gray-400'}>
+
+        <p className={'block tablet:hidden text-gray-500 dark:text-gray-400'}>
           Total de {totalElements} {totalElements > 1 ? 'itens' : 'item'}
         </p>
         <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>

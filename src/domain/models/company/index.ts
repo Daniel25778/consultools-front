@@ -17,6 +17,7 @@ export interface Company {
 }
 export interface CompanyFilter extends FilterPagination, FilterSort {
   status: Status | null;
+  userId: string;
   startDate: Date | null;
   search: string;
   endDate: Date | null;
@@ -26,6 +27,7 @@ export const companyFilterInitialState: CompanyFilter = {
   endDate: null,
   status: null,
   page: 1,
+  userId: '',
   search: '',
   sort: null,
   sortBy: null,

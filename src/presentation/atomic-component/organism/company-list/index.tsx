@@ -12,12 +12,14 @@ interface CompanyListProps {
 }
 
 export const CompanyList: FC<CompanyListProps> = ({ setTotalElements }) => {
-  const { status } = useAppSelector((state) => state.filter.company);
+  const { status, userId, search } = useAppSelector((state) => state.filter.company);
   const navigate = useNavigate();
 
   const companyQuery = useInfiniteScroll<Company>({
     filters: {
-      statusEnum: status ? [status] : undefined
+      status: status ? [status] : undefined,
+      userId: userId ? [userId] : undefined,
+      search: search ? [search] : undefined
     },
     limit: 10,
     queryName: QueryName.company,
@@ -25,7 +27,7 @@ export const CompanyList: FC<CompanyListProps> = ({ setTotalElements }) => {
   });
 
   useEffect(() => {
-    if (companyQuery.data?.length !== undefined) setTotalElements(companyQuery.data?.length);
+    setTotalElements(companyQuery.data?.length ?? 0);
   }, [companyQuery.data, setTotalElements]);
 
   return (
