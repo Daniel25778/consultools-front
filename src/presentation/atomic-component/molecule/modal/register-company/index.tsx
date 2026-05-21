@@ -1,30 +1,37 @@
 import { Add, Edit } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { type useModalProps } from 'data/hooks';
-import type { User } from 'domain/models';
+import { Role } from 'domain/enums/role';
+import type { Company } from 'domain/models';
+import { QueryName, apiPaths } from 'main/config';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import type { FC } from 'react';
-import { RegisterConsultantForm } from '../../form/consultant';
+import { getUser } from 'store/persist/selector';
+import { RegisterCompanyForm } from '../../form/company';
+import { SearchInput } from '../../search-input';
 
-interface RegisterConsultantModalProps {
+interface RegisterCompanyModalProps {
   modal: useModalProps;
-  user?: User;
+  company?: Company;
 }
 
-export const RegisterConsultantModal: FC<RegisterConsultantModalProps> = ({ modal, user }) => {
+export const RegisterCompanyModal: FC<RegisterCompanyModalProps> = ({ modal, company }) => {
   const { closeModal, isOpen, openModal } = modal;
+  const user = getUser();
 
   return (
     <Modal
       openModalElement={
-        user ? (
+        user.role === Role.ADMIN ? (
+          <SearchInput path={'/companies'} route={apiPaths.company} queryName={QueryName.company} />
+        ) : company ? (
           <IconButton href={''} onClick={openModal} className={'gap-4'}>
             <Edit className={'hover:cursor-pointer text-primary'} />
           </IconButton>
         ) : (
           <Button onClick={openModal} variant={'contained'} className={'gap-4'}>
             <Add className={'hover:cursor-pointer text-gray-500'} />
-            <span>Novo consultor</span>
+            <span>Nova empresa</span>
           </Button>
         )
       }
@@ -33,9 +40,9 @@ export const RegisterConsultantModal: FC<RegisterConsultantModalProps> = ({ moda
       openModal={openModal}
       size={'small'}
       subtitle={'Preencha o formulário abaixo.'}
-      title={'Novo consultor'}
+      title={'Nova empresa'}
     >
-      <RegisterConsultantForm closeModal={closeModal} user={user} />
+      <RegisterCompanyForm closeModal={closeModal} company={company} />
     </Modal>
   );
 };

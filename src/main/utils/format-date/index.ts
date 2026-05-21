@@ -12,7 +12,7 @@ export const formatDate = (
     const newDate =
       typeof date === 'string' && formatToUTC ? `${date?.slice(0, 10)} 04:00:00` : date;
 
-    return format(new Date(newDate ?? null), formatType ?? 'dd/MM/yyyy', {
+    return format(new Date(newDate ?? null), formatType ?? "dd 'de' MMMM 'de' yyyy", {
       locale: ptBR
     });
   } catch {

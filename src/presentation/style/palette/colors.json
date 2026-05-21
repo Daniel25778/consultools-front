@@ -25,6 +25,8 @@
   "light-green": "#DCFCE7",
   "dark-green": "#198754",
   "yellow": "#F5B760",
+  "yellowDark": "#F0B100",
+  "yellowLight": "#FEFCE8",
 
   "gray": {
     "default": "#5E5851",

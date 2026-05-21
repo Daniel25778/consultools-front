@@ -1,7 +1,6 @@
 import type { Role, Status } from 'domain/enums';
 import type { FilterPagination, Pagination } from 'domain/protocol/pagination';
 import type { FilterSort } from 'domain/protocol/sort';
-import type { SelectValues } from 'presentation/atomic-component/atom/select';
 
 export interface LoginPayload {
   accessToken: string;
@@ -33,7 +32,6 @@ export interface UserFilter extends FilterPagination, FilterSort {
   startDate: Date | null;
   search: string;
   endDate: Date | null;
-  rolesKeywords: SelectValues[];
 }
 
 export const userFilterInitialState: UserFilter = {
@@ -41,7 +39,6 @@ export const userFilterInitialState: UserFilter = {
   status: null,
   page: 1,
   search: '',
-  rolesKeywords: [],
   sort: null,
   sortBy: null,
   startDate: null

@@ -1,38 +1,37 @@
 import { Button } from '@mui/material';
-import { useRegisterConsultant } from 'data/use-case';
+import { useRegisterCompany } from 'data/use-case';
 import { Status } from 'domain/enums';
-import type { User } from 'domain/models/user';
+import type { Company } from 'domain/models/company';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
 import { SwitchController } from 'presentation/atomic-component/atom/switch-controller';
 import { useEffect, type FC } from 'react';
 
-interface RegisterConsultantFormProps {
+interface RegisterCompanyFormProps {
   closeModal: () => void;
-  user?: User;
+  company?: Company;
 }
 
-export const RegisterConsultantForm: FC<RegisterConsultantFormProps> = ({ closeModal, user }) => {
+export const RegisterCompanyForm: FC<RegisterCompanyFormProps> = ({ closeModal, company }) => {
   const {
     handleSubmit,
     onSubmit,
     setValue,
     control,
     formState: { isSubmitting }
-  } = useRegisterConsultant({
-    user,
+  } = useRegisterCompany({
+    company,
     closeModal
   });
 
   useEffect(() => {
-    if (user) {
-      const { name, email, cpf, status } = user as User;
+    if (company) {
+      const { name, cnpj, status } = company;
       setValue('name', name);
-      setValue('email', email);
-      setValue('cpf', cpf);
+      setValue('cnpj', cnpj);
       setValue('status', status);
     }
-  }, [setValue, user]);
+  }, [setValue, company]);
 
   return (
     <form className={'flex flex-col gap-5 w-full'} onSubmit={handleSubmit(onSubmit)}>
@@ -40,7 +39,7 @@ export const RegisterConsultantForm: FC<RegisterConsultantFormProps> = ({ closeM
         <InputController
           autoFocus
           control={control}
-          label={'Nome'}
+          label={'Nome da Empresa'}
           name={'name'}
           placeholder={'Digite o nome'}
           required
@@ -49,30 +48,22 @@ export const RegisterConsultantForm: FC<RegisterConsultantFormProps> = ({ closeM
 
         <InputController
           control={control}
-          label={'Email'}
-          name={'email'}
-          placeholder={'Digite o email'}
-          required
-          type={'email'}
-        />
-        <InputController
-          control={control}
-          label={'CPF'}
-          mask={'000.000.000-00'}
-          name={'cpf'}
-          placeholder={'Digite o CPF'}
+          label={'CNPJ'}
+          mask={'00.000.000/0000-00'}
+          name={'cnpj'}
+          placeholder={'Digite o CNPJ'}
           required
           type={'text'}
         />
 
         <div className={'flex w-full items-center justify-between'}>
-          <p className={'w-full'}>Situação atual do consultor</p>
+          <p className={'w-full'}>Situação atual da empresa</p>
           <SwitchController
             control={control}
             name={'status'}
             options={[
-              { label: 'Desabilitado', value: Status.DISABLED },
-              { label: 'Habilitado', value: Status.ENABLED }
+              { label: 'Desabilitada', value: Status.DISABLED },
+              { label: 'Habilitada', value: Status.ENABLED }
             ]}
             showMessage
           />
@@ -85,7 +76,6 @@ export const RegisterConsultantForm: FC<RegisterConsultantFormProps> = ({ closeM
         <Button className={'w-full h-12 tablet:h-auto'} color={'secondary'} onClick={closeModal}>
           Cancelar
         </Button>
-
         <FormButton
           disabled={isSubmitting}
           isSubmitting={isSubmitting}

@@ -23,6 +23,29 @@ export const formatMoney = (value?: number): string => {
   }).format(isNaN(Number(value)) ? 0 : Number(value))}`;
 };
 
+export const formatCPF = (value?: string | number): string => {
+  const cpf = String(value ?? '')
+    .replace(/\D/g, '')
+    .slice(0, 11);
+
+  return cpf
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+};
+
+export const formatCNPJ = (value?: string | number): string => {
+  const cnpj = String(value ?? '')
+    .replace(/\D/g, '')
+    .slice(0, 14);
+
+  return cnpj
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1/$2')
+    .replace(/(\d{4})(\d)/, '$1-$2');
+};
+
 export const formatDuration = (ms: number): string => {
   const totalSeconds = Math.floor(ms / 1000);
   const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');

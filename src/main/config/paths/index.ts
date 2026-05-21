@@ -1,7 +1,10 @@
 export enum routePaths {
   login = '/',
-  register = '/cadastro',
-  home = '/home',
+  consultant = '/consultor',
+  consultantDetails = '/consultor/:id',
+  companyDetails = '/empresa/:id',
+  company = '/empresa',
+  notation = '/apontamento',
   requestCode = '/solicitar-codigo',
   enterCode = '/inserir-codigo',
   changePassword = '/alterar-senha'
@@ -9,8 +12,11 @@ export enum routePaths {
 
 export const paths = {
   login: '/',
-  register: '/cadastro',
-  home: '/home',
+  consultant: '/consultor',
+  consultantDetails: (id: number | string): string => `/consultor/${id}`,
+  companyDetails: (id: number | string): string => `/empresa/${id}`,
+  company: '/empresa',
+  notation: '/apontamento',
   requestCode: '/solicitar-codigo',
   enterCode: '/inserir-codigo',
   changePassword: '/alterar-senha'
@@ -19,6 +25,7 @@ export const paths = {
 export const apiPaths = {
   default: '/default',
   login: '/login',
+  company: '/company',
   user: '/user',
   requestCode: '/request-code',
   verifyCode: '/verify-code',

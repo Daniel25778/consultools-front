@@ -24,6 +24,7 @@ export * from './scroll-animation';
 export * from './show-image';
 export * from './simple-menu';
 export * from './sliding-container';
+export * from './status-badge';
 export * from './success-div';
 export * from './table';
 export * from './tabs';

@@ -1,8 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { roleRoutes } from 'domain/enums';
 import type { LoginPayload } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
-import { apiPaths, paths } from 'main/config';
+import { apiPaths } from 'main/config';
 import { resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -20,7 +21,9 @@ export const useUserLogin = (): formReturn<LoginRequest> => {
 
   const dispatch = useDispatch();
   const { redirectPath } = useAppSelector((state) => state.persist);
+
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.persist);
 
   const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
     try {
@@ -35,7 +38,7 @@ export const useUserLogin = (): formReturn<LoginRequest> => {
           user: response.user
         })
       );
-      navigate(redirectPath ?? paths.home);
+      navigate(redirectPath ?? roleRoutes[user.role]);
     } catch (error) {
       resolverError(error);
     }

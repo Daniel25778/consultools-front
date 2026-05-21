@@ -1,17 +1,19 @@
 import { ArrowRightAlt } from '@mui/icons-material';
-import { Status, statusTranslate } from 'domain/enums';
+import { Status } from 'domain/enums';
 import { apiPaths } from 'main/config';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation/delete';
 import type { FC } from 'react';
+import { StatusBadge } from '../..';
 
 interface ConsultantCardProps {
   id: string;
   name: string;
   email: string;
+  onClick: () => void;
   status: Status;
 }
 
-export const ConsultantCard: FC<ConsultantCardProps> = ({ id, name, email, status }) => {
+export const ConsultantCard: FC<ConsultantCardProps> = ({ id, name, email, status, onClick }) => {
   return (
     <div
       style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
@@ -33,12 +35,9 @@ export const ConsultantCard: FC<ConsultantCardProps> = ({ id, name, email, statu
         />
       </div>
       <div className={'flex justify-between items-center'}>
-        <span
-          className={`flex max-w-min px-5 py-1 rounded-full text-base font-semibold ${status === Status.ENABLED ? 'bg-light-green text-dark-green' : 'bg-gray-100 text-gray-700'}`}
-        >
-          {statusTranslate[status]}
-        </span>
+        <StatusBadge status={status} />
         <div
+          onClick={onClick}
           className={
             'text-primary font-medium flex items-center justify-center gap-1 cursor-pointer'
           }

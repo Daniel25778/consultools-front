@@ -5,10 +5,11 @@ import { MainTemplate, PublicTemplate } from 'presentation/atomic-component/temp
 import {
   AuthContent,
   ChangePasswordContent,
+  ConsultantContent,
   EnterCodeContent,
-  HomeContent,
   RequestCodeContent
 } from 'presentation/environment';
+import { ConsultantContentDetails } from 'presentation/environment/consultant';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
@@ -30,7 +31,8 @@ const RouterConfig: FC = () => (
         {/* Private routes */}
         <Route element={<PrivateRoute />}>
           <Route element={<MainTemplate />}>
-            <Route element={<HomeContent />} path={routePaths.home} />
+            <Route element={<ConsultantContent />} path={routePaths.consultant} />
+            <Route element={<ConsultantContentDetails />} path={routePaths.consultantDetails} />
             {/*  */}
             {/*  */}
           </Route>

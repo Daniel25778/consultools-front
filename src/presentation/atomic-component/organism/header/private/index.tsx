@@ -1,7 +1,8 @@
 import { Logout, Person } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { roleTranslate } from 'domain/enums/role';
+import { Role, roleTranslate } from 'domain/enums/role';
 import { Logo } from 'main/assets';
+import { QueryName, apiPaths, paths } from 'main/config';
 import { SearchInput } from 'presentation/atomic-component/molecule/search-input';
 import type { FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,27 @@ import { setSidebar } from 'store/sidebar/slice';
 export const PrivateHeader: FC = () => {
   const { user } = useAppSelector((state) => state.persist);
   const dispatch = useDispatch();
+
+  const searchConfig = {
+    [Role.ADMIN]: {
+      queryName: QueryName.user,
+      route: apiPaths.user,
+      path: paths.consultant,
+      placeholder: 'Buscar consultores...'
+    },
+    [Role.CONSULTANT]: {
+      queryName: QueryName.company,
+      route: apiPaths.company,
+      path: paths.company,
+      placeholder: 'Buscar empresas...'
+    },
+    [Role.COLABORATOR]: {
+      queryName: QueryName.company,
+      route: apiPaths.company,
+      path: paths.company,
+      placeholder: 'Buscar empresas...'
+    }
+  }[user.role];
 
   return (
     <header
@@ -52,7 +74,12 @@ export const PrivateHeader: FC = () => {
           }
         >
           <img alt={'Logo'} className={'h-6 tablet:h-5'} src={Logo} />
-          <SearchInput />
+          <SearchInput
+            path={searchConfig.path}
+            route={searchConfig.route}
+            queryName={searchConfig.queryName}
+            placeholder={searchConfig.placeholder}
+          />
         </div>
       </div>
     </header>

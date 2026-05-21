@@ -1,46 +1,48 @@
 import { useInfiniteScroll } from 'data/hooks';
-import type { User } from 'domain/models';
+import type { Company } from 'domain/models';
 import { QueryName, apiPaths, paths } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
-import { ConsultantCard } from 'presentation/atomic-component/atom/card';
+import { CompanyCard } from 'presentation/atomic-component/atom/card/company';
 import { type Dispatch, type FC, type SetStateAction, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 
-interface ConsultantListProps {
+interface CompanyListProps {
   setTotalElements: Dispatch<SetStateAction<number>>;
 }
 
-export const ConsultantList: FC<ConsultantListProps> = ({ setTotalElements }) => {
-  const { status } = useAppSelector((state) => state.filter.user);
+export const CompanyList: FC<CompanyListProps> = ({ setTotalElements }) => {
+  const { status } = useAppSelector((state) => state.filter.company);
   const navigate = useNavigate();
 
-  const userQuery = useInfiniteScroll<User>({
+  const companyQuery = useInfiniteScroll<Company>({
     filters: {
       statusEnum: status ? [status] : undefined
     },
     limit: 10,
-    queryName: QueryName.user,
-    route: apiPaths.user
+    queryName: QueryName.company,
+    route: apiPaths.company
   });
 
   useEffect(() => {
-    if (userQuery.data?.length !== undefined) setTotalElements(userQuery.data?.length);
-  }, [userQuery.data, setTotalElements]);
+    if (companyQuery.data?.length !== undefined) setTotalElements(companyQuery.data?.length);
+  }, [companyQuery.data, setTotalElements]);
 
   return (
     <div className={'flex w-full flex-col'}>
-      <FetchOnScroll query={userQuery}>
+      <FetchOnScroll query={companyQuery}>
         <div
           style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
-          {userQuery.data?.map((item) => (
-            <ConsultantCard
-              onClick={() => navigate(paths.consultantDetails(item.id))}
+          {companyQuery.data?.map((item) => (
+            <CompanyCard
+              key={item.id}
+              onClick={() => navigate(paths.companyDetails(item.id))}
               id={item.id}
               name={item.name}
-              email={item.email}
+              cnpj={item.cnpj}
+              createdAt={item.createdAt}
               status={item.status}
             />
           ))}
