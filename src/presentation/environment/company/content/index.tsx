@@ -4,7 +4,7 @@ import { companyStatusOptions } from 'domain/models';
 import { setFilter } from 'main/utils';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { RegisterCompanyModal } from 'presentation/atomic-component/molecule/modal';
-import { CompanyList } from 'presentation/atomic-component/organism/company-list';
+import { CompanyList } from 'presentation/atomic-component/organism';
 import { type FC, useState } from 'react';
 import { useAppSelector } from 'store/index';
 

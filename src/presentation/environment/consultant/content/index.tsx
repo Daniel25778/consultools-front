@@ -4,7 +4,7 @@ import { userStatusOptions } from 'domain/models/user-status';
 import { setFilter } from 'main/utils';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { RegisterConsultantModal } from 'presentation/atomic-component/molecule/modal/register-consultant';
-import { ConsultantList } from 'presentation/atomic-component/organism/consultant-list';
+import { ConsultantList } from 'presentation/atomic-component/organism';
 import { type FC, useState } from 'react';
 import { useAppSelector } from 'store/index';
 

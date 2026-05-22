@@ -9,7 +9,6 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from 'store/index';
 import { setAuth } from 'store/persist/slice';
 import type { LoginRequest } from 'validation/schema';
 import { loginSchema } from 'validation/schema';
@@ -20,11 +19,8 @@ export const useUserLogin = (): formReturn<LoginRequest> => {
   });
 
   const dispatch = useDispatch();
-  const { redirectPath } = useAppSelector((state) => state.persist);
 
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.persist);
-
   const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
     try {
       const response = await api.post<LoginPayload>({
@@ -38,7 +34,7 @@ export const useUserLogin = (): formReturn<LoginRequest> => {
           user: response.user
         })
       );
-      navigate(redirectPath ?? roleRoutes[user.role]);
+      navigate(roleRoutes[response.user.role]);
     } catch (error) {
       resolverError(error);
     }

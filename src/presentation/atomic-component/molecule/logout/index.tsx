@@ -1,8 +1,8 @@
 import { SidebarItem } from 'presentation/atomic-component/atom/sidebar-item';
+import type { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { logout } from 'store/persist/slice';
 import { setSidebar } from 'store/sidebar/slice';
-import { useDispatch } from 'react-redux';
-import type { FC } from 'react';
 
 export const Logout: FC = () => {
   const dispatch = useDispatch();

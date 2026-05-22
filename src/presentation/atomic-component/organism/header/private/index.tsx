@@ -7,7 +7,7 @@ import { SearchInput } from 'presentation/atomic-component/molecule/search-input
 import type { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/index';
-import { logout } from 'store/persist/slice';
+import { logout, setRedirectPath } from 'store/persist/slice';
 import { setSidebar } from 'store/sidebar/slice';
 
 export const PrivateHeader: FC = () => {
@@ -59,6 +59,7 @@ export const PrivateHeader: FC = () => {
             className={'gap-3'}
             onClick={(): void => {
               dispatch(logout());
+              dispatch(setRedirectPath(null));
               dispatch(setSidebar(false));
             }}
             color={'inherit'}

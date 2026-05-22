@@ -65,7 +65,6 @@ export const RegisterCompanyForm: FC<RegisterCompanyFormProps> = ({ closeModal, 
               { label: 'Desabilitada', value: Status.DISABLED },
               { label: 'Habilitada', value: Status.ENABLED }
             ]}
-            showMessage
           />
         </div>
       </div>

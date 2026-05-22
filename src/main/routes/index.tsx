@@ -9,6 +9,8 @@ import {
   EnterCodeContent,
   RequestCodeContent
 } from 'presentation/environment';
+import { CompanyContentDetails } from 'presentation/environment/company';
+import { CompanyContent } from 'presentation/environment/company/content';
 import { ConsultantContentDetails } from 'presentation/environment/consultant';
 import type { FC } from 'react';
 import { Suspense } from 'react';
@@ -33,6 +35,8 @@ const RouterConfig: FC = () => (
           <Route element={<MainTemplate />}>
             <Route element={<ConsultantContent />} path={routePaths.consultant} />
             <Route element={<ConsultantContentDetails />} path={routePaths.consultantDetails} />
+            <Route element={<CompanyContent />} path={routePaths.company} />
+            <Route element={<CompanyContentDetails />} path={routePaths.companyDetails} />
             {/*  */}
             {/*  */}
           </Route>
