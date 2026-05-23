@@ -25,6 +25,8 @@ export const paths = {
 export const apiPaths = {
   default: '/default',
   login: '/login',
+  collaborator: '/collaborator',
+  wasteType: '/waste-type',
   company: '/company',
   user: '/user',
   requestCode: '/request-code',

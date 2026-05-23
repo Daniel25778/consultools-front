@@ -4,7 +4,7 @@ import { Box, Button, IconButton, Modal as ModalUI } from '@mui/material';
 import type { OverridableComponent } from '@mui/types';
 import type { FC, ReactNode } from 'react';
 
-type ModalSize = 'full' | 'large' | 'medium' | 'small';
+type ModalSize = 'full' | 'large' | 'medium' | 'small' | 'thin';
 
 interface ModalProps {
   children: ReactNode;
@@ -32,10 +32,13 @@ interface ModalProps {
 const sizes = {
   large: 1125,
   medium: 860,
-  small: 460
+  small: 460,
+  thin: 380
 };
 
-const getWidth = (size?: string | 'full' | 'large' | 'medium' | 'small'): number | string => {
+const getWidth = (
+  size?: string | 'full' | 'large' | 'medium' | 'small' | 'thin'
+): number | string => {
   switch (size) {
     case 'large':
       return sizes.large;
@@ -43,6 +46,8 @@ const getWidth = (size?: string | 'full' | 'large' | 'medium' | 'small'): number
       return sizes.medium;
     case 'small':
       return sizes.small;
+    case 'thin':
+      return sizes.thin;
     case 'full':
       return 'max-content';
     default:
@@ -109,7 +114,7 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
                 className={`flex flex-col gap-2  justify-between tablet:mt-0 ${props.hideCloseButton ? '' : 'mt-4'}`}
               >
                 {typeof props.title === 'string' ? (
-                  <h2 className={'font-semibold text-2xl text-primary tablet:text-2xl capitalize'}>
+                  <h2 className={'font-semibold text-2xl text-primary tablet:text-2xl '}>
                     {props.title}
                   </h2>
                 ) : (

@@ -17,11 +17,11 @@ export const ConsultantCard: FC<ConsultantCardProps> = ({ id, name, email, statu
   return (
     <div
       style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
-      className={'flex flex-col min-w-[390px] gap-6 rounded p-4 bg-white'}
+      className={'flex flex-col gap-6 rounded p-4 bg-white'}
     >
       <div className={'flex justify-between items-start'}>
         <div className={'flex flex-col gap-1'}>
-          <h3 className={'text-lg font-semibold text-primary'}>{name}</h3>
+          <h3 className={'text-lg font-semibold text-primary'}>{name}ddd</h3>
           <p className={'text-base text-gray-400 font-medium'}>{email}</p>
         </div>
         <DeleteConfirmationModal

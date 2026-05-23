@@ -29,7 +29,7 @@ export const CompanyCard: FC<CompanyCardProps> = ({
   return (
     <div
       style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
-      className={'flex flex-col min-w-[390px] gap-6 rounded p-4 bg-white'}
+      className={'flex flex-col  w-full tablet:min-w-[390px] gap-6 rounded p-4 bg-white'}
     >
       <div className={'flex justify-between items-start'}>
         <div className={'flex flex-col gap-1'}>

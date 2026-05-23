@@ -1,10 +1,9 @@
 import { useInfiniteScroll } from 'data/hooks';
-import type { User } from 'domain/models';
-import { QueryName, apiPaths, paths } from 'main/config';
+import type { Collaborator } from 'domain/models';
+import { QueryName, apiPaths } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
-import { ConsultantCard } from 'presentation/atomic-component/atom/card';
+import { CollaboratorCard } from 'presentation/atomic-component/atom/card/collaborator';
 import { type Dispatch, type FC, type SetStateAction, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 
 interface CollaboratorListProps {
@@ -12,37 +11,35 @@ interface CollaboratorListProps {
 }
 
 export const CollaboratorList: FC<CollaboratorListProps> = ({ setTotalElements }) => {
-  const { status } = useAppSelector((state) => state.filter.user);
-  const navigate = useNavigate();
+  const { status, search } = useAppSelector((state) => state.filter.collaborator);
+  const location = window.location.pathname;
+  const companyId = location.split('/')[2];
 
-  const userQuery = useInfiniteScroll<User>({
+  const collaboratorQuery = useInfiniteScroll<Collaborator>({
     filters: {
-      status: status ? [status] : undefined
+      status: status ? [status] : undefined,
+      search: search ? [search] : undefined,
+      companyId: companyId
     },
     limit: 10,
-    queryName: QueryName.user,
-    route: apiPaths.user
+
+    queryName: QueryName.collaborator,
+    route: apiPaths.collaborator
   });
 
   useEffect(() => {
-    setTotalElements(userQuery.data?.length ?? 0);
-  }, [userQuery.data, setTotalElements]);
+    setTotalElements(collaboratorQuery.data?.length ?? 0);
+  }, [collaboratorQuery.data, setTotalElements]);
 
   return (
     <div className={'flex w-full flex-col'}>
-      <FetchOnScroll query={userQuery}>
+      <FetchOnScroll query={collaboratorQuery}>
         <div
           style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
-          {userQuery.data?.map((item) => (
-            <ConsultantCard
-              onClick={() => navigate(paths.consultantDetails(item.id))}
-              id={item.id}
-              name={item.name}
-              email={item.email}
-              status={item.status}
-            />
+          {collaboratorQuery.data?.map((item) => (
+            <CollaboratorCard key={item.id} collaborator={item} />
           ))}
         </div>
       </FetchOnScroll>

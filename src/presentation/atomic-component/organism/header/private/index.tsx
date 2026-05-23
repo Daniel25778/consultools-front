@@ -1,11 +1,12 @@
 import { Logout, Person } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { Role, roleTranslate } from 'domain/enums/role';
+import { Role, roleRoutes, roleTranslate } from 'domain/enums/role';
 import { Logo } from 'main/assets';
 import { QueryName, apiPaths, paths } from 'main/config';
 import { SearchInput } from 'presentation/atomic-component/molecule/search-input';
 import type { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 import { logout, setRedirectPath } from 'store/persist/slice';
 import { setSidebar } from 'store/sidebar/slice';
@@ -13,6 +14,7 @@ import { setSidebar } from 'store/sidebar/slice';
 export const PrivateHeader: FC = () => {
   const { user } = useAppSelector((state) => state.persist);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const searchConfig = {
     [Role.ADMIN]: {
@@ -74,7 +76,12 @@ export const PrivateHeader: FC = () => {
             'w-full h-full bg-white flex flex-col justify-between items-start p-8 px-4 tablet:flex-row tablet:px-[150px] tablet:items-center gap-6'
           }
         >
-          <img alt={'Logo'} className={'h-6 tablet:h-5'} src={Logo} />
+          <img
+            onClick={() => navigate(roleRoutes[user.role])}
+            alt={'Logo'}
+            className={'h-6 tablet:h-5'}
+            src={Logo}
+          />
           <SearchInput
             path={searchConfig.path}
             route={searchConfig.route}

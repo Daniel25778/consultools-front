@@ -18,6 +18,8 @@ export const Tabs: FC<TabsProps> = ({ tabValue, onChange, children, tabs }) => {
   return (
     <TabContext value={String(tabValue)}>
       <MaterialTabs
+        variant={'scrollable'}
+        scrollButtons={'auto'}
         onChange={handleChange}
         sx={{ borderBottom: `1px solid ${colors.gray[200]}` }}
         value={tabValue}
@@ -32,7 +34,7 @@ export const Tabs: FC<TabsProps> = ({ tabValue, onChange, children, tabs }) => {
               marginLeft: index >= 1 ? '24px' : 0,
               minWidth: '73px',
               padding: '0px 4px',
-              textTransform: 'capitalize',
+              textTransform: 'capitalize'
             }}
             value={item.value}
           />

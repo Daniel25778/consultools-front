@@ -5,6 +5,6 @@ export * from './product';
 export * from './responsible-area';
 export * from './shift';
 export * from './stop-reason';
-export * from './wast-type';
+export * from './waste-type';
 export * from './workstation';
 

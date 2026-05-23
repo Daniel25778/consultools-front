@@ -10,31 +10,43 @@ import { Breadcrumbs } from 'presentation/atomic-component/molecule';
 import { RegisterCompanyModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
 import {
-  CollaboratorList,
   ProductList,
   ResponsibleAreaList,
   ShiftList,
   StopReasonList,
-  WasteTypeList,
   WorkstationList
 } from 'presentation/atomic-component/organism';
+import { CollaboratorContent } from 'presentation/atomic-component/organism/content/collaborator';
+import { WasteTypeContent } from 'presentation/atomic-component/organism/content/waste-type';
 import { useEffect, useState, type FC } from 'react';
 import { useParams } from 'react-router-dom';
+
+type TabType =
+  | 'DASHBOARD'
+  | 'COLLABORATOR'
+  | 'WORKSTATION'
+  | 'PRODUCT'
+  | 'WASTE_TYPE'
+  | 'STOP_REASON'
+  | 'RESPONSIBLE_AREA'
+  | 'SHIFT';
+
+const TAB_OPTIONS: { title: string; value: TabType }[] = [
+  { title: 'Dashboard', value: 'DASHBOARD' },
+  { title: 'Colaboradores', value: 'COLLABORATOR' },
+  { title: 'Postos de trabalho', value: 'WORKSTATION' },
+  { title: 'Produtos', value: 'PRODUCT' },
+  { title: 'Tipos de refugo', value: 'WASTE_TYPE' },
+  { title: 'Motivos de parada', value: 'STOP_REASON' },
+  { title: 'Área responsável', value: 'RESPONSIBLE_AREA' },
+  { title: 'Apontamentos', value: 'SHIFT' }
+];
 
 export const CompanyContentDetails: FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const companyQuery = useFindOneCompanyQuery({ id }).data;
   const modal = useModal();
-  type tabTypes =
-    | 'DASHBOARD'
-    | 'COLLABORATOR'
-    | 'WORKSTATION'
-    | 'PRODUCT'
-    | 'WASTE_TYPE'
-    | 'STOP_REASON'
-    | 'RESPONSIBLE_AREA'
-    | 'SHIFT';
-  const [tabSelected, setTabSelected] = useState<tabTypes>('DASHBOARD');
+  const [tabSelected, setTabSelected] = useState<TabType>('DASHBOARD');
 
   useEffect(() => {
     setFilter('company', {
@@ -42,35 +54,25 @@ export const CompanyContentDetails: FC = () => {
     });
   }, [companyQuery?.id]);
 
-  const tabOptions = [
-    { title: 'Dashboard', value: 'DASHBOARD' },
-    { title: 'Colaboradores', value: 'COLLABORATOR' },
-    { title: 'Postos de trabalho', value: 'WORKSTATION' },
-    { title: 'Produtos', value: 'PRODUCT' },
-    { title: 'Tipos de refugo', value: 'WASTE_TYPE' },
-    { title: 'Motivos de parada', value: 'STOP_REASON' },
-    { title: 'Área responsável', value: 'RESPONSIBLE_AREA' },
-    { title: 'Apontamentos', value: 'SHIFT' }
-  ];
-
   const renderTabContent = () => {
+    const noop = () => {};
     switch (tabSelected) {
       case 'DASHBOARD':
-        return <div>Conteúdo do Dashboard</div>;
+        return <div></div>;
       case 'COLLABORATOR':
-        return <CollaboratorList setTotalElements={() => {}} />;
+        return <CollaboratorContent />;
       case 'WORKSTATION':
-        return <WorkstationList setTotalElements={() => {}} />;
+        return <WorkstationList setTotalElements={noop} />;
       case 'PRODUCT':
-        return <ProductList setTotalElements={() => {}} />;
+        return <ProductList setTotalElements={noop} />;
       case 'WASTE_TYPE':
-        return <WasteTypeList setTotalElements={() => {}} />;
+        return <WasteTypeContent />;
       case 'STOP_REASON':
-        return <StopReasonList setTotalElements={() => {}} />;
+        return <StopReasonList setTotalElements={noop} />;
       case 'RESPONSIBLE_AREA':
-        return <ResponsibleAreaList setTotalElements={() => {}} />;
+        return <ResponsibleAreaList setTotalElements={noop} />;
       case 'SHIFT':
-        return <ShiftList setTotalElements={() => {}} />;
+        return <ShiftList setTotalElements={noop} />;
       default:
         return <div>Em breve...</div>;
     }
@@ -129,15 +131,20 @@ export const CompanyContentDetails: FC = () => {
           />
         </div>
       </div>
-      <div className={'flex flex-col'}>
+      <div>
         <Tabs
           onChange={(newValue): void => {
-            setTabSelected(newValue as tabTypes);
+            setTabSelected(newValue as TabType);
           }}
           tabValue={tabSelected}
-          tabs={tabOptions}
+          tabs={TAB_OPTIONS}
         >
-          <TabPanel value={tabSelected}>{renderTabContent()}</TabPanel>
+          <TabPanel
+            value={tabSelected}
+            style={{ paddingTop: '32px', paddingLeft: 0, paddingRight: 0 }}
+          >
+            {renderTabContent()}
+          </TabPanel>
         </Tabs>
       </div>
     </div>

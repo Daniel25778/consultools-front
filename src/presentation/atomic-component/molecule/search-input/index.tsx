@@ -51,7 +51,7 @@ export const SearchInput: FC<SearchInputProps> = ({
   };
 
   return (
-    <div className={'w-fit min-w-[300px] tablet:min-w-[400px] max-w-[500px] relative'}>
+    <div className={'w-full min-w-[300px] tablet:min-w-[400px] max-w-[500px] relative'}>
       <Paper
         elevation={0}
         className={'flex items-center gap-2 rounded-full  px-6 py-1'}

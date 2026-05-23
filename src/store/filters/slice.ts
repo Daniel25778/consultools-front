@@ -1,6 +1,13 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { companyFilterInitialState, type CompanyFilter } from 'domain/models';
+import {
+  collaboratorFilterInitialState,
+  companyFilterInitialState,
+  wasteTypeFilterInitialState,
+  type CollaboratorFilter,
+  type CompanyFilter,
+  type WasteTypeFilter
+} from 'domain/models';
 import { userFilterInitialState, type UserFilter } from 'domain/models/user';
 import type { Sort } from 'domain/protocol';
 
@@ -13,10 +20,14 @@ export interface TableSortFilter {
 export interface FilterSliceState {
   user: UserFilter;
   company: CompanyFilter;
+  collaborator: CollaboratorFilter;
+  wasteType: WasteTypeFilter;
 }
 
 const initialState: FilterSliceState = {
   user: userFilterInitialState,
+  collaborator: collaboratorFilterInitialState,
+  wasteType: wasteTypeFilterInitialState,
   company: companyFilterInitialState
 };
 
