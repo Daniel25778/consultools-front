@@ -13,6 +13,7 @@ export interface Collaborator {
   cpf: string;
   status: Status;
   userId: string;
+  companyId: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,10 +1,9 @@
 import { useInfiniteScroll } from 'data/hooks';
-import type { User } from 'domain/models';
-import { QueryName, apiPaths, paths } from 'main/config';
+import type { Shift } from 'domain/models';
+import { QueryName, apiPaths } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
-import { ConsultantCard } from 'presentation/atomic-component/atom/card';
+import { ShiftCard } from 'presentation/atomic-component/atom/card';
 import { type Dispatch, type FC, type SetStateAction, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 
 interface ShiftListProps {
@@ -12,37 +11,32 @@ interface ShiftListProps {
 }
 
 export const ShiftList: FC<ShiftListProps> = ({ setTotalElements }) => {
-  const { status } = useAppSelector((state) => state.filter.user);
-  const navigate = useNavigate();
-
-  const userQuery = useInfiniteScroll<User>({
+  const { search } = useAppSelector((state) => state.filter.shift);
+  const location = window.location.pathname;
+  const companyId = location.split('/')[2];
+  const shiftQuery = useInfiniteScroll<Shift>({
     filters: {
-      status: status ? [status] : undefined
+      companyId: companyId,
+      name: search ? [search] : undefined
     },
     limit: 10,
-    queryName: QueryName.user,
-    route: apiPaths.user
+    queryName: QueryName.shift,
+    route: apiPaths.shift
   });
 
   useEffect(() => {
-    setTotalElements(userQuery.data?.length ?? 0);
-  }, [userQuery.data, setTotalElements]);
+    setTotalElements(shiftQuery.data?.length ?? 0);
+  }, [shiftQuery.data, setTotalElements]);
 
   return (
     <div className={'flex w-full flex-col'}>
-      <FetchOnScroll query={userQuery}>
+      <FetchOnScroll query={shiftQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(370px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
-          {userQuery.data?.map((item) => (
-            <ConsultantCard
-              onClick={() => navigate(paths.consultantDetails(item.id))}
-              id={item.id}
-              name={item.name}
-              email={item.email}
-              status={item.status}
-            />
+          {shiftQuery.data?.map((item) => (
+            <ShiftCard key={item.id} shift={item} />
           ))}
         </div>
       </FetchOnScroll>

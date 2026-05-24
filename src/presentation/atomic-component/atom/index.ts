@@ -21,6 +21,7 @@ export * from './page-filter';
 export * from './page-header';
 export * from './query-manager';
 export * from './scroll-animation';
+export * from './selectController';
 export * from './show-image';
 export * from './simple-menu';
 export * from './sliding-container';

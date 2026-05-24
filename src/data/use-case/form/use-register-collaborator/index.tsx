@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Status } from 'domain/enums';
 import type { Collaborator } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
@@ -20,7 +21,12 @@ export const useRegisterCollaborator = ({
   collaborator
 }: useRegisterCollaboratorProps): formReturn<CollaboratorRequest> => {
   const formData = useForm<CollaboratorRequest>({
-    resolver: yupResolver(collaboratorSchema)
+    resolver: yupResolver(collaboratorSchema),
+    defaultValues: (collaborator as Collaborator) ?? {
+      status: Status.ENABLED,
+      name: '',
+      description: ''
+    }
   });
 
   const onSubmit: SubmitHandler<CollaboratorRequest> = async (data) => {
@@ -36,7 +42,7 @@ export const useRegisterCollaborator = ({
           body: data,
           route: apiPaths.collaborator
         });
-      toast.success(`Consultor ${collaborator ? 'editado' : 'cadastrado'} com sucesso!`);
+      toast.success(`Colaborador ${collaborator ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: ['collaborator'] });
       closeModal();
     } catch (error) {

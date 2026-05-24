@@ -25,6 +25,12 @@ export const paths = {
 export const apiPaths = {
   default: '/default',
   login: '/login',
+  workstation: '/workstation',
+  shift: '/shift',
+  stoppingReason: '/stopping-reason',
+  responsibleArea: '/responsible-area',
+  measurementUnit: '/measurement-unit',
+  product: '/product',
   collaborator: '/collaborator',
   wasteType: '/waste-type',
   company: '/company',

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Status } from 'domain/enums';
 import type { WasteType } from 'domain/models/waste-type';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
@@ -22,7 +23,7 @@ export const useRegisterWasteType = ({
   const formData = useForm<WasteTypeRequest>({
     resolver: yupResolver(wasteTypeSchema),
     defaultValues: {
-      enabled: true
+      status: Status.ENABLED
     }
   });
 
@@ -39,7 +40,7 @@ export const useRegisterWasteType = ({
           body: data,
           route: apiPaths.wasteType
         });
-      toast.success(`Tipo de resíduo ${wasteType ? 'editado' : 'cadastrado'} com sucesso!`);
+      toast.success(`Tipo de refugo ${wasteType ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: [QueryName.wasteType] });
       closeModal();
     } catch (error) {

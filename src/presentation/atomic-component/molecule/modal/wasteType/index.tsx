@@ -21,7 +21,7 @@ export const WasteTypeModal: FC<WasteTypeModalProps> = ({ modal, openModalElemen
       openModal={openModal}
       size={'thin'}
       subtitle={''}
-      title={'Detalhes de tipo de resíduo'}
+      title={'Detalhes de tipo de refugo'}
     >
       <div className={'flex flex-col gap-4 '}>
         <div className={'flex flex-col gap-2'}>

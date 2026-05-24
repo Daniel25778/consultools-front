@@ -60,6 +60,7 @@ export const RegisterWasteTypeForm: FC<RegisterWasteTypeFormProps> = ({
           label={'Descrição'}
           name={'description'}
           maxRows={5}
+          minRows={4}
           placeholder={'Digite a descrição'}
           required
           multiline

@@ -10,13 +10,13 @@ import { Breadcrumbs } from 'presentation/atomic-component/molecule';
 import { RegisterCompanyModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
 import {
-  ProductList,
-  ResponsibleAreaList,
-  ShiftList,
-  StopReasonList,
-  WorkstationList
-} from 'presentation/atomic-component/organism';
+  ProductContent,
+  ResponsibleAreaContent,
+  ShiftContent,
+  WorkstationContent
+} from 'presentation/atomic-component/organism/content';
 import { CollaboratorContent } from 'presentation/atomic-component/organism/content/collaborator';
+import { StoppingReasonContent } from 'presentation/atomic-component/organism/content/stopping-reason';
 import { WasteTypeContent } from 'presentation/atomic-component/organism/content/waste-type';
 import { useEffect, useState, type FC } from 'react';
 import { useParams } from 'react-router-dom';
@@ -39,7 +39,7 @@ const TAB_OPTIONS: { title: string; value: TabType }[] = [
   { title: 'Tipos de refugo', value: 'WASTE_TYPE' },
   { title: 'Motivos de parada', value: 'STOP_REASON' },
   { title: 'Área responsável', value: 'RESPONSIBLE_AREA' },
-  { title: 'Apontamentos', value: 'SHIFT' }
+  { title: 'Turno', value: 'SHIFT' }
 ];
 
 export const CompanyContentDetails: FC = () => {
@@ -55,24 +55,23 @@ export const CompanyContentDetails: FC = () => {
   }, [companyQuery?.id]);
 
   const renderTabContent = () => {
-    const noop = () => {};
     switch (tabSelected) {
       case 'DASHBOARD':
         return <div></div>;
       case 'COLLABORATOR':
         return <CollaboratorContent />;
       case 'WORKSTATION':
-        return <WorkstationList setTotalElements={noop} />;
+        return <WorkstationContent />;
       case 'PRODUCT':
-        return <ProductList setTotalElements={noop} />;
+        return <ProductContent />;
       case 'WASTE_TYPE':
         return <WasteTypeContent />;
       case 'STOP_REASON':
-        return <StopReasonList setTotalElements={noop} />;
+        return <StoppingReasonContent />;
       case 'RESPONSIBLE_AREA':
-        return <ResponsibleAreaList setTotalElements={noop} />;
+        return <ResponsibleAreaContent />;
       case 'SHIFT':
-        return <ShiftList setTotalElements={noop} />;
+        return <ShiftContent />;
       default:
         return <div>Em breve...</div>;
     }

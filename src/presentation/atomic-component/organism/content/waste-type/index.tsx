@@ -24,7 +24,7 @@ export const WasteTypeContent: FC = () => {
         <SearchInputBase
           value={searchDebounce}
           onChange={(event) => setSearchDebounce(event.target.value)}
-          placeholder={'Buscar tipos de resíduo'}
+          placeholder={'Buscar tipos de refugo'}
         />
         <RegisterWasteTypeModal modal={modal} />
       </div>

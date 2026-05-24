@@ -28,7 +28,7 @@ export const RegisterWasteTypeModal: FC<RegisterWasteTypeModalProps> = ({ modal,
         ) : (
           <Button onClick={openModal} variant={'contained'} className={'gap-4'}>
             <Add className={'text-white'} />
-            <span>Novo tipo de resíduo</span>
+            <span>Novo tipo de refugo</span>
           </Button>
         )
       }
@@ -36,8 +36,8 @@ export const RegisterWasteTypeModal: FC<RegisterWasteTypeModalProps> = ({ modal,
       isOpen={isOpen}
       openModal={openModal}
       size={'small'}
-      subtitle={'Preencha as informações do tipo de resíduo.'}
-      title={wasteType ? 'Editar tipo de resíduo' : 'Novo tipo de resíduo'}
+      subtitle={'Preencha as informações do tipo de refugo.'}
+      title={wasteType ? 'Editar tipo de refugo' : 'Novo tipo de refugo'}
     >
       <RegisterWasteTypeForm closeModal={closeModal} wasteType={wasteType} />
     </Modal>

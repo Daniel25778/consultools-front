@@ -93,7 +93,8 @@ export const Select: FC<SelectProps> = ({
         closeText={'Fechar'}
         componentsProps={{
           clearIndicator: { id: `clear-indicator-${id}` },
-          popupIndicator: { id: `open-indicator-${id}` }
+          popupIndicator: { id: `open-indicator-${id}` },
+          popper: { sx: { zIndex: 14000000 } }
         }}
         disableClearable={props.isHideClearButton}
         disableCloseOnSelect={isMultiple}

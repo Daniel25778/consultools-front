@@ -43,7 +43,9 @@ export const FetchOnScroll: FC<FetchOnScrollProps> = ({
       )}
 
       {(isFetching || isFetchingNextPage) && (
-        <div className={'flex justify-center col-span-2 text-xl font-semibold'}>Buscando ...</div>
+        <div className={'flex text-primary justify-center col-span-2 text-xl font-semibold'}>
+          Buscando ...
+        </div>
       )}
     </div>
   );

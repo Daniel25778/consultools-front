@@ -28,12 +28,12 @@ export const WasteTypeCard: FC<WasteTypeCardProps> = ({ wasteType }) => {
           <RegisterWasteTypeModal wasteType={wasteType} modal={modalRegister} />
           <DeleteConfirmationModal
             id={wasteType.id}
-            title={'Remover tipo de resíduo'}
-            text={'Deseja realmente remover este tipo de resíduo?'}
+            title={'Remover tipo de refugo'}
+            text={'Deseja realmente remover este tipo de refugo?'}
             route={apiPaths.wasteType}
             queryName={QueryName.wasteType}
             color={'error'}
-            successMessage={'Tipo de resíduo removido com sucesso!'}
+            successMessage={'Tipo de refugo removido com sucesso!'}
           />
         </div>
       </div>

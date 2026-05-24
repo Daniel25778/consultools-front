@@ -3,10 +3,20 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   collaboratorFilterInitialState,
   companyFilterInitialState,
+  productFilterInitialState,
+  responsibleAreaFilterInitialState,
+  shiftFilterInitialState,
+  stoppingReasonFilterInitialState,
   wasteTypeFilterInitialState,
+  workstationFilterInitialState,
   type CollaboratorFilter,
   type CompanyFilter,
-  type WasteTypeFilter
+  type ProductFilter,
+  type ResponsibleAreaFilter,
+  type ShiftFilter,
+  type StoppingReasonFilter,
+  type WasteTypeFilter,
+  type WorkstationFilter
 } from 'domain/models';
 import { userFilterInitialState, type UserFilter } from 'domain/models/user';
 import type { Sort } from 'domain/protocol';
@@ -21,13 +31,23 @@ export interface FilterSliceState {
   user: UserFilter;
   company: CompanyFilter;
   collaborator: CollaboratorFilter;
+  workstation: WorkstationFilter;
+  responsibleArea: ResponsibleAreaFilter;
+  stoppingReason: StoppingReasonFilter;
+  shift: ShiftFilter;
+  product: ProductFilter;
   wasteType: WasteTypeFilter;
 }
 
 const initialState: FilterSliceState = {
   user: userFilterInitialState,
+  stoppingReason: stoppingReasonFilterInitialState,
   collaborator: collaboratorFilterInitialState,
+  workstation: workstationFilterInitialState,
+  shift: shiftFilterInitialState,
+  responsibleArea: responsibleAreaFilterInitialState,
   wasteType: wasteTypeFilterInitialState,
+  product: productFilterInitialState,
   company: companyFilterInitialState
 };
 
