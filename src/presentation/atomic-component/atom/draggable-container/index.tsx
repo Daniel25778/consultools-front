@@ -93,7 +93,7 @@ export const DraggableContainer: FC<DraggableContainerProps> = ({
       ref={scrollContainerRef}
       style={{ height: break2 && list.length >= break2 ? height * 2 : height }}
     >
-      {list?.map((item, index) => {
+      {list?.map((item) => {
         const item1 = list[index];
 
         if (break2 && list.length >= break2) {

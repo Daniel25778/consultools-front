@@ -2,7 +2,6 @@ import { api } from 'infra/http';
 import { queryClient } from 'infra/lib/react-query';
 import { resolverError } from 'main/utils';
 import type { Dispatch, SetStateAction } from 'react';
-import { toast } from 'react-toastify';
 
 interface useDeleteProps {
   id: number | string;
@@ -37,7 +36,7 @@ export const useDelete = ({
       else await api.delete({ id, route });
 
       await queryClient.invalidateQueries(queryName);
-      toast.success(successMessage);
+      callToast.success(successMessage);
       if (afterDelete) afterDelete();
       closeModal();
     } catch (error) {

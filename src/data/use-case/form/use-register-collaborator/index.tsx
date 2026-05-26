@@ -5,10 +5,9 @@ import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { apiPaths } from 'main/config';
-import { resolverError } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { collaboratorSchema, type CollaboratorRequest } from 'validation/schema/collaborator';
 
 interface useRegisterCollaboratorProps {
@@ -42,7 +41,7 @@ export const useRegisterCollaborator = ({
           body: data,
           route: apiPaths.collaborator
         });
-      toast.success(`Colaborador ${collaborator ? 'editado' : 'cadastrado'} com sucesso!`);
+      callToast.success(`Colaborador ${collaborator ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: ['collaborator'] });
       closeModal();
     } catch (error) {

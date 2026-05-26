@@ -1,0 +1,74 @@
+import { AccessTimeFilled, ArrowRightAlt, Leaderboard } from '@mui/icons-material';
+import type { ProductionReport } from 'domain/models';
+import { apiPaths } from 'main/config';
+import { formatCompactNumber, formatHour } from 'main/utils';
+import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation/delete';
+import type { FC } from 'react';
+import { StatusBadge } from '../../status-badge';
+
+interface ProductionReportCardProps {
+  productionReport: ProductionReport;
+  onClick: () => void;
+}
+
+export const ProductionReportCard: FC<ProductionReportCardProps> = ({
+  productionReport,
+  onClick
+}) => {
+  return (
+    <div
+      style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
+      className={'flex flex-col w-full tablet:min-w-[390px] gap-6 rounded p-4 bg-white'}
+    >
+      <div className={'flex justify-between items-start'}>
+        <div className={'flex flex-col gap-1'}>
+          <h3 className={'text-lg font-semibold text-primary'}>{productionReport.code}</h3>
+          <div className={'flex gap-2 items-center'}>
+            <span className={'flex text-sm font-semibold gap-1 text-gray-400'}>
+              <AccessTimeFilled sx={{ fontSize: '18px' }} />
+              <p>
+                {formatHour(productionReport.startTime)} - {formatHour(productionReport.endTime)}
+              </p>
+            </span>
+            <p className={'text-gray-400 text-base font-medium'}>•</p>
+            <span className={'flex text-sm font-semibold gap-1 text-gray-400'}>
+              <Leaderboard sx={{ fontSize: '18px' }} />
+              <p>
+                {formatCompactNumber(productionReport.production)}{' '}
+                {productionReport.production > 1 ? 'produzidos' : 'produzido'}
+              </p>
+            </span>
+          </div>
+        </div>
+        <div className={'flex gap-2'}>
+          <DeleteConfirmationModal
+            id={productionReport.id}
+            title={'Remover apontamento'}
+            text={'Deseja realmente remover o apontamento? Todos os dados serão perdidos.'}
+            route={apiPaths.productionReport}
+            queryName={'productionReport'}
+            color={'error'}
+            successMessage={'Apontamento removido com sucesso!'}
+          />
+        </div>
+      </div>
+      <div className={'flex justify-between items-center'}>
+        <StatusBadge
+          tooltipMessage={
+            'Você não finalizou o apontamento. Para completar a ação clique em "Ver detalhes" '
+          }
+          finished={productionReport.finishedAt !== null}
+        />
+        <div
+          onClick={onClick}
+          className={
+            'text-primary font-medium flex items-center justify-center gap-1 cursor-pointer'
+          }
+        >
+          <p>Ver Detalhes</p>
+          <ArrowRightAlt className={'text-primary'} />
+        </div>
+      </div>
+    </div>
+  );
+};

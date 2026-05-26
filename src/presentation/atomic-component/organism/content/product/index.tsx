@@ -1,24 +1,37 @@
-import { useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
-import { statusOptions } from 'domain/models';
+import { statusOptions, type Product } from 'domain/models';
+import { apiPaths, QueryName } from 'main/config';
 import { setFilter } from 'main/utils';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterProductModal } from 'presentation/atomic-component/molecule/modal';
-import { type FC, useEffect, useState } from 'react';
+import { useEffect, type FC } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 import { ProductList } from '../../list';
 
 export const ProductContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.product);
   const modal = useModal();
-  const [totalElements, setTotalElements] = useState(0);
+  const { id = '' } = useParams<{ id: string }>();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
   useEffect(() => {
     setFilter('product', {
       search
     });
   }, [search]);
+
+  const productQuery = useInfiniteScroll<Product>({
+    filters: {
+      status: status,
+      search: search,
+      companyId: id
+    },
+    limit: 20,
+    queryName: QueryName.product,
+    route: apiPaths.product
+  });
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
@@ -43,13 +56,13 @@ export const ProductContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end justify-between'}>
-        <p className={'hidden tablet:block text-gray-500 dark:text-gray-400'}>
-          Exibindo um total de {totalElements} resultado{totalElements > 1 ? 's' : ''}
-        </p>
-
-        <p className={'block tablet:hidden text-gray-500 dark:text-gray-400'}>
-          Total de {totalElements} {totalElements > 1 ? 'itens' : 'item'}
+      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
+        <p className={'text-gray-500 dark:text-gray-400'}>
+          Exibindo {productQuery.data?.length} de um total de{' '}
+          {productQuery.pagination?.totalElements}{' '}
+          {productQuery.pagination?.totalElements && productQuery.pagination?.totalElements > 1
+            ? 'itens'
+            : 'item'}
         </p>
         <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
           <Select
@@ -68,7 +81,7 @@ export const ProductContent: FC = () => {
           />
         </div>
       </div>
-      <ProductList setTotalElements={setTotalElements} />
+      <ProductList productQuery={productQuery} />
     </div>
   );
 };

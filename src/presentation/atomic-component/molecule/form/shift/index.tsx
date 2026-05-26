@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { useRegisterShift } from 'data/use-case';
 import type { Shift } from 'domain/models';
+import { timeOptions } from 'main/utils/time-options';
 import { SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
@@ -10,15 +11,6 @@ interface RegisterShiftFormProps {
   closeModal: () => void;
   shift?: Shift;
 }
-
-const timeOptions = Array.from({ length: 96 }).map((_, i) => {
-  const hour = Math.floor(i / 4)
-    .toString()
-    .padStart(2, '0');
-  const minute = ((i % 4) * 15).toString().padStart(2, '0');
-  const time = `${hour}:${minute}`;
-  return { label: time, value: time };
-});
 
 export const RegisterShiftForm: FC<RegisterShiftFormProps> = ({ closeModal, shift }) => {
   const {

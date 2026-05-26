@@ -1,8 +1,9 @@
 export interface Pagination {
-  page: number;
+  elements: number;
   limit: number;
-  total_elements: number;
-  total_pages: number;
+  page: number;
+  totalElements: number;
+  totalPages: number;
 }
 
 export interface FilterPagination {

@@ -52,20 +52,16 @@ export const Select: FC<SelectProps> = ({
   id,
   ...props
 }) => {
-  const random = String(Math.random() * 10).replace('.', '-');
+  const [random] = useState(() => String(Math.random() * 10).replace('.', '-'));
   const [selectAll, setSelectAll] = useState(false);
 
-  const handleScroll = (): void => {
+  const handleScroll = (event: React.UIEvent<HTMLUListElement>): void => {
     if (props.query) {
-      const element = document.getElementById(`select-scroll-${id}-${random}`);
+      const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+      const isScrolledToBottom = scrollHeight - scrollTop <= clientHeight + 50;
 
-      if (element) {
-        const { scrollTop, clientHeight, scrollHeight } = element;
-        const isScrolledToBottom = scrollTop + clientHeight >= scrollHeight - 10;
-
-        if (isScrolledToBottom && props.query.hasNextPage && !props.query.isFetchingNextPage)
-          props.query.fetchNextPage();
-      }
+      if (isScrolledToBottom && props.query.hasNextPage && !props.query.isFetchingNextPage)
+        props.query.fetchNextPage();
     }
   };
 
@@ -81,12 +77,7 @@ export const Select: FC<SelectProps> = ({
       <Autocomplete
         ListboxProps={{
           id: `select-scroll-${id}-${random}`,
-          onMouseLeave(event): void {
-            event.target.removeEventListener('scroll', handleScroll);
-          },
-          onScroll(event): void {
-            event.target.addEventListener('scroll', handleScroll);
-          },
+          onScroll: handleScroll,
           style: { maxHeight: '300px' }
         }}
         clearText={'Limpar'}

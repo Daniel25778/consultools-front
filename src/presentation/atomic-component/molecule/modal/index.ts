@@ -4,6 +4,7 @@ export * from './product';
 export * from './register-company';
 export * from './register-consultant';
 export * from './register-product';
+export * from './register-production-report';
 export * from './register-responsible-area';
 export * from './register-shift';
 export * from './register-stopping-reason';

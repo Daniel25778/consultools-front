@@ -6,16 +6,11 @@ import type { MeasurementUnit } from '../measurement';
 export interface FindProductQuery extends Pagination {
   content: Product[];
 }
-
-export interface ProductDetails extends Product {
-  measurementUnit: MeasurementUnit;
-}
-
 export interface Product {
   id: string;
   name: string;
   status: Status;
-  measurementUnitId: string;
+  measurementUnit: MeasurementUnit;
   userId: string;
   createdAt: string;
   updatedAt: string;

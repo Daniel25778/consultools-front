@@ -1,17 +1,28 @@
-import { useModal } from 'data/hooks';
+import { useInfiniteScroll, useModal } from 'data/hooks';
 import { Status } from 'domain/enums';
-import { companyStatusOptions } from 'domain/models';
+import { companyStatusOptions, type Company } from 'domain/models';
+import { apiPaths } from 'main/config/paths';
+import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { RegisterCompanyModal } from 'presentation/atomic-component/molecule/modal';
 import { CompanyList } from 'presentation/atomic-component/organism';
-import { type FC, useState } from 'react';
+import { type FC } from 'react';
 import { useAppSelector } from 'store/index';
 
 export const CompanyContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.company);
   const modal = useModal();
-  const [totalElements, setTotalElements] = useState(0);
+  const { user } = useAppSelector((state) => state.persist);
+  const companyQuery = useInfiniteScroll<Company>({
+    filters: {
+      status: status,
+      userId: user?.id
+    },
+    limit: 20,
+    queryName: QueryName.company,
+    route: apiPaths.company
+  });
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
       <div className={'w-full flex items-center justify-between'}>
@@ -25,13 +36,13 @@ export const CompanyContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end justify-between'}>
-        <p className={'hidden tablet:block text-gray-500 dark:text-gray-400'}>
-          Exibindo um total de {totalElements} resultado{totalElements > 1 ? 's' : ''}
-        </p>
-
-        <p className={'block tablet:hidden text-gray-500 dark:text-gray-400'}>
-          Total de {totalElements} {totalElements > 1 ? 'itens' : 'item'}
+      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
+        <p className={'text-gray-500 dark:text-gray-400'}>
+          Exibindo {companyQuery.data?.length} de um total de{' '}
+          {companyQuery.pagination?.totalElements}{' '}
+          {companyQuery.pagination?.totalElements && companyQuery.pagination?.totalElements > 1
+            ? 'itens'
+            : 'item'}
         </p>
         <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
           <Select
@@ -50,7 +61,7 @@ export const CompanyContent: FC = () => {
           />
         </div>
       </div>
-      <CompanyList setTotalElements={setTotalElements} />
+      <CompanyList companyQuery={companyQuery} />
     </div>
   );
 };

@@ -12,12 +12,14 @@ interface SelectControllerProps<T extends FieldValues> {
   isLoading?: boolean;
   labelTop?: string;
   width?: number | string;
+  query?: any;
 }
 
 export const SelectController = <T extends FieldValues>({
   control,
   name,
   options,
+  query,
   ...props
 }: SelectControllerProps<T>) => {
   return (
@@ -26,10 +28,11 @@ export const SelectController = <T extends FieldValues>({
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         const getValue = () => {
+          const currentOptions = options || [];
           if (props.isMultiple) {
-            return options.filter((option) => (value as string[])?.includes(option.value));
+            const valuesArray = Array.isArray(value) ? value : [];
           }
-          return options.find((option) => option.value === value) ?? null;
+          return currentOptions.find((option) => option.value === value) ?? null;
         };
 
         return (
@@ -45,6 +48,7 @@ export const SelectController = <T extends FieldValues>({
             }}
             options={options}
             value={getValue()}
+            query={query}
           />
         );
       }}

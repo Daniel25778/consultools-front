@@ -29,6 +29,7 @@ type TabType =
   | 'WASTE_TYPE'
   | 'STOP_REASON'
   | 'RESPONSIBLE_AREA'
+  | 'PRODUCTION_REPORT'
   | 'SHIFT';
 
 const TAB_OPTIONS: { title: string; value: TabType }[] = [
@@ -39,10 +40,11 @@ const TAB_OPTIONS: { title: string; value: TabType }[] = [
   { title: 'Tipos de refugo', value: 'WASTE_TYPE' },
   { title: 'Motivos de parada', value: 'STOP_REASON' },
   { title: 'Área responsável', value: 'RESPONSIBLE_AREA' },
+  { title: 'Apontamento', value: 'PRODUCTION_REPORT' },
   { title: 'Turno', value: 'SHIFT' }
 ];
 
-export const CompanyContentDetails: FC = () => {
+export const CompanyDetails: FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const companyQuery = useFindOneCompanyQuery({ id }).data;
   const modal = useModal();
@@ -71,6 +73,8 @@ export const CompanyContentDetails: FC = () => {
       case 'RESPONSIBLE_AREA':
         return <ResponsibleAreaContent />;
       case 'SHIFT':
+        return <ShiftContent />;
+      case 'PRODUCTION_REPORT':
         return <ShiftContent />;
       default:
         return <div>Em breve...</div>;

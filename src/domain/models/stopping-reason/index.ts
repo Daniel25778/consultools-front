@@ -6,11 +6,6 @@ import type { ResponsibleArea } from '../responsible-area';
 export interface FindStoppingReasonQuery extends Pagination {
   content: StoppingReason[];
 }
-
-export interface StoppingReasonDetails extends StoppingReason {
-  responsibleArea: ResponsibleArea;
-}
-
 export interface StoppingReason {
   id: string;
   name: string;
@@ -19,7 +14,7 @@ export interface StoppingReason {
   description: string;
   companyId: string;
   nature: Nature;
-  responsibleAreaId: string;
+  responsibleArea: ResponsibleArea;
   createdAt: string;
   updatedAt: string;
 }

@@ -29,18 +29,18 @@ export const PrivateHeader: FC = () => {
       path: paths.company,
       placeholder: 'Buscar empresas...'
     },
-    [Role.COLABORATOR]: {
-      queryName: QueryName.company,
-      route: apiPaths.company,
-      path: paths.company,
-      placeholder: 'Buscar empresas...'
+    [Role.COLLABORATOR]: {
+      queryName: QueryName.productionReport,
+      route: apiPaths.productionReport,
+      path: paths.productionReport,
+      placeholder: 'Buscar apontamentos...'
     }
   }[user.role];
 
   return (
     <header
       className={
-        'flex flex-row justify-between items-center z-[9999] top-0 header sticky tablet:flex  h-auto laptop: w-full'
+        'flex flex-row justify-between items-center z-[1200] top-0 header sticky tablet:flex  h-auto laptop: w-full'
       }
     >
       <div className={'flex flex-col w-full'}>
@@ -79,7 +79,7 @@ export const PrivateHeader: FC = () => {
           <img
             onClick={() => navigate(roleRoutes[user.role])}
             alt={'Logo'}
-            className={'h-6 tablet:h-5'}
+            className={'h-6 tablet:h-5 cursor-pointer'}
             src={Logo}
           />
           <SearchInput

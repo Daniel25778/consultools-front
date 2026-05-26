@@ -4,7 +4,8 @@ export enum routePaths {
   consultantDetails = '/consultor/:id',
   companyDetails = '/empresa/:id',
   company = '/empresa',
-  notation = '/apontamento',
+  productionReport = '/apontamento',
+  productionReportDetails = '/apontamento/:id',
   requestCode = '/solicitar-codigo',
   enterCode = '/inserir-codigo',
   changePassword = '/alterar-senha'
@@ -15,8 +16,9 @@ export const paths = {
   consultant: '/consultor',
   consultantDetails: (id: number | string): string => `/consultor/${id}`,
   companyDetails: (id: number | string): string => `/empresa/${id}`,
+  productionReportDetails: (id: number | string): string => `/apontamento/${id}`,
+  productionReport: '/apontamento',
   company: '/empresa',
-  notation: '/apontamento',
   requestCode: '/solicitar-codigo',
   enterCode: '/inserir-codigo',
   changePassword: '/alterar-senha'
@@ -26,6 +28,7 @@ export const apiPaths = {
   default: '/default',
   login: '/login',
   workstation: '/workstation',
+  productionReport: '/production-reporting',
   shift: '/shift',
   stoppingReason: '/stopping-reason',
   responsibleArea: '/responsible-area',

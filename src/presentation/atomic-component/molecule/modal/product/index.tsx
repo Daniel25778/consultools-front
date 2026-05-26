@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import { type useModalProps } from 'data/hooks';
 import { Status, statusTranslate } from 'domain/enums';
 import type { Product } from 'domain/models';
-import { useFindOneProductQuery } from 'infra/cache';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import type { FC } from 'react';
 
@@ -14,8 +13,6 @@ interface ProductModalProps {
 
 export const ProductModal: FC<ProductModalProps> = ({ modal, openModalElement, product }) => {
   const { closeModal, isOpen, openModal } = modal;
-
-  const productDetailsQuery = useFindOneProductQuery({ id: product.id }).data;
 
   return (
     <Modal
@@ -31,23 +28,23 @@ export const ProductModal: FC<ProductModalProps> = ({ modal, openModalElement, p
         <div className={'flex flex-col gap-2'}>
           <h1 className={'text-primary font-semibold'}>Status</h1>
           <p
-            className={`${productDetailsQuery?.status === Status.ENABLED ? 'text-dark-green' : 'text-gray-400'} text-base font-medium`}
+            className={`${product?.status === Status.ENABLED ? 'text-dark-green' : 'text-gray-400'} text-base font-medium`}
           >
-            {statusTranslate[productDetailsQuery?.status ?? Status.DISABLED]}
+            {statusTranslate[product?.status ?? Status.DISABLED]}
           </p>
         </div>
         <div className={'flex flex-col gap-2'}>
           <h1 className={'text-primary font-semibold'}>Nome</h1>
-          <p>{productDetailsQuery?.name}</p>
+          <p>{product?.name}</p>
         </div>
 
         <div className={'flex flex-col gap-2'}>
           <h1 className={'text-primary font-semibold'}>Unidade de medida</h1>
-          <p>{productDetailsQuery?.measurementUnit.name}</p>
+          <p>{product?.measurementUnit.name}</p>
         </div>
         <div className={'flex flex-col gap-2'}>
           <h1 className={'text-primary font-semibold'}>Descrição</h1>
-          <p>{productDetailsQuery?.description}</p>
+          <p>{product?.description}</p>
         </div>
       </div>
       <div

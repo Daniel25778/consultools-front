@@ -4,6 +4,7 @@ export * from './use-register-collaborator';
 export * from './use-register-company';
 export * from './use-register-consultant';
 export * from './use-register-product';
+export * from './use-register-production-report';
 export * from './use-register-responsible-area';
 export * from './use-register-shift';
 export * from './use-register-stopping-reason';

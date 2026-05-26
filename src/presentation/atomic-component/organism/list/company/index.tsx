@@ -1,38 +1,22 @@
-import { useInfiniteScroll } from 'data/hooks';
+import type { useInfiniteScroll } from 'data/hooks';
 import type { Company } from 'domain/models';
-import { QueryName, apiPaths, paths } from 'main/config';
+import { paths } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
+import { CardSkeleton } from 'presentation/atomic-component/atom/card';
 import { CompanyCard } from 'presentation/atomic-component/atom/card/company';
-import { type Dispatch, type FC, type SetStateAction, useEffect } from 'react';
+import { type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from 'store/index';
 
 interface CompanyListProps {
-  setTotalElements: Dispatch<SetStateAction<number>>;
+  companyQuery: ReturnType<typeof useInfiniteScroll<Company>>;
 }
 
-export const CompanyList: FC<CompanyListProps> = ({ setTotalElements }) => {
-  const { status, userId, search } = useAppSelector((state) => state.filter.company);
+export const CompanyList: FC<CompanyListProps> = ({ companyQuery }) => {
   const navigate = useNavigate();
-
-  const companyQuery = useInfiniteScroll<Company>({
-    filters: {
-      status: status ? [status] : undefined,
-      userId: userId ? [userId] : undefined,
-      search: search ? [search] : undefined
-    },
-    limit: 10,
-    queryName: QueryName.company,
-    route: apiPaths.company
-  });
-
-  useEffect(() => {
-    setTotalElements(companyQuery.data?.length ?? 0);
-  }, [companyQuery.data, setTotalElements]);
 
   return (
     <div className={'flex w-full flex-col'}>
-      <FetchOnScroll query={companyQuery}>
+      <FetchOnScroll skeleton={<CardSkeleton />} query={companyQuery}>
         <div
           style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
           className={'grid gap-[18px]'}

@@ -2,6 +2,7 @@ export * from './change-password';
 export * from './company';
 export * from './login';
 export * from './product';
+export * from './production-report';
 export * from './request-code';
 export * from './responsible-area';
 export * from './shift';

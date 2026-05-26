@@ -1,24 +1,37 @@
-import { useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
-import { companyStatusOptions } from 'domain/models';
+import { companyStatusOptions, type Collaborator } from 'domain/models';
+import { apiPaths } from 'main/config/paths';
+import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterCollaboratorModal } from 'presentation/atomic-component/molecule/modal/register-collaborator';
 import { CollaboratorList } from 'presentation/atomic-component/organism';
-import { type FC, useEffect, useState } from 'react';
+import { useEffect, type FC } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 
 export const CollaboratorContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.collaborator);
   const modal = useModal();
-  const [totalElements, setTotalElements] = useState(0);
   const { search, setSearchDebounce, searchDebounce } = useSearch();
   useEffect(() => {
     setFilter('collaborator', {
       search
     });
   }, [search]);
+  const { id = '' } = useParams<{ id: string }>();
+  const collaboratorQuery = useInfiniteScroll<Collaborator>({
+    filters: {
+      status: status,
+      search: search,
+      companyId: id
+    },
+    limit: 20,
+    queryName: QueryName.collaborator,
+    route: apiPaths.collaborator
+  });
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
@@ -43,13 +56,14 @@ export const CollaboratorContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end justify-between'}>
-        <p className={'hidden tablet:block text-gray-500 dark:text-gray-400'}>
-          Exibindo um total de {totalElements} resultado{totalElements > 1 ? 's' : ''}
-        </p>
-
-        <p className={'block tablet:hidden text-gray-500 dark:text-gray-400'}>
-          Total de {totalElements} {totalElements > 1 ? 'itens' : 'item'}
+      <div className={'flex flex-col-reverse gap-4 items-end justify-between tablet:flex-row'}>
+        <p className={'text-gray-500 dark:text-gray-400'}>
+          Exibindo {collaboratorQuery.data?.length} de um total de{' '}
+          {collaboratorQuery.pagination?.totalElements}{' '}
+          {collaboratorQuery.pagination?.totalElements &&
+          collaboratorQuery.pagination?.totalElements > 1
+            ? 'itens'
+            : 'item'}
         </p>
         <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
           <Select
@@ -68,7 +82,7 @@ export const CollaboratorContent: FC = () => {
           />
         </div>
       </div>
-      <CollaboratorList setTotalElements={setTotalElements} />
+      <CollaboratorList collaboratorQuery={collaboratorQuery} />
     </div>
   );
 };

@@ -5,10 +5,9 @@ import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { apiPaths } from 'main/config';
-import { resolverError } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { stoppingReasonSchema, type StoppingReasonRequest } from 'validation/schema';
 
 interface useRegisterStoppingReasonProps {
@@ -42,7 +41,9 @@ export const useRegisterStoppingReason = ({
           body: data,
           route: apiPaths.stoppingReason
         });
-      toast.success(`Motivo de parada ${stoppingReason ? 'editado' : 'cadastrado'} com sucesso!`);
+      callToast.success(
+        `Motivo de parada ${stoppingReason ? 'editado' : 'cadastrado'} com sucesso!`
+      );
       queryClient.invalidateQueries({ queryKey: ['stoppingReason'] });
       closeModal();
     } catch (error) {

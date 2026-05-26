@@ -36,7 +36,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   isLoading,
   type,
   confirmText,
-  openElement,
+  openElement
 }) => {
   const { closeModal, isOpen, openModal } = useModal();
   const getButtonType = (): 'error' | 'primary' => {
@@ -70,11 +70,7 @@ export const ActionModal: FC<ActionModalProps> = ({
             'flex flex-col tablet:flex-row gap-4 w-full justify-center tablet:items-center mt-2'
           }
         >
-          <Button
-            className={'flex-grow'}
-            color={'info'}
-            onClick={modal?.closeModal ?? closeModal}
-          >
+          <Button className={'flex-grow'} color={'info'} onClick={modal?.closeModal ?? closeModal}>
             Cancelar
           </Button>
 
@@ -89,7 +85,7 @@ export const ActionModal: FC<ActionModalProps> = ({
               else closeModal();
             }}
             sx={{
-              padding: type === 'error' ? '8px' : undefined,
+              padding: type === 'error' ? '8px' : undefined
             }}
             type={'button'}
           >
@@ -99,8 +95,8 @@ export const ActionModal: FC<ActionModalProps> = ({
                   size={24}
                   sx={{
                     svg: {
-                      color: `${colors.white} !important`,
-                    },
+                      color: `${colors.white} !important`
+                    }
                   }}
                   thickness={5}
                 />

@@ -35,8 +35,8 @@ export const RegisterStoppingReasonForm: FC<RegisterStoppingReasonFormProps> = (
 
   useEffect(() => {
     setValue('companyId', companyId);
-    setValue('responsibleAreaId', stoppingReason?.responsibleAreaId ?? '');
-  }, [setValue, companyId, stoppingReason?.responsibleAreaId]);
+    setValue('responsibleAreaId', stoppingReason?.responsibleArea?.id ?? '');
+  }, [setValue, companyId, stoppingReason?.responsibleArea?.id]);
 
   return (
     <form className={'flex flex-col gap-5 w-full'} onSubmit={handleSubmit(onSubmit)}>

@@ -11,7 +11,7 @@ import { CompanyContent } from 'presentation/environment/company';
 import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
 
-export const ConsultantContentDetails: FC = () => {
+export const ConsultantDetails: FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const userQuery = useFindOneUserQuery({ id }).data;
   const modal = useModal();

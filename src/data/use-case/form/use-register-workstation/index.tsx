@@ -5,10 +5,9 @@ import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { apiPaths } from 'main/config';
-import { resolverError } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { workstationSchema, type WorkstationRequest } from 'validation/schema/workstation';
 
 interface useRegisterWorkstationProps {
@@ -42,7 +41,7 @@ export const useRegisterWorkstation = ({
           body: data,
           route: apiPaths.workstation
         });
-      toast.success(`Posto de trabalho ${workstation ? 'editado' : 'cadastrado'} com sucesso!`);
+      callToast.success(`Posto de trabalho ${workstation ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: ['workstation'] });
       closeModal();
     } catch (error) {

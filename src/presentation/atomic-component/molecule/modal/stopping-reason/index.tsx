@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import { type useModalProps } from 'data/hooks';
 import { Nature, natureTranslate, Status, statusTranslate } from 'domain/enums';
 import type { StoppingReason } from 'domain/models';
-import { useFindOneStoppingReasonQuery } from 'infra/cache/queries/stopping-reason';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import type { FC } from 'react';
 
@@ -19,8 +18,6 @@ export const StoppingReasonModal: FC<StoppingReasonModalProps> = ({
 }) => {
   const { closeModal, isOpen, openModal } = modal;
 
-  const stoppingReasonDetailsQuery = useFindOneStoppingReasonQuery({ id: stoppingReason.id }).data;
-
   return (
     <Modal
       openModalElement={openModalElement}
@@ -36,34 +33,34 @@ export const StoppingReasonModal: FC<StoppingReasonModalProps> = ({
           <div className={'flex flex-col gap-2 w-full'}>
             <h1 className={'text-primary font-semibold'}>Status</h1>
             <p
-              className={`${stoppingReasonDetailsQuery?.status === Status.ENABLED ? 'text-dark-green' : 'text-gray-400'} text-base line-clamp-1 font-medium`}
+              className={`${stoppingReason?.status === Status.ENABLED ? 'text-dark-green' : 'text-gray-400'} text-base line-clamp-1 font-medium`}
             >
-              {statusTranslate[stoppingReasonDetailsQuery?.status ?? Status.DISABLED]}
+              {statusTranslate[stoppingReason?.status ?? Status.DISABLED]}
             </p>
           </div>
           <div className={'flex flex-col gap-2 w-full'}>
             <h1 className={'text-primary font-semibold'}>Nome</h1>
-            <p title={stoppingReasonDetailsQuery?.name} className={'line-clamp-1'}>
-              {stoppingReasonDetailsQuery?.name}
+            <p title={stoppingReason?.name} className={'line-clamp-1'}>
+              {stoppingReason?.name}
             </p>
           </div>
         </div>
         <div className={'flex gap-10'}>
           <div className={'flex flex-col gap-2 w-full'}>
             <h1 className={'text-primary font-semibold'}>Natureza</h1>
-            <p>{natureTranslate[stoppingReasonDetailsQuery?.nature ?? Nature.PLANNED]}</p>
+            <p>{natureTranslate[stoppingReason?.nature ?? Nature.PLANNED]}</p>
           </div>
           <div className={'flex flex-col gap-2 w-full'}>
             <h1 className={'text-primary font-semibold'}>Área responsável</h1>
-            <p className={'line-clamp-1'} title={stoppingReasonDetailsQuery?.responsibleArea?.name}>
-              {stoppingReasonDetailsQuery?.responsibleArea.name}
+            <p className={'line-clamp-1'} title={stoppingReason?.responsibleArea?.name}>
+              {stoppingReason?.responsibleArea.name}
             </p>
           </div>
         </div>
         <div className={'flex flex-col gap-2'}>
           <h1 className={'text-primary font-semibold'}>Descrição</h1>
-          <p title={stoppingReasonDetailsQuery?.description} className={'line-clamp-5'}>
-            {stoppingReasonDetailsQuery?.description}
+          <p title={stoppingReason?.description} className={'line-clamp-5'}>
+            {stoppingReason?.description}
           </p>
         </div>
       </div>

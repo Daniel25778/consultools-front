@@ -79,14 +79,15 @@ export const useInfiniteScroll = <T>({
 
     const item1 = data?.pages?.[0] as unknown as {
       content: T[];
-      total_elements: number;
-      total_pages: number;
-    };
+    } & Partial<Pagination>;
 
-    if (typeof item1?.total_elements === 'number' && typeof item1?.total_pages === 'number')
+    if (typeof item1?.totalElements === 'number' && typeof item1?.totalPages === 'number')
       setPagination({
-        total_elements: item1?.total_elements,
-        total_pages: item1?.total_pages
+        elements: item1.elements,
+        limit: item1.limit,
+        page: item1.page,
+        totalElements: item1.totalElements,
+        totalPages: item1.totalPages
       });
 
     setNewData(items);

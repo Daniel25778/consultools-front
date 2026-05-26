@@ -1,36 +1,20 @@
-import { useInfiniteScroll } from 'data/hooks';
+import type { useInfiniteScroll } from 'data/hooks';
 import type { User } from 'domain/models';
-import { QueryName, apiPaths, paths } from 'main/config';
+import { paths } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
-import { ConsultantCard } from 'presentation/atomic-component/atom/card';
-import { type Dispatch, type FC, type SetStateAction, useEffect } from 'react';
+import { CardSkeleton, ConsultantCard } from 'presentation/atomic-component/atom/card';
+import { type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from 'store/index';
 
 interface ConsultantListProps {
-  setTotalElements: Dispatch<SetStateAction<number>>;
+  userQuery: ReturnType<typeof useInfiniteScroll<User>>;
 }
 
-export const ConsultantList: FC<ConsultantListProps> = ({ setTotalElements }) => {
-  const { status } = useAppSelector((state) => state.filter.user);
+export const ConsultantList: FC<ConsultantListProps> = ({ userQuery }) => {
   const navigate = useNavigate();
-
-  const userQuery = useInfiniteScroll<User>({
-    filters: {
-      status: status ? [status] : undefined
-    },
-    limit: 10,
-    queryName: QueryName.user,
-    route: apiPaths.user
-  });
-
-  useEffect(() => {
-    setTotalElements(userQuery.data?.length ?? 0);
-  }, [userQuery.data, setTotalElements]);
-
   return (
     <div className={'flex w-full flex-col'}>
-      <FetchOnScroll query={userQuery}>
+      <FetchOnScroll skeleton={<CardSkeleton />} query={userQuery}>
         <div
           style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))' }}
           className={'grid gap-[18px]'}

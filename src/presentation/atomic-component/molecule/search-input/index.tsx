@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface SearchData {
   id: string;
+  code?: string;
   name?: string;
   title?: string;
   email?: string;
@@ -34,7 +35,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
   const query = useInfiniteScroll<SearchData>({
     filters: { search },
-    limit: 10,
+    limit: 20,
     queryName,
     route
   });
@@ -45,6 +46,8 @@ export const SearchInput: FC<SearchInputProps> = ({
         return <Person sx={{ color: colors.gray[400] }} />;
       case QueryName.company:
         return <Business sx={{ color: colors.gray[400] }} />;
+      case QueryName.productionReport:
+        return <Description sx={{ color: colors.gray[400] }} />;
       default:
         return <Description sx={{ color: colors.gray[400] }} />;
     }
@@ -112,7 +115,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                     <div className={'flex-shrink-0'}>{getIcon()}</div>
                     <div className={'flex flex-col overflow-hidden'}>
                       <span className={'font-medium text-sm text-gray-900 truncate'}>
-                        {item.name || 'Sem nome'}
+                        {item.name || item.code || 'Sem nome'}
                       </span>
                       <span className={'text-xs text-gray-500 truncate'}>
                         {item.email || item.cnpj || item.description || ''}

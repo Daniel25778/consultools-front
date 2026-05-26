@@ -5,13 +5,16 @@ import type { FC, ReactNode } from 'react';
 interface FetchOnScrollProps {
   query: useInfiniteScrollReturnProps;
   children: ReactNode;
+  skeleton?: ReactNode;
+  skeletonCount?: number;
   className?: string;
 }
 
 export const FetchOnScroll: FC<FetchOnScrollProps> = ({
   query: { isFetchingNextPage, hasNextPage, fetchNextPage, error, isFetching, data },
   children,
-  className
+  className,
+  skeleton
 }) => {
   const isEmpty = !isFetching && !isFetchingNextPage && !error && data?.length === 0;
 
@@ -41,12 +44,8 @@ export const FetchOnScroll: FC<FetchOnScrollProps> = ({
           isFetchingNextPage={isFetchingNextPage}
         />
       )}
-
-      {(isFetching || isFetchingNextPage) && (
-        <div className={'flex text-primary justify-center col-span-2 text-xl font-semibold'}>
-          Buscando ...
-        </div>
-      )}
+      {(isFetching || isFetchingNextPage) &&
+        (skeleton || <div className={'w-full animate-pulse h-20 rounded bg-gray-200'} />)}
     </div>
   );
 };

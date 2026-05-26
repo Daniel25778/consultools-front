@@ -7,11 +7,13 @@ import {
   ChangePasswordContent,
   ConsultantContent,
   EnterCodeContent,
+  ProductionReportContent,
+  ProductionReportDetails,
   RequestCodeContent
 } from 'presentation/environment';
-import { CompanyContentDetails } from 'presentation/environment/company';
+import { CompanyDetails } from 'presentation/environment/company';
 import { CompanyContent } from 'presentation/environment/company/content';
-import { ConsultantContentDetails } from 'presentation/environment/consultant';
+import { ConsultantDetails } from 'presentation/environment/consultant';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
@@ -34,9 +36,14 @@ const RouterConfig: FC = () => (
         <Route element={<PrivateRoute />}>
           <Route element={<MainTemplate />}>
             <Route element={<ConsultantContent />} path={routePaths.consultant} />
-            <Route element={<ConsultantContentDetails />} path={routePaths.consultantDetails} />
+            <Route element={<ConsultantDetails />} path={routePaths.consultantDetails} />
             <Route element={<CompanyContent />} path={routePaths.company} />
-            <Route element={<CompanyContentDetails />} path={routePaths.companyDetails} />
+            <Route element={<CompanyDetails />} path={routePaths.companyDetails} />
+            <Route element={<ProductionReportContent />} path={routePaths.productionReport} />
+            <Route
+              element={<ProductionReportDetails />}
+              path={routePaths.productionReportDetails}
+            />
             {/*  */}
             {/*  */}
           </Route>

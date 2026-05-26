@@ -1,3 +1,4 @@
+import { AccessTimeFilled } from '@mui/icons-material';
 import { useModal } from 'data/hooks';
 import type { Shift } from 'domain/models';
 import { apiPaths, QueryName } from 'main/config';
@@ -26,19 +27,24 @@ export const ShiftCard: FC<ShiftCardProps> = ({ shift }) => {
           <RegisterShiftModal shift={shift} modal={modal} />
           <DeleteConfirmationModal
             id={shift.id}
-            title={'Remover tipo de refugo'}
-            text={'Deseja realmente remover este tipo de refugo?'}
+            title={'Remover turno'}
+            text={'Deseja realmente remover este turno?'}
             route={apiPaths.shift}
             queryName={QueryName.shift}
             color={'error'}
-            successMessage={'Tipo de refugo removido com sucesso!'}
+            successMessage={'Turno removido com sucesso!'}
           />
         </div>
       </div>
       <div className={'flex justify-between items-center'}>
         <StatusBadge status={shift.status} />
-        <span className={'text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-500'}>
-          {formatHour(shift.startTime)} - {formatHour(shift.endTime)}
+        <span
+          className={' flex text-sm font-bold bg-gray-100 px-2 py-1 rounded gap-1 text-gray-500'}
+        >
+          <AccessTimeFilled sx={{ fontSize: '18px' }} />
+          <p>
+            {formatHour(shift.startTime)} - {formatHour(shift.endTime)}
+          </p>
         </span>
       </div>
     </div>

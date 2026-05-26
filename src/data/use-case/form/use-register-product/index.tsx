@@ -5,10 +5,9 @@ import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { apiPaths } from 'main/config';
-import { resolverError } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { productSchema, type ProductRequest } from 'validation/schema';
 
 interface useRegisterProductProps {
@@ -42,7 +41,7 @@ export const useRegisterProduct = ({
           body: data,
           route: apiPaths.product
         });
-      toast.success(`Produto ${product ? 'editado' : 'cadastrado'} com sucesso!`);
+      callToast.success(`Produto ${product ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: ['product'] });
       closeModal();
     } catch (error) {

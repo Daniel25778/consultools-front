@@ -2,6 +2,7 @@ export * from './collaborator';
 export * from './company';
 export * from './company-status';
 export * from './product';
+export * from './production-report';
 export * from './responsible-area';
 export * from './shift';
 export * from './status';

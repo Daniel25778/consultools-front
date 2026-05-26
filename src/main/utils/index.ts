@@ -5,6 +5,7 @@ export * from './click-element-by-id';
 export * from './close-modal';
 export * from './convert-list';
 export * from './filter';
+export * from './format-compact-number';
 export * from './format-date';
 export * from './format-number';
 export * from './format-share-data';
@@ -27,3 +28,4 @@ export * from './update-hash';
 export * from './validate';
 export * from './void-function';
 export * from './yup';
+

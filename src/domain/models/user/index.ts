@@ -18,6 +18,7 @@ export interface User {
   email: string;
   cpf: string;
   phone: string;
+  companyId: string;
   imageUrl: string;
   status: Status;
   createdAt: string;

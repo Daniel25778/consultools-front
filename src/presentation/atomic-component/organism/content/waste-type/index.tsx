@@ -1,18 +1,32 @@
-import { useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import type { WasteType } from 'domain/models/waste-type';
+import { apiPaths } from 'main/config/paths';
+import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
 import { SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterWasteTypeModal } from 'presentation/atomic-component/molecule/modal/register-waste-type';
 import { WasteTypeList } from 'presentation/atomic-component/organism/list/waste-type';
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export const WasteTypeContent: FC = () => {
   const modal = useModal();
-  const [totalElements, setTotalElements] = useState(0);
   const { search, setSearchDebounce, searchDebounce } = useSearch();
+  const { id = '' } = useParams<{ id: string }>();
 
   useEffect(() => {
     setFilter('wasteType', { search });
   }, [search]);
+
+  const wasteTypeQuery = useInfiniteScroll<WasteType>({
+    filters: {
+      companyId: id,
+      search: search
+    },
+    limit: 20,
+    queryName: QueryName.wasteType,
+    route: apiPaths.wasteType
+  });
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800 rounded-md flex'}>
@@ -28,12 +42,16 @@ export const WasteTypeContent: FC = () => {
         />
         <RegisterWasteTypeModal modal={modal} />
       </div>
-      <div className={'flex items-end justify-between'}>
+      <div className={'flex items-end'}>
         <p className={'text-gray-500 dark:text-gray-400'}>
-          Exibindo um total de {totalElements} resultado{totalElements !== 1 ? 's' : ''}
+          Exibindo {wasteTypeQuery.data?.length} de um total de{' '}
+          {wasteTypeQuery.pagination?.totalElements}{' '}
+          {wasteTypeQuery.pagination?.totalElements && wasteTypeQuery.pagination?.totalElements > 1
+            ? 'itens'
+            : 'item'}
         </p>
       </div>
-      <WasteTypeList setTotalElements={setTotalElements} />
+      <WasteTypeList wasteTypeQuery={wasteTypeQuery} />
     </div>
   );
 };

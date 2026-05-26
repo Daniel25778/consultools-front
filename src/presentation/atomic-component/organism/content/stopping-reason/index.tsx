@@ -1,24 +1,37 @@
-import { useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
-import { statusOptions } from 'domain/models';
+import { statusOptions, type StoppingReason } from 'domain/models';
+import { apiPaths } from 'main/config/paths';
+import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterStoppingReasonModal } from 'presentation/atomic-component/molecule/modal';
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 import { StoppingReasonList } from '../../list';
 
 export const StoppingReasonContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.stoppingReason);
   const modal = useModal();
-  const [totalElements, setTotalElements] = useState(0);
+  const { id = '' } = useParams<{ id: string }>();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
   useEffect(() => {
     setFilter('stoppingReason', {
       search
     });
   }, [search]);
+  const stoppingReasonQuery = useInfiniteScroll<StoppingReason>({
+    filters: {
+      status: status,
+      search: search,
+      companyId: id
+    },
+    limit: 20,
+    queryName: QueryName.stoppingReason,
+    route: apiPaths.stoppingReason
+  });
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
@@ -43,13 +56,14 @@ export const StoppingReasonContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end justify-between'}>
-        <p className={'hidden tablet:block text-gray-500 dark:text-gray-400'}>
-          Exibindo um total de {totalElements} resultado{totalElements > 1 ? 's' : ''}
-        </p>
-
-        <p className={'block tablet:hidden text-gray-500 dark:text-gray-400'}>
-          Total de {totalElements} {totalElements > 1 ? 'itens' : 'item'}
+      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
+        <p className={'text-gray-500 dark:text-gray-400'}>
+          Exibindo {stoppingReasonQuery.data?.length} de um total de{' '}
+          {stoppingReasonQuery.pagination?.totalElements}{' '}
+          {stoppingReasonQuery.pagination?.totalElements &&
+          stoppingReasonQuery.pagination?.totalElements > 1
+            ? 'itens'
+            : 'item'}
         </p>
         <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
           <Select
@@ -68,7 +82,7 @@ export const StoppingReasonContent: FC = () => {
           />
         </div>
       </div>
-      <StoppingReasonList setTotalElements={setTotalElements} />
+      <StoppingReasonList stoppingReasonQuery={stoppingReasonQuery} />
     </div>
   );
 };

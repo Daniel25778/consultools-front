@@ -79,7 +79,7 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
         disableAutoFocus
         disableEscapeKeyDown={props.disableEscapeKeyDown}
         disableRestoreFocus
-        sx={{ zIndex: 99999 }}
+        sx={{ zIndex: 1300 }}
         hideBackdrop={props.disableBackdrop}
         onClose={closeModal}
         open={props.isOpen}

@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Status } from 'domain/enums';
 import type { Company } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { apiPaths } from 'main/config';
-import { resolverError } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import type { CompanyRequest } from 'validation/schema';
 import { companySchema } from 'validation/schema';
 
@@ -21,7 +21,10 @@ export const useRegisterCompany = ({
   company
 }: useRegisterCompanyProps): formReturn<CompanyRequest> => {
   const formData = useForm<CompanyRequest>({
-    resolver: yupResolver(companySchema)
+    resolver: yupResolver(companySchema),
+    defaultValues: {
+      status: Status.DISABLED
+    }
   });
 
   const onSubmit: SubmitHandler<CompanyRequest> = async (data) => {
@@ -37,7 +40,7 @@ export const useRegisterCompany = ({
           body: data,
           route: apiPaths.company
         });
-      toast.success(`Empresa ${company ? 'editada' : 'cadastrada'} com sucesso!`);
+      callToast.success(`Empresa ${company ? 'editada' : 'cadastrada'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: ['company'] });
       closeModal();
     } catch (error) {

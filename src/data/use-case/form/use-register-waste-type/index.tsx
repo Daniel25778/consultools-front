@@ -5,10 +5,9 @@ import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { apiPaths, QueryName } from 'main/config';
-import { resolverError } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { wasteTypeSchema, type WasteTypeRequest } from 'validation/schema/waste-type';
 
 interface useRegisterWasteTypeProps {
@@ -40,7 +39,7 @@ export const useRegisterWasteType = ({
           body: data,
           route: apiPaths.wasteType
         });
-      toast.success(`Tipo de refugo ${wasteType ? 'editado' : 'cadastrado'} com sucesso!`);
+      callToast.success(`Tipo de refugo ${wasteType ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: [QueryName.wasteType] });
       closeModal();
     } catch (error) {
