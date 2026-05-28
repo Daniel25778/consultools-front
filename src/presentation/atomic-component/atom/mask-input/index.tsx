@@ -26,7 +26,7 @@ export const MaskInput: FC<MaskInputProps> = ({
     maskRef.setValue(value ? String(value) : '');
   }, [value]);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (props.onChange) props.onChange(event);
     else if (register?.onChange) register.onChange(event);
 
@@ -38,7 +38,7 @@ export const MaskInput: FC<MaskInputProps> = ({
       {...props}
       {...register}
       inputRef={maskRef.ref}
-      onInput={handleInputChange}
+      onChange={handleInputChange}
       ref={register?.ref}
       type={'tel'}
     />

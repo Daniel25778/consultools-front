@@ -1,6 +1,6 @@
-import { store } from 'store';
-import { updateFilter } from 'store/filters/slice';
 import type { FilterDataProps, FilterSliceState, TableSortFilter } from 'store/filters/slice';
+import { updateFilter } from 'store/filters/slice';
+import { store } from 'store/index';
 
 export const setFilter = <T extends keyof FilterSliceState>(
   entity: T,

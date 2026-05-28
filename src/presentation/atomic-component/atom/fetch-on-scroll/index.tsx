@@ -11,12 +11,12 @@ interface FetchOnScrollProps {
 }
 
 export const FetchOnScroll: FC<FetchOnScrollProps> = ({
-  query: { isFetchingNextPage, hasNextPage, fetchNextPage, error, isFetching, data },
+  query: { isFetchingNextPage, hasNextPage, fetchNextPage, error, isFetching },
   children,
   className,
   skeleton
 }) => {
-  const isEmpty = !isFetching && !isFetchingNextPage && !error && data?.length === 0;
+  const isEmpty = !isFetching && !isFetchingNextPage && !error;
 
   return (
     <div className={className}>

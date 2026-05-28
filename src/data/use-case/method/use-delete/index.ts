@@ -35,7 +35,7 @@ export const useDelete = ({
       if (isPatch) await api.patch({ id, route });
       else await api.delete({ id, route });
 
-      await queryClient.invalidateQueries(queryName);
+      await queryClient.invalidateQueries({ queryKey: [queryName] });
       callToast.success(successMessage);
       if (afterDelete) afterDelete();
       closeModal();

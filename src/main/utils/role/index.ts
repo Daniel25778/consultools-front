@@ -1,5 +1,5 @@
-import { store } from 'store';
 import type { Role } from 'domain/enums';
+import { store } from 'store/index';
 
 export const inRole = (roles: Role[]): boolean => {
   const { role } = store.getState().persist.user;

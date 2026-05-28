@@ -1,12 +1,10 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
 import { useUser } from 'data/use-case';
 import type { User } from 'domain/models';
 import { paths } from 'main/config';
 import { validate } from 'main/utils';
 import { FormButton, InputController } from 'presentation/atomic-component/atom';
 import { colors } from 'presentation/style';
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 interface UserFormProps {
@@ -14,7 +12,7 @@ interface UserFormProps {
 }
 
 export const UserForm: FC<UserFormProps> = ({ user }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
   const {
     handleSubmit,
@@ -48,7 +46,7 @@ export const UserForm: FC<UserFormProps> = ({ user }) => {
           placeholder={'Digite o email'}
           required
         />
-
+        {/* 
         <InputController
           EndIcon={
             <IconButton onClick={(): void => setShowPassword((old) => !old)} tabIndex={-1}>
@@ -62,7 +60,7 @@ export const UserForm: FC<UserFormProps> = ({ user }) => {
           required
           inputProps={{ autoComplete: 'new-password' }}
           type={showPassword ? 'text' : 'password'}
-        />
+        /> */}
 
         <FormButton isSubmitting={isSubmitting} label={'Cadastrar'} loadingColor={colors.white} />
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Controller, type Control, type FieldValues, type Path } from 'react-hook-form';
 import { Select, type SelectValues } from '../select';
 
@@ -12,7 +13,7 @@ interface SelectControllerProps<T extends FieldValues> {
   isLoading?: boolean;
   labelTop?: string;
   width?: number | string;
-  query?: unknown;
+  query?: any;
 }
 
 export const SelectController = <T extends FieldValues>({
@@ -30,7 +31,7 @@ export const SelectController = <T extends FieldValues>({
         const getValue = () => {
           const currentOptions = options || [];
           if (props.isMultiple) {
-            const valuesArray = Array.isArray(value) ? value : [];
+            // const valuesArray = Array.isArray(value) ? value : [];
           }
           return currentOptions.find((option) => option.value === value) ?? null;
         };
