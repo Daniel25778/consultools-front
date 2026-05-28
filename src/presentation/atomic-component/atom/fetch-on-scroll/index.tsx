@@ -3,19 +3,25 @@ import { LoadMoreButton } from 'presentation/atomic-component/atom/load-more-but
 import type { FC, ReactNode } from 'react';
 
 interface FetchOnScrollProps {
-  query: useInfiniteScrollReturnProps;
+  query:
+    | useInfiniteScrollReturnProps
+    | {
+        isFetchingNextPage: boolean;
+        hasNextPage?: boolean;
+        fetchNextPage: () => void;
+        error?: any;
+        isFetching: boolean;
+        data?: any[];
+      };
   children: ReactNode;
   skeleton?: ReactNode;
   skeletonCount?: number;
   className?: string;
 }
 
-export const FetchOnScroll: FC<FetchOnScrollProps> = ({
-  query: { isFetchingNextPage, hasNextPage, fetchNextPage, error, isFetching, data },
-  children,
-  className,
-  skeleton
-}) => {
+export const FetchOnScroll: FC<FetchOnScrollProps> = ({ query, children, className, skeleton }) => {
+  const { isFetchingNextPage, hasNextPage, fetchNextPage, error, isFetching, data } = query as any;
+
   const isEmpty = !isFetching && !isFetchingNextPage && !error && data?.length === 0;
 
   return (

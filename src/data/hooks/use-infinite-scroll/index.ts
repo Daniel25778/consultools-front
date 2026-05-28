@@ -17,7 +17,6 @@ export interface useInfiniteScrollProps {
 }
 
 export interface useInfiniteScrollReturnProps {
-  data: unknown[] | undefined;
   fetchNextPage: (
     options?: FetchNextPageOptions | undefined
   ) => Promise<InfiniteQueryObserverResult<unknown>>;
