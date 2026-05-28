@@ -37,11 +37,7 @@ export const WorkstationContent: FC = () => {
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
       <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
-      <div
-        className={
-          'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'
-        }
-      >
+      <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Postos de trabalho</h2>
         <RegisterWorkstationModal
           modal={{
@@ -52,8 +48,8 @@ export const WorkstationContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
-        <p className={'text-gray-500 dark:text-gray-400'}>
+      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row'}>
+        <p className={'text-gray-500 dark:text-gray-400 w-full'}>
           Exibindo {workstationQuery.data?.length} de um total de{' '}
           {workstationQuery.pagination?.totalElements}{' '}
           {workstationQuery.pagination?.totalElements &&
@@ -61,7 +57,9 @@ export const WorkstationContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
-        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+        <div
+          className={'flex  w-full justify-end items-end gap-4 flex-col-reverse tablet:flex-row'}
+        >
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>

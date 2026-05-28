@@ -35,7 +35,7 @@ export const useRegisterStopping = ({
           body: data,
           route: apiPaths.stopping
         });
-      callToast.success(`Parada ${stopping ? 'editado' : 'cadastrado'} com sucesso!`);
+      callToast.success(`Parada ${stopping ? 'editado' : 'cadastrada'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: ['stopping'] });
       closeModal();
     } catch (error) {

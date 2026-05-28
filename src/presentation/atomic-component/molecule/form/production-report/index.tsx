@@ -17,11 +17,13 @@ import { useAppSelector } from 'store/index';
 interface RegisterProductionReportFormProps {
   closeModal: () => void;
   productionReport?: ProductionReportDetails;
+  companyId?: string;
 }
 
 export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps> = ({
   closeModal,
-  productionReport
+  productionReport,
+  companyId
 }) => {
   const {
     handleSubmit,
@@ -36,6 +38,9 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
 
   const shiftQuery = useInfiniteScroll<Shift>({
     route: apiPaths.shift,
+    filters: {
+      companyId
+    },
     limit: 20,
     queryName: QueryName.shift
   });
@@ -43,19 +48,25 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
   const workstationQuery = useInfiniteScroll<Workstation>({
     route: apiPaths.workstation,
     limit: 20,
+    filters: {
+      companyId
+    },
     queryName: QueryName.workstation
   });
 
   const productQuery = useInfiniteScroll<Product>({
     route: apiPaths.product,
     limit: 20,
+    filters: {
+      companyId
+    },
     queryName: QueryName.product
   });
 
   const { user } = useAppSelector((state) => state.persist);
 
   useEffect(() => {
-    setValue('companyId', user.companyId);
+    setValue('companyId', companyId || user.companyId);
     setValue('endTime', productionReport?.endTime ?? '');
     setValue('production', productionReport?.production ?? 0);
     setValue('startTime', productionReport?.startTime ?? '');
@@ -71,6 +82,7 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
     productionReport?.id,
     productionReport?.startTime,
     productionReport?.endTime,
+    companyId,
     productionReport?.production
   ]);
 

@@ -8,6 +8,7 @@ export * from './shift';
 export * from './stopping';
 export * from './stopping-reason';
 export * from './user';
+export * from './waste';
 export * from './waste-type';
 export * from './workstation';
 

@@ -6,9 +6,10 @@ import { type FC } from 'react';
 
 interface StoppingListProps {
   stoppingQuery: ReturnType<typeof useInfiniteScroll<Stopping>>;
+  companyId?: string;
 }
 
-export const StoppingList: FC<StoppingListProps> = ({ stoppingQuery }) => {
+export const StoppingList: FC<StoppingListProps> = ({ stoppingQuery, companyId }) => {
   return (
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={stoppingQuery}>
@@ -17,7 +18,7 @@ export const StoppingList: FC<StoppingListProps> = ({ stoppingQuery }) => {
           className={'grid gap-[18px]'}
         >
           {stoppingQuery.data?.map((item) => (
-            <StoppingCard key={item.id} stopping={item} />
+            <StoppingCard key={item.id} stopping={item} companyId={companyId} />
           ))}
         </div>
       </FetchOnScroll>

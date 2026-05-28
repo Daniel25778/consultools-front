@@ -1,17 +1,19 @@
 import { East } from '@mui/icons-material';
 import { type FC, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface MenuCardProps {
   title: string;
   description: string;
   icon: ReactNode;
-  onClick?: () => void;
+  path: string;
 }
 
-export const MenuCard: FC<MenuCardProps> = ({ title, description, icon, onClick }) => {
+export const MenuCard: FC<MenuCardProps> = ({ title, description, icon, path }) => {
+  const navigate = useNavigate();
   return (
     <div
-      onClick={onClick}
+      onClick={() => navigate(path)}
       style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
       className={
         'flex flex-col gap-4 w-full tablet:max-w-[300px] bg-white rounded px-6 pt-8 pb-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer group'

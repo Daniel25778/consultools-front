@@ -8,9 +8,13 @@ import { useNavigate } from 'react-router-dom';
 
 interface ProductionReportListProps {
   productionReport: ReturnType<typeof useInfiniteScroll<ProductionReport>>;
+  companyId?: string;
 }
 
-export const ProductionReportList: FC<ProductionReportListProps> = ({ productionReport }) => {
+export const ProductionReportList: FC<ProductionReportListProps> = ({
+  productionReport,
+  companyId
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -22,7 +26,13 @@ export const ProductionReportList: FC<ProductionReportListProps> = ({ production
         >
           {productionReport.data?.map((item) => (
             <ProductionReportCard
-              onClick={() => navigate(paths.productionReportDetails(item.id))}
+              onClick={() =>
+                navigate(
+                  companyId
+                    ? paths.productionReportDetailsCompany(item.id, companyId)
+                    : paths.productionReportDetails(item.id)
+                )
+              }
               key={item.id}
               productionReport={item}
             />

@@ -36,23 +36,21 @@ export const CollaboratorContent: FC = () => {
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
       <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
-      <div
-        className={
-          'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'
-        }
-      >
+      <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Colaboradores</h2>
-        <RegisterCollaboratorModal
-          modal={{
-            ...modal,
-            closeModal() {
-              modal.closeModal();
-            }
-          }}
-        />
+        <div>
+          <RegisterCollaboratorModal
+            modal={{
+              ...modal,
+              closeModal() {
+                modal.closeModal();
+              }
+            }}
+          />
+        </div>
       </div>
-      <div className={'flex flex-col-reverse gap-4 items-end justify-between tablet:flex-row'}>
-        <p className={'text-gray-500 dark:text-gray-400'}>
+      <div className={'flex flex-col-reverse  gap-4 items-end justify-between tablet:flex-row'}>
+        <p className={'text-gray-500 dark:text-gray-400 w-full'}>
           Exibindo {collaboratorQuery.data?.length} de um total de{' '}
           {collaboratorQuery.pagination?.totalElements}{' '}
           {collaboratorQuery.pagination?.totalElements &&
@@ -60,7 +58,9 @@ export const CollaboratorContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
-        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+        <div
+          className={'flex w-full justify-end items-end  gap-4 flex-col-reverse tablet:flex-row'}
+        >
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>

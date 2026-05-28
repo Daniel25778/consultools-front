@@ -20,6 +20,7 @@ import { CollaboratorContent } from 'presentation/environment/collaborator';
 import { CompanyDetails } from 'presentation/environment/company';
 import { CompanyContent } from 'presentation/environment/company/content';
 import { ConsultantDetails } from 'presentation/environment/consultant';
+import { WasteContent } from 'presentation/environment/waste';
 import { WasteTypeContent } from 'presentation/environment/waste-type';
 import { WorkstationContent } from 'presentation/environment/workstation';
 import type { FC } from 'react';
@@ -48,7 +49,16 @@ const RouterConfig: FC = () => (
             <Route element={<CompanyContent />} path={routePaths.company} />
             <Route element={<CompanyDetails />} path={routePaths.companyDetails} />
             <Route element={<ProductionReportContent />} path={routePaths.productionReport} />
+            <Route
+              element={<ProductionReportContent />}
+              path={routePaths.productionReportCompany}
+            />
             <Route element={<StoppingContent />} path={routePaths.stopping} />
+            <Route element={<StoppingContent />} path={routePaths.stoppingCompany} />
+
+            <Route element={<WasteContent />} path={routePaths.waste} />
+            <Route element={<WasteContent />} path={routePaths.wasteCompany} />
+
             <Route element={<WorkstationContent />} path={routePaths.workstation} />
             <Route element={<WasteTypeContent />} path={routePaths.wasteType} />
             <Route element={<CollaboratorContent />} path={routePaths.collaborator} />
@@ -60,6 +70,10 @@ const RouterConfig: FC = () => (
             <Route
               element={<ProductionReportDetails />}
               path={routePaths.productionReportDetails}
+            />
+            <Route
+              element={<ProductionReportDetails />}
+              path={routePaths.productionReportDetailsCompany}
             />
             {/*  */}
             {/*  */}

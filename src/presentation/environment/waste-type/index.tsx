@@ -39,7 +39,7 @@ export const WasteTypeContent: FC = () => {
       </div>
       <div
         className={
-          'flex justify-end items-end gap-4 tablet:gap-0 tablet:justify-between flex-col-reverse tablet:flex-row'
+          'flex justify-end w-full items-end gap-4 tablet:gap-0 tablet:justify-between flex-col-reverse tablet:flex-row'
         }
       >
         <p className={'text-gray-500 dark:text-gray-400'}>

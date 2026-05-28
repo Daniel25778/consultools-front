@@ -45,7 +45,6 @@ export interface ProductionReport {
   updatedAt: string;
 }
 export interface ProductionReportFilter extends FilterPagination, FilterSort {
-  finishedAt: boolean | null;
   startDate: Date | null;
   search: string;
   endDate: Date | null;
@@ -58,7 +57,6 @@ export const finishedOptions = [
 
 export const productionReportFilterInitialState: ProductionReportFilter = {
   endDate: null,
-  finishedAt: null,
   page: 1,
   search: '',
   sort: null,

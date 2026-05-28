@@ -9,10 +9,13 @@ export * from './register-responsible-area';
 export * from './register-shift';
 export * from './register-stopping';
 export * from './register-stopping-reason';
+export * from './register-waste';
 export * from './register-waste-type';
 export * from './register-workstation';
 export * from './responsible-area';
+export * from './stopping';
 export * from './stopping-reason';
+export * from './waste';
 export * from './wasteType';
 export * from './workstation';
 

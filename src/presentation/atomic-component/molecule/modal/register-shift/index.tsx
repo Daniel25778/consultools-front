@@ -26,7 +26,11 @@ export const RegisterShiftModal: FC<RegisterShiftModalProps> = ({ modal, shift }
             <Edit className={'text-primary'} />
           </IconButton>
         ) : (
-          <Button onClick={openModal} variant={'contained'} className={'gap-4'}>
+          <Button
+            onClick={openModal}
+            variant={'contained'}
+            className={'gap-4 w-full tablet:w-auto'}
+          >
             <Add className={'text-white'} />
             <span>Novo turno</span>
           </Button>

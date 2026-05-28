@@ -17,7 +17,9 @@ export const SearchInputBase: FC<SearchInputBaseProps> = ({
   return (
     <Paper
       elevation={0}
-      className={'flex items-center w-[400px] gap-2 rounded-full px-6 py-1'}
+      className={
+        'flex items-center w-full tablet:min-w-[400px] tablet:max-w-[400px] gap-2 rounded-full px-6 py-1'
+      }
       sx={{
         border: `1.5px solid ${colors.gray[100]}`,
         backgroundColor: colors.white,

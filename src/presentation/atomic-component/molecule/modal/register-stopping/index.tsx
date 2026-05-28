@@ -10,9 +10,14 @@ import { RegisterStoppingForm } from '../../form';
 interface RegisterStoppingModalProps {
   modal: useModalProps;
   stopping?: Stopping;
+  companyId?: string;
 }
 
-export const RegisterStoppingModal: FC<RegisterStoppingModalProps> = ({ modal, stopping }) => {
+export const RegisterStoppingModal: FC<RegisterStoppingModalProps> = ({
+  modal,
+  stopping,
+  companyId
+}) => {
   const { closeModal, isOpen, openModal } = modal;
 
   return (
@@ -27,7 +32,7 @@ export const RegisterStoppingModal: FC<RegisterStoppingModalProps> = ({ modal, s
             <Edit className={'hover:cursor-pointer text-primary'} />
           </IconButton>
         ) : (
-          <Button onClick={openModal} variant={'contained'} className={'gap-4'}>
+          <Button onClick={openModal} variant={'contained'} className={'gap-4 w-full'}>
             <Add className={'hover:cursor-pointer text-gray-500'} />
             <span>Nova parada</span>
           </Button>
@@ -40,7 +45,7 @@ export const RegisterStoppingModal: FC<RegisterStoppingModalProps> = ({ modal, s
       subtitle={'Preencha o formulário abaixo.'}
       title={'Nova parada'}
     >
-      <RegisterStoppingForm closeModal={closeModal} stopping={stopping} />
+      <RegisterStoppingForm closeModal={closeModal} stopping={stopping} companyId={companyId} />
     </Modal>
   );
 };

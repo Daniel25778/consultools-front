@@ -1,17 +1,20 @@
+import { ArrowRightAlt } from '@mui/icons-material';
 import { useModal } from 'data/hooks';
 import type { Stopping } from 'domain/models';
 import { apiPaths } from 'main/config';
-import { RegisterStoppingModal } from 'presentation/atomic-component/molecule/modal';
+import { RegisterStoppingModal, StoppingModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation/delete';
 import type { FC } from 'react';
+import { NatureBadge } from '../../status-badge-nature';
 
 interface StoppingCardProps {
   stopping: Stopping;
+  companyId?: string;
 }
 
-export const StoppingCard: FC<StoppingCardProps> = ({ stopping }) => {
+export const StoppingCard: FC<StoppingCardProps> = ({ stopping, companyId }) => {
   const modalRegister = useModal();
-  // const modalDetails = useModal();
+  const modalDetails = useModal();
   return (
     <div
       style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
@@ -27,6 +30,7 @@ export const StoppingCard: FC<StoppingCardProps> = ({ stopping }) => {
         <div className={'flex gap-2'}>
           <RegisterStoppingModal
             stopping={stopping}
+            companyId={companyId}
             modal={{
               ...modalRegister,
               closeModal() {
@@ -41,12 +45,13 @@ export const StoppingCard: FC<StoppingCardProps> = ({ stopping }) => {
             route={apiPaths.stopping}
             queryName={'stopping'}
             color={'error'}
-            successMessage={'Parada removido com sucesso!'}
+            successMessage={'Parada removida com sucesso!'}
           />
         </div>
       </div>
       <div className={'flex justify-between items-center'}>
-        {/* <StoppingModal
+        <NatureBadge nature={stopping?.stoppingReason?.nature} />
+        <StoppingModal
           stopping={stopping}
           modal={{
             ...modalDetails,
@@ -65,7 +70,7 @@ export const StoppingCard: FC<StoppingCardProps> = ({ stopping }) => {
               <ArrowRightAlt className={'text-primary'} />
             </div>
           }
-        /> */}
+        />
       </div>
     </div>
   );

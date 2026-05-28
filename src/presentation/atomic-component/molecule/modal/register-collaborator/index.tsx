@@ -30,7 +30,7 @@ export const RegisterCollaboratorModal: FC<RegisterCollaboratorModalProps> = ({
             <Edit className={'hover:cursor-pointer text-primary'} />
           </IconButton>
         ) : (
-          <Button onClick={openModal} variant={'contained'} className={'gap-4'}>
+          <Button onClick={openModal} variant={'contained'} className={'gap-4 w-full'}>
             <Add className={'hover:cursor-pointer text-gray-500'} />
             <span>Novo colaborador</span>
           </Button>

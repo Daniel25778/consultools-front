@@ -13,9 +13,14 @@ import { useAppSelector } from 'store/index';
 interface RegisterStoppingFormProps {
   closeModal: () => void;
   stopping?: Stopping;
+  companyId?: string;
 }
 
-export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({ closeModal, stopping }) => {
+export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({
+  closeModal,
+  stopping,
+  companyId
+}) => {
   const { user } = useAppSelector((state) => state.persist);
   const { id = '' } = useParams<{ id: string }>();
   const {
@@ -33,7 +38,7 @@ export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({ closeModal
     route: apiPaths.stoppingReason,
     limit: 20,
     filters: {
-      companyId: user.companyId
+      companyId: companyId || user.companyId
     },
     queryName: QueryName.stoppingReason
   });

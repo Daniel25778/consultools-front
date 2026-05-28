@@ -37,10 +37,6 @@ export const fetchApi = async <T>(params: ApiProps): Promise<T> => {
     return null as T;
   }
 
-  // if (
-  //   (response.status as unknown as HttpStatusCode) === HttpStatusCode.noContent ||
-  //   (response.status as unknown as HttpStatusCode) === HttpStatusCode.created
-  // )
   if ((response.status as unknown as HttpStatusCode) === HttpStatusCode.noContent) return null as T;
 
   if (response.headers.get('total-pages')) {
@@ -56,6 +52,5 @@ export const fetchApi = async <T>(params: ApiProps): Promise<T> => {
   const data = await response.json();
 
   if (response.ok) return data.payload;
-  console.log(data);
   throw Object(data);
 };

@@ -1,25 +1,30 @@
-import { Error, Recycling } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { useModal } from 'data/hooks';
 import { useFindOneProductionReportQuery } from 'infra/cache';
-import { apiPaths, paths } from 'main/config/paths';
+import { apiPaths } from 'main/config/paths';
 import { formatCompactNumber, formatHour } from 'main/utils';
-import { MenuCard } from 'presentation/atomic-component/atom/card';
+import { getProductionReportMenuCards } from 'presentation/atomic-component/atom/card';
+import { MenuCard } from 'presentation/atomic-component/atom/card/menu';
 import { Breadcrumbs } from 'presentation/atomic-component/molecule';
 import { RegisterProductionReportModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
-import { colors } from 'presentation/style';
 import { type FC } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const ProductionReportDetails: FC = () => {
-  const { id = '' } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const { id = '', companyId } = useParams<{ id: string; companyId?: string }>();
   const productionReportQuery = useFindOneProductionReportQuery({ id }).data;
+
   const modal = useModal();
+  const menuCards = getProductionReportMenuCards(id, companyId);
   return (
     <div className={'flex w-full flex-col  gap-5 '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de apontamento' }} />
+      <Breadcrumbs
+        replaceItems={{
+          ...(companyId && { [companyId]: 'Detalhes de Empresa' }),
+          [id]: 'Detalhes de Apontamento'
+        }}
+      />
       <div
         className={
           'flex flex-col tablet:flex-row w-full bg-white rounded p-6 tablet:p-8 items-start tablet:items-center justify-between gap-6'
@@ -31,6 +36,7 @@ export const ProductionReportDetails: FC = () => {
               {productionReportQuery?.code}
             </h1>
             <RegisterProductionReportModal
+              companyId={companyId}
               productionReport={productionReportQuery}
               modal={{
                 ...modal,
@@ -85,18 +91,15 @@ export const ProductionReportDetails: FC = () => {
       </div>
 
       <div className={'flex flex-col tablet:flex-row gap-5'}>
-        <MenuCard
-          title={'Cadastro de Refugos'}
-          description={'Cadastre os refugos relacionados a este apontamento de produção.'}
-          icon={<Recycling sx={{ fontSize: '32px', color: colors.primary }} />}
-          onClick={() => console.log('Navegar para refugos')}
-        />
-        <MenuCard
-          title={'Cadastro de Paradas'}
-          description={'Cadastre as paradas relacionadas a este apontamento de produção.'}
-          icon={<Error sx={{ fontSize: '32px', color: colors.primary }} />}
-          onClick={() => navigate(paths.stopping(id))}
-        />
+        {menuCards.map((card) => (
+          <MenuCard
+            key={card.title}
+            title={card.title}
+            description={card.description}
+            icon={card.icon}
+            path={card.path}
+          />
+        ))}
       </div>
     </div>
   );

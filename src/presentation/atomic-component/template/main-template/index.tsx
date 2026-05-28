@@ -21,7 +21,7 @@ export const MainTemplate: FC = () => {
           <div className={'flex w-full'} style={{ transition: 'all 200ms' }}>
             <div
               className={
-                'text-white w-full py-10 min-h-[calc(100dvh-69px)] dark:text-white flex items-start justify-center gap-3 pr-4 pl-2 tablet:px-[150px] tablet:py-14'
+                'text-white w-full py-10 min-h-[calc(100dvh-69px)] dark:text-white flex items-start justify-center gap-3 pr-4 pl-4 tablet:px-[150px] tablet:py-14'
               }
             >
               <Outlet />

@@ -1,17 +1,21 @@
 import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
-import type { Shift } from 'domain/models';
+import type { Status } from 'domain/enums';
+import { statusOptions, type Shift } from 'domain/models';
 import { apiPaths } from 'main/config';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterShiftModal } from 'presentation/atomic-component/molecule/modal';
 import { ShiftList } from 'presentation/atomic-component/organism';
-import { type FC, useEffect } from 'react';
+import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from 'store/index';
 
 export const ShiftContent: FC = () => {
   const modal = useModal();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
+  const { status } = useAppSelector((state) => state.filter.shift);
   const { id = '' } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -21,6 +25,7 @@ export const ShiftContent: FC = () => {
   const shiftQuery = useInfiniteScroll<Shift>({
     filters: {
       companyId: id,
+      status,
       name: search
     },
     limit: 20,
@@ -48,11 +53,33 @@ export const ShiftContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
-        <SearchInputBase
-          value={searchDebounce}
-          onChange={(event) => setSearchDebounce(event.target.value)}
-          placeholder={'Buscar turno'}
-        />
+
+        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+          <SearchInputBase
+            value={searchDebounce}
+            onChange={(event) => setSearchDebounce(event.target.value)}
+            placeholder={'Buscar turno'}
+          />
+
+          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+            <Select
+              id={''}
+              options={statusOptions}
+              value={statusOptions.find((option) => option.value === (status ?? '')) ?? null}
+              onChange={(event) => {
+                const newValue = event as SelectValues | SelectValues[] | null;
+                const selectedValue = Array.isArray(newValue)
+                  ? newValue[0]?.value
+                  : newValue?.value;
+
+                setFilter('shift', {
+                  status: selectedValue ? (selectedValue as Status) : null
+                });
+              }}
+              placeholder={'Filtrar por status'}
+            />
+          </div>
+        </div>
       </div>
       <ShiftList shiftQuery={shiftQuery} />
     </div>

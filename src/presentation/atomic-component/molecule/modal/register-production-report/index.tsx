@@ -9,11 +9,13 @@ import { RegisterProductionReportForm } from '../../form';
 interface RegisterProductionReportModalProps {
   modal: useModalProps;
   productionReport?: ProductionReportDetails;
+  companyId?: string;
 }
 
 export const RegisterProductionReportModal: FC<RegisterProductionReportModalProps> = ({
   modal,
-  productionReport
+  productionReport,
+  companyId
 }) => {
   const { closeModal, isOpen, openModal } = modal;
 
@@ -38,7 +40,11 @@ export const RegisterProductionReportModal: FC<RegisterProductionReportModalProp
       subtitle={'Preencha o formulário abaixo.'}
       title={'Novo apontamento'}
     >
-      <RegisterProductionReportForm closeModal={closeModal} productionReport={productionReport} />
+      <RegisterProductionReportForm
+        closeModal={closeModal}
+        productionReport={productionReport}
+        companyId={companyId}
+      />
     </Modal>
   );
 };
