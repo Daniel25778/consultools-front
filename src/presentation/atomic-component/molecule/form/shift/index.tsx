@@ -1,10 +1,9 @@
 import { Button } from '@mui/material';
 import { useRegisterShift } from 'data/use-case';
 import type { Shift } from 'domain/models';
-import { timeOptions } from 'main/utils/time-options';
-import { SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
+import { TimePickerController } from 'presentation/atomic-component/atom/time-controller';
 import { useEffect, type FC } from 'react';
 
 interface RegisterShiftFormProps {
@@ -47,25 +46,18 @@ export const RegisterShiftForm: FC<RegisterShiftFormProps> = ({ closeModal, shif
           required
         />
 
-        <div className={'grid grid-cols-1 tablet:grid-cols-2 gap-3 w-full'}>
-          <SelectController
-            control={control}
-            label={'Horário de início'}
-            name={'startTime'}
-            options={timeOptions}
-            placeholder={'00:00'}
-            required
-          />
-
-          <SelectController
-            control={control}
-            label={'Horário de término'}
-            name={'endTime'}
-            options={timeOptions}
-            placeholder={'00:00'}
-            required
-          />
-        </div>
+        <TimePickerController
+          control={control}
+          label={'Horário de início'}
+          name={'startTime'}
+          required
+        />
+        <TimePickerController
+          control={control}
+          label={'Horário de término'}
+          name={'endTime'}
+          required
+        />
       </div>
 
       <div

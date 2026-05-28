@@ -13,7 +13,7 @@ export const StoppingReasonList: FC<StoppingReasonListProps> = ({ stoppingReason
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={stoppingReasonQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {stoppingReasonQuery.data?.map((item) => (

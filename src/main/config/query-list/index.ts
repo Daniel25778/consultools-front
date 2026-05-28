@@ -8,6 +8,7 @@ export type QueryList =
   | 'workstation'
   | 'responsibleArea'
   | 'stoppingReason'
+  | 'stopping'
   | 'productionReport'
   | 'shift'
   | 'measurementUnit';
@@ -18,6 +19,7 @@ export enum QueryName {
   productionReport = 'production-report',
   wasteType = 'waste-type',
   workstation = 'workstation',
+  stopping = 'stopping',
   shift = 'shift',
   stoppingReason = 'stopping-reason',
   responsibleArea = 'responsibleArea',

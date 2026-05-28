@@ -6,6 +6,7 @@ export * from './production-report';
 export * from './request-code';
 export * from './responsible-area';
 export * from './shift';
+export * from './stopping';
 export * from './stopping-reason';
 export * from './user';
 export * from './verify-code';

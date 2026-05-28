@@ -1,17 +1,22 @@
 import { Button } from '@mui/material';
 import { useInfiniteScroll } from 'data/hooks';
 import { useRegisterProductionReport } from 'data/use-case';
-import { type Product, type ProductionReport, type Shift, type Workstation } from 'domain/models';
+import {
+  type Product,
+  type ProductionReportDetails,
+  type Shift,
+  type Workstation
+} from 'domain/models';
 import { QueryName, apiPaths } from 'main/config';
-import { timeOptions } from 'main/utils/time-options';
 import { InputController, SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
+import { TimePickerController } from 'presentation/atomic-component/atom/time-controller';
 import { useEffect, type FC } from 'react';
 import { useAppSelector } from 'store/index';
 
 interface RegisterProductionReportFormProps {
   closeModal: () => void;
-  productionReport?: ProductionReport;
+  productionReport?: ProductionReportDetails;
 }
 
 export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps> = ({
@@ -51,7 +56,23 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
 
   useEffect(() => {
     setValue('companyId', user.companyId);
-  }, [setValue, user.companyId]);
+    setValue('endTime', productionReport?.endTime ?? '');
+    setValue('production', productionReport?.production ?? 0);
+    setValue('startTime', productionReport?.startTime ?? '');
+    setValue('shiftId', productionReport?.shift?.id ?? '');
+    setValue('workstationId', productionReport?.workstation?.id ?? '');
+    setValue('productId', productionReport?.product?.id ?? '');
+  }, [
+    setValue,
+    user.companyId,
+    productionReport?.shift?.id,
+    productionReport?.workstation?.id,
+    productionReport?.product?.id,
+    productionReport?.id,
+    productionReport?.startTime,
+    productionReport?.endTime,
+    productionReport?.production
+  ]);
 
   return (
     <form className={'flex flex-col gap-5 w-full'} onSubmit={handleSubmit(onSubmit)}>
@@ -62,23 +83,19 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
           name={'production'}
           type={'number'}
           placeholder={'Digite a quantidade produzida'}
-          inputProps={{ max: 2147483647, min: 0 }}
+          inputProps={{ max: 2147483647, min: 1 }}
           required
         />
-        <SelectController
+        <TimePickerController
           control={control}
           label={'Horário de início'}
           name={'startTime'}
-          options={timeOptions}
-          placeholder={'00:00'}
           required
         />
-        <SelectController
+        <TimePickerController
           control={control}
           label={'Horário de término'}
           name={'endTime'}
-          options={timeOptions}
-          placeholder={'00:00'}
           required
         />
 

@@ -7,6 +7,7 @@ import {
   productionReportFilterInitialState,
   responsibleAreaFilterInitialState,
   shiftFilterInitialState,
+  stoppingFilterInitialState,
   stoppingReasonFilterInitialState,
   wasteTypeFilterInitialState,
   workstationFilterInitialState,
@@ -16,6 +17,7 @@ import {
   type ProductionReportFilter,
   type ResponsibleAreaFilter,
   type ShiftFilter,
+  type StoppingFilter,
   type StoppingReasonFilter,
   type WasteTypeFilter,
   type WorkstationFilter
@@ -38,6 +40,7 @@ export interface FilterSliceState {
   stoppingReason: StoppingReasonFilter;
   productionReport: ProductionReportFilter;
   shift: ShiftFilter;
+  stopping: StoppingFilter;
   product: ProductFilter;
   wasteType: WasteTypeFilter;
 }
@@ -52,6 +55,7 @@ const initialState: FilterSliceState = {
   responsibleArea: responsibleAreaFilterInitialState,
   wasteType: wasteTypeFilterInitialState,
   product: productFilterInitialState,
+  stopping: stoppingFilterInitialState,
   company: companyFilterInitialState
 };
 

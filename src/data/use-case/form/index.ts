@@ -7,6 +7,7 @@ export * from './use-register-product';
 export * from './use-register-production-report';
 export * from './use-register-responsible-area';
 export * from './use-register-shift';
+export * from './use-register-stopping';
 export * from './use-register-stopping-reason';
 export * from './use-register-waste-type';
 export * from './use-register-workstation';

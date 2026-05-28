@@ -1,46 +1,22 @@
-import { TabPanel } from '@mui/lab';
+import { Error, Recycling } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { useModal } from 'data/hooks';
 import { useFindOneProductionReportQuery } from 'infra/cache';
-import { apiPaths } from 'main/config/paths';
-import { formatCompactNumber } from 'main/utils';
-import { Tabs } from 'presentation/atomic-component/atom';
+import { apiPaths, paths } from 'main/config/paths';
+import { formatCompactNumber, formatHour } from 'main/utils';
+import { MenuCard } from 'presentation/atomic-component/atom/card';
 import { Breadcrumbs } from 'presentation/atomic-component/molecule';
+import { RegisterProductionReportModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
-import {
-  CollaboratorContent,
-  WorkstationContent
-} from 'presentation/atomic-component/organism/content';
-import { useState, type FC } from 'react';
-import { useParams } from 'react-router-dom';
+import { colors } from 'presentation/style';
+import { type FC } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const ProductionReportDetails: FC = () => {
   const { id = '' } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const productionReportQuery = useFindOneProductionReportQuery({ id }).data;
-  // const modal = useModal();
-
-  // useEffect(() => {
-  //   setFilter('productionReport', {
-  //     productionReportId: productionReportQuery?.id ? productionReportQuery.id : undefined
-  //   });
-  // }, [productionReportQuery?.id]);
-  type TabType = 'WASTE' | 'STOPPING';
-
-  const TAB_OPTIONS: { title: string; value: TabType }[] = [
-    { title: 'Refugos', value: 'WASTE' },
-    { title: 'paradas', value: 'STOPPING' }
-  ];
-  const [tabSelected, setTabSelected] = useState<TabType>('WASTE');
-  const renderTabContent = () => {
-    switch (tabSelected) {
-      case 'WASTE':
-        return <CollaboratorContent />;
-      case 'STOPPING':
-        return <WorkstationContent />;
-      default:
-        return <div>Em breve...</div>;
-    }
-  };
-
+  const modal = useModal();
   return (
     <div className={'flex w-full flex-col  gap-5 '}>
       <Breadcrumbs replaceItems={{ [id]: 'Detalhes de apontamento' }} />
@@ -54,7 +30,7 @@ export const ProductionReportDetails: FC = () => {
             <h1 className={'text-primary text-xl tablet:text-2xl font-semibold break-words'}>
               {productionReportQuery?.code}
             </h1>
-            {/* <RegisterProductionReportModal
+            <RegisterProductionReportModal
               productionReport={productionReportQuery}
               modal={{
                 ...modal,
@@ -62,7 +38,7 @@ export const ProductionReportDetails: FC = () => {
                   modal.closeModal();
                 }
               }}
-            /> */}
+            />
           </div>
           <div className={'flex flex-wrap items-center gap-x-3 gap-y-1'}>
             <p className={'text-gray-400 text-base font-medium'}>
@@ -70,7 +46,10 @@ export const ProductionReportDetails: FC = () => {
             </p>
             <p className={'text-gray-400 text-base font-medium'}>•</p>
             <p className={'text-gray-400 text-base font-medium'}>
-              {formatCompactNumber(productionReportQuery?.production)}
+              {formatCompactNumber(productionReportQuery?.production)}{' '}
+              {productionReportQuery?.production && productionReportQuery.production > 1
+                ? 'produzidos'
+                : 'produzido'}
             </p>
             <p className={'text-gray-400 text-base font-medium'}>•</p>
             <p className={'text-gray-400 text-base font-medium'}>
@@ -79,6 +58,11 @@ export const ProductionReportDetails: FC = () => {
             <p className={'text-gray-400 text-base font-medium'}>•</p>
             <p className={'text-gray-400 text-base font-medium'}>
               {productionReportQuery?.product?.name}
+            </p>
+            <p className={'text-gray-400 text-base font-medium'}>•</p>
+            <p className={'text-gray-400 text-base font-medium'}>
+              {formatHour(productionReportQuery?.startTime)} -{' '}
+              {formatHour(productionReportQuery?.endTime)}
             </p>
           </div>
         </div>
@@ -99,21 +83,20 @@ export const ProductionReportDetails: FC = () => {
           />
         </div>
       </div>
-      <div>
-        <Tabs
-          onChange={(newValue): void => {
-            setTabSelected(newValue as TabType);
-          }}
-          tabValue={tabSelected}
-          tabs={TAB_OPTIONS}
-        >
-          <TabPanel
-            value={tabSelected}
-            style={{ paddingTop: '32px', paddingLeft: 0, paddingRight: 0 }}
-          >
-            {renderTabContent()}
-          </TabPanel>
-        </Tabs>
+
+      <div className={'flex flex-col tablet:flex-row gap-5'}>
+        <MenuCard
+          title={'Cadastro de Refugos'}
+          description={'Cadastre os refugos relacionados a este apontamento de produção.'}
+          icon={<Recycling sx={{ fontSize: '32px', color: colors.primary }} />}
+          onClick={() => console.log('Navegar para refugos')}
+        />
+        <MenuCard
+          title={'Cadastro de Paradas'}
+          description={'Cadastre as paradas relacionadas a este apontamento de produção.'}
+          icon={<Error sx={{ fontSize: '32px', color: colors.primary }} />}
+          onClick={() => navigate(paths.stopping(id))}
+        />
       </div>
     </div>
   );

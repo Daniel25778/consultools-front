@@ -7,13 +7,21 @@ import {
   ChangePasswordContent,
   ConsultantContent,
   EnterCodeContent,
+  ProductContent,
   ProductionReportContent,
   ProductionReportDetails,
-  RequestCodeContent
+  RequestCodeContent,
+  ResponsibleAreaContent,
+  ShiftContent,
+  StoppingContent,
+  StoppingReasonContent
 } from 'presentation/environment';
+import { CollaboratorContent } from 'presentation/environment/collaborator';
 import { CompanyDetails } from 'presentation/environment/company';
 import { CompanyContent } from 'presentation/environment/company/content';
 import { ConsultantDetails } from 'presentation/environment/consultant';
+import { WasteTypeContent } from 'presentation/environment/waste-type';
+import { WorkstationContent } from 'presentation/environment/workstation';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
@@ -40,6 +48,15 @@ const RouterConfig: FC = () => (
             <Route element={<CompanyContent />} path={routePaths.company} />
             <Route element={<CompanyDetails />} path={routePaths.companyDetails} />
             <Route element={<ProductionReportContent />} path={routePaths.productionReport} />
+            <Route element={<StoppingContent />} path={routePaths.stopping} />
+            <Route element={<WorkstationContent />} path={routePaths.workstation} />
+            <Route element={<WasteTypeContent />} path={routePaths.wasteType} />
+            <Route element={<CollaboratorContent />} path={routePaths.collaborator} />
+            <Route element={<ProductContent />} path={routePaths.product} />
+            <Route element={<ShiftContent />} path={routePaths.shift} />
+            <Route element={<StoppingReasonContent />} path={routePaths.stoppingReason} />
+            <Route element={<ResponsibleAreaContent />} path={routePaths.responsibleArea} />
+
             <Route
               element={<ProductionReportDetails />}
               path={routePaths.productionReportDetails}

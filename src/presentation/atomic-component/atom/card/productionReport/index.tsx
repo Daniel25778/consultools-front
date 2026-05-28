@@ -4,7 +4,6 @@ import { apiPaths } from 'main/config';
 import { formatCompactNumber, formatHour } from 'main/utils';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation/delete';
 import type { FC } from 'react';
-import { StatusBadge } from '../../status-badge';
 
 interface ProductionReportCardProps {
   productionReport: ProductionReport;
@@ -21,7 +20,7 @@ export const ProductionReportCard: FC<ProductionReportCardProps> = ({
       className={'flex flex-col w-full tablet:min-w-[390px] gap-6 rounded p-4 bg-white'}
     >
       <div className={'flex justify-between items-start'}>
-        <div className={'flex flex-col gap-1'}>
+        <div className={'flex flex-col gap-2'}>
           <h3 className={'text-lg font-semibold text-primary'}>{productionReport.code}</h3>
           <div className={'flex gap-2 items-center'}>
             <span className={'flex text-sm font-semibold gap-1 text-gray-400'}>
@@ -52,13 +51,7 @@ export const ProductionReportCard: FC<ProductionReportCardProps> = ({
           />
         </div>
       </div>
-      <div className={'flex justify-between items-center'}>
-        <StatusBadge
-          tooltipMessage={
-            'Você não finalizou o apontamento. Para completar a ação clique em "Ver detalhes" '
-          }
-          finished={productionReport.finishedAt !== null}
-        />
+      <div className={'flex justify-end items-center'}>
         <div
           onClick={onClick}
           className={

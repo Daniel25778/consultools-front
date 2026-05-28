@@ -17,7 +17,7 @@ export const ProductionReportList: FC<ProductionReportListProps> = ({ production
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={productionReport}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {productionReport.data?.map((item) => (

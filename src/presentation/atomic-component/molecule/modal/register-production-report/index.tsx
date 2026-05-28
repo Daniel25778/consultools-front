@@ -1,15 +1,14 @@
 import { Add, Edit } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { type useModalProps } from 'data/hooks';
-import type { ProductionReport } from 'domain/models';
+import type { ProductionReportDetails } from 'domain/models';
 import { Modal } from 'presentation/atomic-component/atom/modal';
-import { colors } from 'presentation/style';
 import type { FC } from 'react';
 import { RegisterProductionReportForm } from '../../form';
 
 interface RegisterProductionReportModalProps {
   modal: useModalProps;
-  productionReport?: ProductionReport;
+  productionReport?: ProductionReportDetails;
 }
 
 export const RegisterProductionReportModal: FC<RegisterProductionReportModalProps> = ({
@@ -22,11 +21,7 @@ export const RegisterProductionReportModal: FC<RegisterProductionReportModalProp
     <Modal
       openModalElement={
         productionReport ? (
-          <IconButton
-            href={''}
-            style={{ backgroundColor: colors.blue[50], padding: '4px', borderRadius: '10%' }}
-            onClick={openModal}
-          >
+          <IconButton href={''} onClick={openModal}>
             <Edit className={'hover:cursor-pointer text-primary'} />
           </IconButton>
         ) : (

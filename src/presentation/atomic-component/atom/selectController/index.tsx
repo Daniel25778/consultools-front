@@ -12,7 +12,7 @@ interface SelectControllerProps<T extends FieldValues> {
   isLoading?: boolean;
   labelTop?: string;
   width?: number | string;
-  query?: any;
+  query?: unknown;
 }
 
 export const SelectController = <T extends FieldValues>({

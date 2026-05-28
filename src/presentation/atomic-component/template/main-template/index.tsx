@@ -1,3 +1,5 @@
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { PrivateHeader } from 'presentation/atomic-component/organism';
 import Footer from 'presentation/atomic-component/organism/footer';
 import { type FC, useEffect } from 'react';
@@ -11,21 +13,23 @@ export const MainTemplate: FC = () => {
   }, [pathname]);
 
   return (
-    <div className={'flex flex-col min-h-dvh'} id={'main'}>
-      <PrivateHeader />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className={'flex flex-col min-h-dvh'} id={'main'}>
+        <PrivateHeader />
 
-      <main className={'flex w-full bg-gray-75 dark:bg-gray-900'}>
-        <div className={'flex w-full'} style={{ transition: 'all 200ms' }}>
-          <div
-            className={
-              'text-white w-full py-14 min-h-[calc(100dvh-69px)] dark:text-white flex items-start justify-center gap-3 px-4 tablet:px-[150px]'
-            }
-          >
-            <Outlet />
+        <main className={'flex w-full bg-gray-75 dark:bg-gray-900'}>
+          <div className={'flex w-full'} style={{ transition: 'all 200ms' }}>
+            <div
+              className={
+                'text-white w-full py-10 min-h-[calc(100dvh-69px)] dark:text-white flex items-start justify-center gap-3 pr-4 pl-2 tablet:px-[150px] tablet:py-14'
+              }
+            >
+              <Outlet />
+            </div>
           </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
+    </LocalizationProvider>
   );
 };

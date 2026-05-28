@@ -3,7 +3,7 @@ import type { FC } from 'react';
 
 export const CardSkeleton: FC = () => (
   <div
-    style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+    style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
     className={'grid gap-[18px] mt-4'}
   >
     <div

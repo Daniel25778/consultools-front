@@ -13,7 +13,7 @@ export const ResponsibleAreaList: FC<ResponsibleAreaListProps> = ({ responsibleA
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={responsibleAreaQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {responsibleAreaQuery.data?.map((item) => (

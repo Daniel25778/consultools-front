@@ -24,7 +24,7 @@ export const CompanyContent: FC = () => {
     route: apiPaths.company
   });
   return (
-    <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
+    <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800 rounded-md flex '}>
       <div className={'w-full flex items-center justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Empresas</h2>
         <RegisterCompanyModal

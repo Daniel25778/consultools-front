@@ -31,6 +31,7 @@ export * from './table';
 export * from './tabs';
 export * from './terms';
 export * from './time-ago';
+export * from './time-controller';
 export * from './title';
 export * from './toggle-menu';
 export * from './toggle-theme';

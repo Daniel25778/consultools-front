@@ -14,7 +14,7 @@ export const CollaboratorList: FC<CollaboratorListProps> = ({ collaboratorQuery 
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={collaboratorQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {collaboratorQuery.data?.map((item) => (

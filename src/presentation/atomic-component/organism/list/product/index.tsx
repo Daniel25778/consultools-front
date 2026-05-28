@@ -13,7 +13,7 @@ export const ProductList: FC<ProductListProps> = ({ productQuery }) => {
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={productQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(390px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {productQuery.data?.map((item) => (

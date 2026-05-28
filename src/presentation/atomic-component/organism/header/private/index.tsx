@@ -51,7 +51,7 @@ export const PrivateHeader: FC = () => {
         >
           <div className={'flex gap-2 justify-center items-center'}>
             <Person color={'inherit'} fontSize={'small'} />
-            <p className={'font-medium dark:font-bold'}>
+            <p className={'text-sm font-medium tablet:font-medium line-clamp-1 dark:font-bold'}>
               {' '}
               {roleTranslate[user.role]} - {user.name}{' '}
             </p>
