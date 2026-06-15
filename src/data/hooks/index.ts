@@ -5,6 +5,8 @@ export * from './use-modal';
 export * from './use-pagination';
 export * from './use-pagination-controls';
 export * from './use-path';
+export * from './use-remove-items';
 export * from './use-search';
 export * from './use-theme';
 export * from './use-window-dimensions';
+

@@ -2,26 +2,25 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
-    FLUSH,
-    PAUSE,
-    PERSIST,
-    persistReducer,
-    persistStore,
-    PURGE,
-    REGISTER,
-    REHYDRATE,
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { filterReducer } from './filters/slice';
 import { persistReducer as persistedReducer } from './persist/slice';
 import { recoveryReducer } from './recovery/slice';
-import { sidebarReducer } from './sidebar/slice';
 import { themeReducer } from './theme/slice';
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage
 };
 
 const persisted = persistReducer(persistConfig, persistedReducer);
@@ -30,8 +29,7 @@ const rootReducer = combineReducers({
   theme: themeReducer,
   filter: filterReducer,
   persist: persisted,
-  recovery: recoveryReducer,
-  sidebar: sidebarReducer,
+  recovery: recoveryReducer
 });
 
 export const store = configureStore({
@@ -39,9 +37,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
+    })
 });
 
 export const persister = persistStore(store);

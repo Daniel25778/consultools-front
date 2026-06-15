@@ -98,18 +98,8 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
           inputProps={{ max: 2147483647, min: 1 }}
           required
         />
-        <TimePickerController
-          control={control}
-          label={'Horário de início'}
-          name={'startTime'}
-          required
-        />
-        <TimePickerController
-          control={control}
-          label={'Horário de término'}
-          name={'endTime'}
-          required
-        />
+        <TimePickerController control={control} label={'Horário de início'} name={'startTime'} />
+        <TimePickerController control={control} label={'Horário de término'} name={'endTime'} />
 
         <SelectController
           control={control}

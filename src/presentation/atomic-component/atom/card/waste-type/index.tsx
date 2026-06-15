@@ -21,7 +21,12 @@ export const WasteTypeCard: FC<WasteTypeCardProps> = ({ wasteType }) => {
     >
       <div className={'flex justify-between items-start'}>
         <div className={'flex flex-col gap-1'}>
-          <h3 className={'text-lg font-semibold text-primary'}>{wasteType.name}</h3>
+          <h3
+            className={'text-lg font-semibold text-primary cursor-pointer'}
+            onClick={modalDetails.openModal}
+          >
+            {wasteType.name}
+          </h3>
           <p className={'text-sm text-gray-400 line-clamp-1'}>{wasteType.description}</p>
         </div>
         <div className={'flex gap-2'}>

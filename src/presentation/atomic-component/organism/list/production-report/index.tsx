@@ -4,7 +4,6 @@ import { paths } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
 import { CardSkeleton, ProductionReportCard } from 'presentation/atomic-component/atom/card';
 import { type FC } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface ProductionReportListProps {
   productionReport: ReturnType<typeof useInfiniteScroll<ProductionReport>>;
@@ -15,8 +14,6 @@ export const ProductionReportList: FC<ProductionReportListProps> = ({
   productionReport,
   companyId
 }) => {
-  const navigate = useNavigate();
-
   return (
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={productionReport}>
@@ -26,12 +23,10 @@ export const ProductionReportList: FC<ProductionReportListProps> = ({
         >
           {productionReport.data?.map((item) => (
             <ProductionReportCard
-              onClick={() =>
-                navigate(
-                  companyId
-                    ? paths.productionReportDetailsCompany(item.id, companyId)
-                    : paths.productionReportDetails(item.id)
-                )
+              link={
+                companyId
+                  ? paths.productionReportDetailsCompany(item.id, companyId)
+                  : paths.productionReportDetails(item.id)
               }
               key={item.id}
               productionReport={item}

@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
 import { statusOptions, type Workstation } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
@@ -15,8 +15,10 @@ import { useAppSelector } from 'store/index';
 export const WorkstationContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.workstation);
   const modal = useModal();
-  const { id = '' } = useParams<{ id: string }>();
+  const { companyId } = useParams() as { companyId: string };
   const { search, setSearchDebounce, searchDebounce } = useSearch();
+  const { removeItems } = useRemoveItems();
+
   useEffect(() => {
     setFilter('workstation', {
       search
@@ -26,7 +28,7 @@ export const WorkstationContent: FC = () => {
     filters: {
       status: status,
       search: search,
-      companyId: id
+      companyId
     },
     limit: 20,
 
@@ -36,7 +38,10 @@ export const WorkstationContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+        removeItems={removeItems}
+      />
       <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Postos de trabalho</h2>
         <RegisterWorkstationModal

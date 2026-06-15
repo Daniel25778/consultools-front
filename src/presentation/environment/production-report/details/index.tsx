@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { useModal } from 'data/hooks';
+import { useModal, useRemoveItems } from 'data/hooks';
 import { useFindOneProductionReportQuery } from 'infra/cache';
 import { apiPaths } from 'main/config/paths';
 import { formatCompactNumber, formatHour } from 'main/utils';
@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 export const ProductionReportDetails: FC = () => {
   const { id = '', companyId } = useParams<{ id: string; companyId?: string }>();
   const productionReportQuery = useFindOneProductionReportQuery({ id }).data;
+  const { removeItems } = useRemoveItems();
 
   const modal = useModal();
   const menuCards = getProductionReportMenuCards(id, companyId);
@@ -24,6 +25,7 @@ export const ProductionReportDetails: FC = () => {
           ...(companyId && { [companyId]: 'Detalhes de Empresa' }),
           [id]: 'Detalhes de Apontamento'
         }}
+        removeItems={removeItems}
       />
       <div
         className={

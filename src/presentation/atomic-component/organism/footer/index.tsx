@@ -1,13 +1,15 @@
 import { Email } from '@mui/icons-material';
 import { colors } from 'presentation/style/palette';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useAppSelector } from 'store/index';
 
 const Footer: React.FC = () => {
+  const { sidebarOpen } = useAppSelector((state) => state.persist);
+
   return (
     <footer
       style={{ boxShadow: '0px -4px 20px rgba(144, 144, 144, 0.05)' }}
-      className={'w-full dark:bg-gray-900 py-4 '}
+      className={'w-full dark:bg-gray-900 py-4 border-t'}
     >
       <div
         className={
@@ -16,16 +18,16 @@ const Footer: React.FC = () => {
       >
         <a
           href={'mailto:contato@consultools.com'}
-          className={'flex items-center gap-2 hover:underline'}
+          className={`flex items-center gap-2 hover:underline ${sidebarOpen ? 'tablet:ml-[150px]' : 'ml-0'} transition-all duration-200`}
           aria-label={'Fale com a Consultools'}
         >
           <Email style={{ color: colors.primary }} />
           <span className={'text-primary font-medium text-sm'}>FALE COM A CONSULTOOLS</span>
         </a>
 
-        <Link to={'/'} className={'text-primary font-medium text-sm'}>
+        <span className={'text-primary font-medium text-sm'}>
           Todos os direitos reservados © Consultools {new Date().getFullYear()}
-        </Link>
+        </span>
       </div>
     </footer>
   );

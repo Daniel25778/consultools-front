@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import type { Nature } from 'domain/enums';
 import { type Stopping } from 'domain/models';
 import { natureOptions } from 'domain/models/nature';
@@ -18,6 +18,8 @@ export const StoppingContent: FC = () => {
   const { id = '', companyId } = useParams<{ id: string; companyId?: string }>();
   const { nature } = useAppSelector((state) => state.filter.stopping);
   const { search, setSearchDebounce, searchDebounce } = useSearch();
+  const { removeItems } = useRemoveItems();
+
   useEffect(() => {
     setFilter('stopping', {
       search,
@@ -42,6 +44,7 @@ export const StoppingContent: FC = () => {
           ...(companyId && { [companyId]: 'Detalhes de Empresa' }),
           [id]: 'Detalhes de Apontamento'
         }}
+        removeItems={removeItems}
       />
       <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Paradas</h2>

@@ -1,10 +1,10 @@
 import { Business, Description, Person, Search } from '@mui/icons-material';
-import { Box, CircularProgress, InputBase, Paper, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, InputBase, Paper, Typography } from '@mui/material';
 import { useInfiniteScroll, useSearch } from 'data/hooks';
 import { QueryName } from 'main/config';
 import { FetchOnScroll } from 'presentation/atomic-component/atom';
 import { colors } from 'presentation/style/palette';
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface SearchData {
@@ -30,6 +30,7 @@ export const SearchInput: FC<SearchInputProps> = ({
   route,
   queryName
 }) => {
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const { search, searchDebounce, setSearchDebounce } = useSearch();
 
@@ -54,15 +55,17 @@ export const SearchInput: FC<SearchInputProps> = ({
   };
 
   return (
-    <div className={'w-full min-w-[300px] tablet:min-w-[400px] max-w-[500px] relative'}>
+    <div className={'relative'}>
       <Paper
         elevation={0}
-        className={'flex items-center gap-2 rounded-full  px-6 py-1'}
+        className={`flex items-center justify-end gap-2 rounded-full ${isOpen ? 'w-[75dvw] tablet:w-[400px]' : 'w-10'}`}
         sx={{
           border: `1.5px solid ${colors.gray[100]}`,
           backgroundColor: colors.white,
           borderRadius: '9999px',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          overflow: 'hidden',
+          transition: 'width 0.3s ease-in-out'
         }}
       >
         <InputBase
@@ -72,6 +75,7 @@ export const SearchInput: FC<SearchInputProps> = ({
           fullWidth
           inputProps={{ 'aria-label': 'Pesquisar itens' }}
           sx={{
+            paddingLeft: '12px',
             fontSize: '1rem',
             color: colors.gray[900],
             '& input::placeholder': {
@@ -81,13 +85,17 @@ export const SearchInput: FC<SearchInputProps> = ({
           }}
         />
         {query.isFetching && !query.isFetchingNextPage ? (
-          <CircularProgress size={20} color={'inherit'} />
+          <IconButton>
+            <CircularProgress size={24} color={'inherit'} />
+          </IconButton>
         ) : (
-          <Search sx={{ color: colors.gray[800], fontSize: 24 }} />
+          <IconButton onClick={() => setIsOpen(!isOpen)}>
+            <Search sx={{ color: colors.gray[800], fontSize: 24 }} />
+          </IconButton>
         )}
       </Paper>
 
-      {search.length > 0 && (
+      {search.length > 0 && (!query.isFetching || query.isFetchingNextPage) && (
         <Paper
           className={'mt-2 absolute rounded w-fit min-w-full z-50 left-0'}
           sx={{

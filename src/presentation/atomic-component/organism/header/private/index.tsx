@@ -1,20 +1,14 @@
-import { Logout, Person } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { Role, roleRoutes, roleTranslate } from 'domain/enums/role';
+import { Role, roleRoutes } from 'domain/enums';
 import { Logo } from 'main/assets';
-import { QueryName, apiPaths, paths } from 'main/config';
-import { SearchInput } from 'presentation/atomic-component/molecule/search-input';
+import { apiPaths, paths, QueryName } from 'main/config';
+import { ToggleMenu } from 'presentation/atomic-component/atom';
+import { SearchInput } from 'presentation/atomic-component/molecule';
 import type { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
-import { logout, setRedirectPath } from 'store/persist/slice';
-import { setSidebar } from 'store/sidebar/slice';
 
 export const PrivateHeader: FC = () => {
-  const { user } = useAppSelector((state) => state.persist);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { user, sidebarOpen } = useAppSelector((state) => state.persist);
 
   const searchConfig = {
     [Role.ADMIN]: {
@@ -34,61 +28,45 @@ export const PrivateHeader: FC = () => {
       route: apiPaths.productionReport,
       path: paths.productionReport,
       placeholder: 'Buscar apontamentos...'
+    },
+    [Role.MANAGER]: {
+      queryName: QueryName.productionReport,
+      route: apiPaths.productionReport,
+      path: paths.productionReport,
+      placeholder: 'Buscar apontamentos...'
     }
   }[user.role];
 
   return (
     <header
       className={
-        'flex flex-row justify-between items-center z-[1200] top-0 header sticky tablet:flex  h-auto laptop: w-full'
+        'flex justify-between items-center p-4 border-b z-[999] bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-600 sticky top-0 h-[70px] header'
       }
     >
-      <div className={'flex flex-col w-full'}>
-        <div
-          className={
-            'text-white w-full  bg-primary dark:text-white flex items-center justify-end gap-5 py-1 px-4 tablet:px-[150px]  tablet:items-center tablet:justify-end '
-          }
-        >
-          <div className={'flex gap-2 justify-center items-center'}>
-            <Person color={'inherit'} fontSize={'small'} />
-            <p className={'text-sm font-medium tablet:font-medium line-clamp-1 dark:font-bold'}>
-              {' '}
-              {roleTranslate[user.role]} - {user.name}{' '}
-            </p>
-          </div>
+      <div
+        className={`hidden laptop:flex ml-[80px] ${sidebarOpen ? 'w-0' : 'w-[200px]'} transition-[width] ease duration-200 overflow-hidden`}
+      >
+        <Link to={roleRoutes[user.role]?.replace('redirect', user?.companyId)}>
+          <img alt={'Logo'} className={'h-[20px] cursor-pointer'} src={Logo} />
+        </Link>
+      </div>
 
-          <IconButton
-            className={'gap-3'}
-            onClick={(): void => {
-              dispatch(logout());
-              dispatch(setRedirectPath(null));
-              dispatch(setSidebar(false));
-            }}
-            color={'inherit'}
-          >
-            <Logout color={'inherit'} fontSize={'small'} />
-            <p className={'font-medium text-lg'}>Sair</p>
-          </IconButton>
-        </div>
-        <div
-          style={{ boxShadow: '0px 4px 20px rgba(144, 144, 144, 0.05)' }}
-          className={
-            'w-full h-full bg-white flex flex-col justify-between items-start p-8 px-4 tablet:flex-row tablet:px-[150px] tablet:items-center gap-6'
-          }
+      <div className={'flex gap-3 laptop:hidden'}>
+        <ToggleMenu />
+      </div>
+
+      <div className={'flex items-center gap-3 tablet:gap-6'}>
+        <SearchInput
+          path={searchConfig.path}
+          route={searchConfig.route}
+          queryName={searchConfig.queryName}
+          placeholder={searchConfig.placeholder}
+        />
+        <p
+          className={'hidden tablet:flex text-primary dark:text-white font-semibold dark:font-bold'}
         >
-          <img
-            onClick={() => navigate(roleRoutes[user.role])}
-            alt={'Logo'}
-            className={'h-6 tablet:h-5 cursor-pointer'}
-            src={Logo}
-          />
-          <SearchInput
-            path={searchConfig.path}
-            route={searchConfig.route}
-            queryName={searchConfig.queryName}
-            placeholder={searchConfig.placeholder}
-          />
-        </div>
+          Olá, {user.name}
+        </p>
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import type { Waste } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
@@ -13,6 +13,8 @@ export const WasteContent: FC = () => {
   const modal = useModal();
   const { id = '', companyId } = useParams<{ id: string; companyId?: string }>();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
+  const { removeItems } = useRemoveItems();
+
   useEffect(() => {
     setFilter('waste', {
       search
@@ -35,6 +37,7 @@ export const WasteContent: FC = () => {
           ...(companyId && { [companyId]: 'Detalhes de Empresa' }),
           [id]: 'Detalhes de Apontamento'
         }}
+        removeItems={removeItems}
       />
       <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Refugos</h2>
