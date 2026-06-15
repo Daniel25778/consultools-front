@@ -156,7 +156,7 @@ export const LabelInput: FC<LabelInputProps> = ({
             label ? (
               <span>
                 {label}
-                {required ? '*' : ''}
+                {required ? <span className={'text-[#ff4747]'}> *</span> : ''}
               </span>
             ) : null
           }
@@ -185,7 +185,7 @@ export const LabelInput: FC<LabelInputProps> = ({
           label ? (
             <span>
               {label}
-              {required ? ' *' : ''}
+              {required ? <span className={'text-[#ff4747]'}> *</span> : ''}
             </span>
           ) : null
         }

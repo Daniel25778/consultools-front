@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
 import { statusOptions, type Product } from 'domain/models';
 import { apiPaths, QueryName } from 'main/config';
@@ -14,7 +14,8 @@ import { useAppSelector } from 'store/index';
 export const ProductContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.product);
   const modal = useModal();
-  const { id = '' } = useParams<{ id: string }>();
+  const { companyId } = useParams() as { companyId: string };
+  const { removeItems } = useRemoveItems();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
   useEffect(() => {
     setFilter('product', {
@@ -26,7 +27,7 @@ export const ProductContent: FC = () => {
     filters: {
       status: status,
       search: search,
-      companyId: id
+      companyId
     },
     limit: 20,
     queryName: QueryName.product,
@@ -35,7 +36,10 @@ export const ProductContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+        removeItems={removeItems}
+      />
       <div
         className={
           'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'

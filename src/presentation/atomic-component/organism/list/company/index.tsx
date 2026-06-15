@@ -18,7 +18,7 @@ export const CompanyList: FC<CompanyListProps> = ({ companyQuery }) => {
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={companyQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {companyQuery.data?.map((item) => (

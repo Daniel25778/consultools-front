@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { useRemoveItems } from 'data/hooks';
 import { useModal } from 'data/hooks/use-modal';
 import { Status, statusTranslate } from 'domain/enums';
 import { useFindOneUserQuery } from 'infra/cache';
@@ -15,6 +16,7 @@ export const ConsultantDetails: FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const userQuery = useFindOneUserQuery({ id }).data;
   const modal = useModal();
+  const { removeItems } = useRemoveItems();
 
   useEffect(() => {
     setFilter('company', {
@@ -24,7 +26,7 @@ export const ConsultantDetails: FC = () => {
 
   return (
     <div className={'flex w-full flex-col  gap-5 '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de Consultor' }} />
+      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de Consultor' }} removeItems={removeItems} />
       <div
         className={
           'flex flex-col tablet:flex-row w-full bg-white rounded p-6 tablet:p-8 items-start tablet:items-center justify-between gap-6'
@@ -74,7 +76,7 @@ export const ConsultantDetails: FC = () => {
           />
         </div>
       </div>
-      <CompanyContent />
+      <CompanyContent userId={id} />
     </div>
   );
 };

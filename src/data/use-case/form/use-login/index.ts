@@ -34,7 +34,7 @@ export const useUserLogin = (): formReturn<LoginRequest> => {
           user: response.user
         })
       );
-      navigate(roleRoutes[response.user.role]);
+      navigate(roleRoutes[response.user.role]?.replace('redirect', response.user.companyId));
     } catch (error) {
       resolverError(error);
     }

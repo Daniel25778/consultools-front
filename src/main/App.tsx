@@ -1,8 +1,11 @@
 import 'presentation/style/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useTheme, useWindowDimensions } from 'data/hooks';
+import { ptBR } from 'date-fns/locale';
 import { queryClient } from 'infra/lib';
 import { colors } from 'presentation/style';
 import { useEffect, type FC } from 'react';
@@ -34,8 +37,9 @@ const App: FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router />
-
+      <LocalizationProvider adapterLocale={ptBR} dateAdapter={AdapterDateFns}>
+        <Router />
+      </LocalizationProvider>
       <ToastContainer
         autoClose={3000}
         closeOnClick

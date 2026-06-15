@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
 import { statusOptions, type StoppingReason } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
@@ -15,8 +15,10 @@ import { useAppSelector } from 'store/index';
 export const StoppingReasonContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.stoppingReason);
   const modal = useModal();
-  const { id = '' } = useParams<{ id: string }>();
+  const { companyId } = useParams() as { companyId: string };
   const { search, setSearchDebounce, searchDebounce } = useSearch();
+  const { removeItems } = useRemoveItems();
+
   useEffect(() => {
     setFilter('stoppingReason', {
       search
@@ -26,7 +28,7 @@ export const StoppingReasonContent: FC = () => {
     filters: {
       status: status,
       search: search,
-      companyId: id
+      companyId
     },
     limit: 20,
     queryName: QueryName.stoppingReason,
@@ -35,7 +37,10 @@ export const StoppingReasonContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+        removeItems={removeItems}
+      />
       <div
         className={
           'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'

@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import type { WasteType } from 'domain/models/waste-type';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
@@ -12,7 +12,8 @@ import { useParams } from 'react-router-dom';
 export const WasteTypeContent: FC = () => {
   const modal = useModal();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
-  const { id = '' } = useParams<{ id: string }>();
+  const { companyId } = useParams() as { companyId: string };
+  const { removeItems } = useRemoveItems();
 
   useEffect(() => {
     setFilter('wasteType', { search });
@@ -20,7 +21,7 @@ export const WasteTypeContent: FC = () => {
 
   const wasteTypeQuery = useInfiniteScroll<WasteType>({
     filters: {
-      companyId: id,
+      companyId,
       search: search
     },
     limit: 20,
@@ -30,7 +31,10 @@ export const WasteTypeContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800 rounded-md flex'}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+        removeItems={removeItems}
+      />
       <div className={'w-full flex flex-col gap-4  tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium w-full'}>Tipos de refugo</h2>
         <div className={'flex items-end justify-end w-full'}>

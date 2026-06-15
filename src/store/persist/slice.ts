@@ -7,6 +7,7 @@ interface PersistState {
   accessToken: string | null;
   isLoading: boolean;
   theme: 'dark' | 'light';
+  sidebarOpen: boolean;
   redirectPath: string | null;
 }
 
@@ -15,6 +16,7 @@ const initialState: PersistState = {
   isLoading: false,
   redirectPath: null,
   theme: 'light',
+  sidebarOpen: false,
   user: null as unknown as User
 };
 
@@ -29,6 +31,9 @@ const persistSlice = createSlice({
     setAuth(state: PersistState, action: PayloadAction<{ user: User; token: string }>) {
       state.user = action.payload.user;
       state.accessToken = action.payload.token;
+    },
+    setSidebarOpen(state: PersistState, action: PayloadAction<boolean>) {
+      state.sidebarOpen = action.payload;
     },
     setIsLoading(state: PersistState, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
@@ -47,5 +52,5 @@ const persistSlice = createSlice({
 
 export const {
   reducer: persistReducer,
-  actions: { setAuth, logout, setUser, setTheme, setIsLoading, setRedirectPath }
+  actions: { logout, setUser, setTheme, setIsLoading, setRedirectPath, setSidebarOpen, setAuth }
 } = persistSlice;

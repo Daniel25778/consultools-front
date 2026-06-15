@@ -16,7 +16,7 @@ interface useRegisterProductionReportProps {
 }
 
 export const useRegisterProductionReport = ({
-  closeModal,
+  // closeModal,
   productionReport
 }: useRegisterProductionReportProps): formReturn<ProductionReportRequest> => {
   const formData = useForm<ProductionReportRequest>({
@@ -42,7 +42,7 @@ export const useRegisterProductionReport = ({
 
       callToast.success(`Apontamento ${productionReport ? 'editado' : 'cadastrado'} com sucesso!`);
       queryClient.invalidateQueries({ queryKey: [QueryName.productionReport] });
-      closeModal();
+      // closeModal();
     } catch (error) {
       resolverError(error);
     }

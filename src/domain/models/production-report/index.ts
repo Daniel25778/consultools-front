@@ -34,7 +34,7 @@ export interface ProductionReport {
   startTime: string;
   endTime: string;
   code: string;
-  finishedAt: boolean | null;
+  finishedAt: Date | null;
   production: number;
   workstation: string;
   productId: string;

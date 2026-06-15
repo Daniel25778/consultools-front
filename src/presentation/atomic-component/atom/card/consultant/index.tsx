@@ -20,9 +20,9 @@ export const ConsultantCard: FC<ConsultantCardProps> = ({ id, name, email, statu
       className={'flex flex-col gap-6 rounded p-4 bg-white'}
     >
       <div className={'flex justify-between items-start'}>
-        <div className={'flex flex-col gap-1'}>
-          <h3 className={'text-lg font-semibold text-primary'}>{name}</h3>
-          <p className={'text-base text-gray-400 font-medium'}>{email}</p>
+        <div className={'flex flex-col gap-1 max-w-[87%]'}>
+          <h3 className={'text-lg font-semibold text-primary truncate'}>{name}</h3>
+          <p className={'text-base text-gray-400 font-medium truncate'}>{email}</p>
         </div>
         <DeleteConfirmationModal
           id={id}

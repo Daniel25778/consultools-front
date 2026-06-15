@@ -6,7 +6,7 @@ import type { Company } from 'domain/models';
 import { setFilter } from 'main/utils/filter';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import { useEffect, type FC } from 'react';
-import { getUser } from 'store/persist/selector';
+import { useUserLogged } from 'store/persist/selector';
 import { RegisterCompanyForm } from '../../form/company';
 import { SearchInputBase } from '../../search-input-base';
 
@@ -18,7 +18,7 @@ interface RegisterCompanyModalProps {
 export const RegisterCompanyModal: FC<RegisterCompanyModalProps> = ({ modal, company }) => {
   const { closeModal, isOpen, openModal } = modal;
   const { search, setSearchDebounce, searchDebounce } = useSearch();
-  const user = getUser();
+  const user = useUserLogged();
 
   useEffect(() => {
     if (user.role === Role.ADMIN) {

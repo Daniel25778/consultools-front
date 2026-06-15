@@ -16,7 +16,7 @@ export const ConsultantList: FC<ConsultantListProps> = ({ userQuery }) => {
     <div className={'flex w-full flex-col'}>
       <FetchOnScroll skeleton={<CardSkeleton />} query={userQuery}>
         <div
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))' }}
           className={'grid gap-[18px]'}
         >
           {userQuery.data?.map((item) => (

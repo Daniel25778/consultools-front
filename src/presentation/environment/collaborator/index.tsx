@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import { Status } from 'domain/enums';
 import { statusOptions, type Collaborator } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
@@ -14,6 +14,9 @@ import { useAppSelector } from 'store/index';
 
 export const CollaboratorContent: FC = () => {
   const { status } = useAppSelector((state) => state.filter.collaborator);
+  const { removeItems } = useRemoveItems();
+  const { companyId } = useParams() as { companyId: string };
+
   const modal = useModal();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
   useEffect(() => {
@@ -21,12 +24,12 @@ export const CollaboratorContent: FC = () => {
       search
     });
   }, [search]);
-  const { id = '' } = useParams<{ id: string }>();
+
   const collaboratorQuery = useInfiniteScroll<Collaborator>({
     filters: {
       status: status,
       search: search,
-      companyId: id
+      companyId
     },
     limit: 20,
     queryName: QueryName.collaborator,
@@ -35,7 +38,10 @@ export const CollaboratorContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+        removeItems={removeItems}
+      />
       <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Colaboradores</h2>
         <div>

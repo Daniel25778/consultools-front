@@ -2,7 +2,7 @@ import { Tooltip } from '@mui/material';
 import { colors } from 'presentation/style';
 import type { FC, ReactNode } from 'react';
 import { Link, type To } from 'react-router-dom';
-import { useSidebar } from 'store/sidebar/selector';
+import { useSidebar } from 'store/persist/selector';
 import { IconRender } from '../icon-render';
 
 interface SidebarItemProps {
@@ -84,7 +84,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
     </Tooltip>
   );
 
-  const gap = size === 'small' ? 'tablet:px-4' : 'py-2 tablet:px-4 tablet:py-3';
+  const gap = size === 'small' ? 'tablet:px-4 tablet:p y-[7px]' : 'py-2 tablet:px-4 tablet:py-3';
 
   if (link)
     return (

@@ -10,14 +10,18 @@ import { CompanyList } from 'presentation/atomic-component/organism';
 import { type FC } from 'react';
 import { useAppSelector } from 'store/index';
 
-export const CompanyContent: FC = () => {
+interface CompanyContentProps {
+  userId?: string;
+}
+
+export const CompanyContent: FC<CompanyContentProps> = ({ userId }) => {
   const { status } = useAppSelector((state) => state.filter.company);
   const modal = useModal();
   const { user } = useAppSelector((state) => state.persist);
   const companyQuery = useInfiniteScroll<Company>({
     filters: {
       status: status,
-      userId: user?.id
+      userId: userId ?? user?.id
     },
     limit: 20,
     queryName: QueryName.company,

@@ -1,10 +1,8 @@
-import { useInfiniteScroll, useModal, useSearch } from 'data/hooks';
-import type { Status } from 'domain/enums';
-import { statusOptions, type Shift } from 'domain/models';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
+import { type Shift } from 'domain/models';
 import { apiPaths } from 'main/config';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
-import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterShiftModal } from 'presentation/atomic-component/molecule/modal';
 import { ShiftList } from 'presentation/atomic-component/organism';
@@ -16,7 +14,8 @@ export const ShiftContent: FC = () => {
   const modal = useModal();
   const { search, setSearchDebounce, searchDebounce } = useSearch();
   const { status } = useAppSelector((state) => state.filter.shift);
-  const { id = '' } = useParams<{ id: string }>();
+  const { companyId } = useParams() as { companyId: string };
+  const { removeItems } = useRemoveItems();
 
   useEffect(() => {
     setFilter('shift', { search });
@@ -24,7 +23,7 @@ export const ShiftContent: FC = () => {
 
   const shiftQuery = useInfiniteScroll<Shift>({
     filters: {
-      companyId: id,
+      companyId,
       status,
       name: search
     },
@@ -35,7 +34,10 @@ export const ShiftContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800 rounded-md flex'}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+        removeItems={removeItems}
+      />
       <div className={'w-full flex flex-col gap-4  tablet:flex-row tablet:justify-between'}>
         <h2 className={'text-primary text-2xl font-medium w-full'}>Turnos</h2>
         <div className={'flex items-end justify-end w-full'}>
@@ -61,7 +63,7 @@ export const ShiftContent: FC = () => {
             placeholder={'Buscar turno'}
           />
 
-          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          {/* <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -78,7 +80,7 @@ export const ShiftContent: FC = () => {
               }}
               placeholder={'Filtrar por status'}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <ShiftList shiftQuery={shiftQuery} />

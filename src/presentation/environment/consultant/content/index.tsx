@@ -19,7 +19,7 @@ export const ConsultantContent: FC = () => {
     filters: {
       status: status
     },
-    limit: 20,
+    limit: 24,
     queryName: QueryName.user,
     route: apiPaths.user
   });

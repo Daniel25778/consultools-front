@@ -1,4 +1,4 @@
-import { useInfiniteScroll, useModal } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems } from 'data/hooks';
 import { type ProductionReport } from 'domain/models/production-report';
 import { QueryName } from 'main/config';
 import { apiPaths } from 'main/config/paths';
@@ -10,13 +10,13 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 
 export const ProductionReportContent: FC = () => {
-  const { id: urlCompanyId } = useParams<{ id: string }>();
+  const { companyId } = useParams() as { companyId: string };
   const { search } = useAppSelector((state) => state.filter.productionReport);
   const modal = useModal();
   const { user } = useAppSelector((state) => state.persist);
+  const { removeItems } = useRemoveItems();
 
-  const companyId = urlCompanyId;
-  const userId = urlCompanyId ? undefined : user.id;
+  const userId = companyId ? undefined : user.id;
 
   const productionReportQuery = useInfiniteScroll<ProductionReport>({
     filters: {
@@ -31,7 +31,12 @@ export const ProductionReportContent: FC = () => {
 
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800  rounded-md flex '}>
-      {urlCompanyId && <Breadcrumbs replaceItems={{ [urlCompanyId]: 'Detalhes de empresa' }} />}
+      {companyId && (
+        <Breadcrumbs
+          replaceItems={{ [companyId]: 'Detalhes de empresa' }}
+          removeItems={removeItems}
+        />
+      )}
       <div className={'w-full flex  justify-between flex-col gap-4 tablet:flex-row'}>
         <h2 className={'text-primary text-2xl font-medium'}>Apontamentos</h2>
         <RegisterProductionReportModal

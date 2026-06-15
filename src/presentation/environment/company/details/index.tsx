@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
+import { useRemoveItems } from 'data/hooks';
 import { useModal } from 'data/hooks/use-modal';
-import { Status, statusTranslate } from 'domain/enums';
+import { Role, Status, statusTranslate } from 'domain/enums';
 import { useFindOneCompanyQuery } from 'infra/cache';
 import { apiPaths } from 'main/config/paths';
 import { formatCNPJ, setFilter } from 'main/utils';
@@ -10,12 +11,15 @@ import { RegisterCompanyModal } from 'presentation/atomic-component/molecule/mod
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
 import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
+import { useUserLogged } from 'store/persist/selector';
 import { getCompanyMenuCards } from '../../../../main/mock/menu';
 
 export const CompanyDetails: FC = () => {
-  const { id = '' } = useParams<{ id: string }>();
-  const companyQuery = useFindOneCompanyQuery({ id }).data;
+  const { companyId } = useParams() as { companyId: string };
+  const { data: companyQuery } = useFindOneCompanyQuery({ id: companyId });
   const modal = useModal();
+  const { removeItems } = useRemoveItems();
+  const { role } = useUserLogged();
 
   useEffect(() => {
     setFilter('company', {
@@ -23,11 +27,14 @@ export const CompanyDetails: FC = () => {
     });
   }, [companyQuery?.id]);
 
-  const menuCards = getCompanyMenuCards(id);
+  const menuCards = getCompanyMenuCards(companyId);
 
   return (
     <div className={'flex w-full flex-col  gap-5 '}>
-      <Breadcrumbs replaceItems={{ [id]: 'Detalhes de Empresa' }} />
+      <Breadcrumbs
+        replaceItems={{ [companyId]: 'Detalhes de Empresa' }}
+        removeItems={removeItems}
+      />
 
       <div
         className={
@@ -39,44 +46,52 @@ export const CompanyDetails: FC = () => {
             <h1 className={'text-primary text-xl tablet:text-2xl font-semibold break-words'}>
               {companyQuery?.name}
             </h1>
-            <RegisterCompanyModal
-              company={companyQuery}
-              modal={{
-                ...modal,
-                closeModal() {
-                  modal.closeModal();
-                }
-              }}
-            />
+            {role === Role.CONSULTANT && (
+              <RegisterCompanyModal
+                company={companyQuery}
+                modal={{
+                  ...modal,
+                  closeModal() {
+                    modal.closeModal();
+                  }
+                }}
+              />
+            )}
           </div>
           <div className={'flex flex-wrap items-center gap-x-3 gap-y-1'}>
             <p className={'text-gray-400 text-base font-medium'}>
               {formatCNPJ(companyQuery?.cnpj)}
             </p>
-            <p className={'text-gray-400 text-base font-medium'}>•</p>
-            <p
-              className={`${companyQuery?.status === Status.ENABLED ? 'text-dark-green' : 'text-gray-400'} text-base font-medium`}
-            >
-              {statusTranslate[companyQuery?.status ?? Status.DISABLED]}
-            </p>
+            {role === Role.CONSULTANT && (
+              <>
+                <p className={'text-gray-400 text-base font-medium'}>•</p>
+                <p
+                  className={`${companyQuery?.status === Status.ENABLED ? 'text-dark-green' : 'text-gray-400'} text-base font-medium`}
+                >
+                  {statusTranslate[companyQuery?.status ?? Status.DISABLED]}
+                </p>
+              </>
+            )}
           </div>
         </div>
-        <div className={'flex w-full tablet:w-auto tablet:min-w-max'}>
-          <DeleteConfirmationModal
-            id={id}
-            openElement={
-              <Button variant={'contained'} color={'error'} className={'w-full tablet:w-auto'}>
-                Remover empresa
-              </Button>
-            }
-            title={'Remover empresa'}
-            text={'Deseja realmente remover a empresa? Todos os dados serão perdidos.'}
-            route={apiPaths.company}
-            queryName={'company'}
-            color={'error'}
-            successMessage={'Empresa removida com sucesso!'}
-          />
-        </div>
+        {role === Role.CONSULTANT && (
+          <div className={'flex w-full tablet:w-auto tablet:min-w-max'}>
+            <DeleteConfirmationModal
+              id={companyId}
+              openElement={
+                <Button variant={'contained'} color={'error'} className={'w-full tablet:w-auto'}>
+                  Remover empresa
+                </Button>
+              }
+              title={'Remover empresa'}
+              text={'Deseja realmente remover a empresa? Todos os dados serão perdidos.'}
+              route={apiPaths.company}
+              queryName={'company'}
+              color={'error'}
+              successMessage={'Empresa removida com sucesso!'}
+            />
+          </div>
+        )}
       </div>
       <div
         className={
