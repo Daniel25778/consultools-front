@@ -3,7 +3,7 @@ import type { Waste } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
-import { apiPaths } from 'main/config';
+import { apiPaths, QueryName } from 'main/config';
 import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -36,7 +36,7 @@ export const useRegisterWaste = ({
           route: apiPaths.waste
         });
       callToast.success(`Refugo ${waste ? 'editado' : 'cadastrado'} com sucesso!`);
-      queryClient.invalidateQueries({ queryKey: ['waste'] });
+      queryClient.invalidateQueries({ queryKey: [QueryName.waste] });
       closeModal();
     } catch (error) {
       resolverError(error);

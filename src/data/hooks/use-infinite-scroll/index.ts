@@ -14,6 +14,7 @@ export interface useInfiniteScrollProps {
   retry?: number;
   refetchInterval?: number;
   filters?: object;
+  enabled?: boolean;
 }
 
 export interface useInfiniteScrollReturnProps {
@@ -33,7 +34,8 @@ export const useInfiniteScroll = <T>({
   limit,
   retry,
   refetchInterval,
-  filters
+  filters,
+  enabled
 }: useInfiniteScrollProps): useInfiniteScrollReturnProps & {
   data: T[] | undefined;
 } => {
@@ -52,6 +54,7 @@ export const useInfiniteScroll = <T>({
       queryKey: [queryName, ...Object.values(filter)],
       queryFn: async ({ pageParam = 1 }) => fetchItems({ pageParam }),
       initialPageParam: 1,
+      enabled,
       getNextPageParam: (_lastPage, pages) => {
         const currentPage = pages.length;
         const lastPage = _lastPage as any;

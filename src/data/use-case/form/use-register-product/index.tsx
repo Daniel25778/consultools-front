@@ -4,7 +4,7 @@ import type { Product } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
-import { apiPaths } from 'main/config';
+import { apiPaths, QueryName } from 'main/config';
 import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -42,7 +42,7 @@ export const useRegisterProduct = ({
           route: apiPaths.product
         });
       callToast.success(`Produto ${product ? 'editado' : 'cadastrado'} com sucesso!`);
-      queryClient.invalidateQueries({ queryKey: ['product'] });
+      queryClient.invalidateQueries({ queryKey: [QueryName.product] });
       closeModal();
     } catch (error) {
       resolverError(error);

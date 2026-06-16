@@ -75,7 +75,7 @@ export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({
 
         <SelectController
           control={control}
-          label={'Área responsável'}
+          label={'Motivo de parada'}
           name={'stoppingReasonId'}
           query={stoppingReasonQuery}
           options={

@@ -16,13 +16,13 @@ export type QueryList =
 
 export enum QueryName {
   default = 'default',
-  measurementUnit = 'measurement-unit',
-  productionReport = 'production-report',
-  wasteType = 'waste-type',
+  measurementUnit = 'measurementUnit',
+  productionReport = 'productionReport',
+  wasteType = 'wasteType',
   workstation = 'workstation',
   stopping = 'stopping',
   shift = 'shift',
-  stoppingReason = 'stopping-reason',
+  stoppingReason = 'stoppingReason',
   waste = 'waste',
   responsibleArea = 'responsibleArea',
   product = 'product',

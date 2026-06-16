@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { useModal, useRemoveItems } from 'data/hooks';
+import { Role } from 'domain/enums';
 import { useFindOneProductionReportQuery } from 'infra/cache';
 import { apiPaths } from 'main/config/paths';
 import { formatCompactNumber, formatHour } from 'main/utils';
@@ -10,11 +11,13 @@ import { RegisterProductionReportModal } from 'presentation/atomic-component/mol
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
 import { type FC } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from 'store/index';
 
 export const ProductionReportDetails: FC = () => {
   const { id = '', companyId } = useParams<{ id: string; companyId?: string }>();
   const productionReportQuery = useFindOneProductionReportQuery({ id }).data;
   const { removeItems } = useRemoveItems();
+  const { user } = useAppSelector((state) => state.persist);
 
   const modal = useModal();
   const menuCards = getProductionReportMenuCards(id, companyId);
@@ -49,6 +52,14 @@ export const ProductionReportDetails: FC = () => {
             />
           </div>
           <div className={'flex flex-wrap items-center gap-x-3 gap-y-1'}>
+            {user.role !== Role.COLLABORATOR && (
+              <>
+                <p className={'text-gray-400 text-base font-medium'}>
+                  {productionReportQuery?.collaborator?.name}
+                </p>
+                <p className={'text-gray-400 text-base font-medium'}>•</p>
+              </>
+            )}
             <p className={'text-gray-400 text-base font-medium'}>
               {productionReportQuery?.workstation?.name}
             </p>

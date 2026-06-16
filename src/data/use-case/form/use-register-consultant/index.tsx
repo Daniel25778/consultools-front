@@ -3,7 +3,7 @@ import type { User } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
-import { apiPaths } from 'main/config';
+import { apiPaths, QueryName } from 'main/config';
 import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -37,7 +37,7 @@ export const useRegisterConsultant = ({
           route: apiPaths.user
         });
       callToast.success(`Consultor ${user ? 'editado' : 'cadastrado'} com sucesso!`);
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: [QueryName.user] });
       closeModal();
     } catch (error) {
       resolverError(error);

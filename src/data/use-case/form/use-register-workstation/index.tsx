@@ -4,7 +4,7 @@ import type { Workstation } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
-import { apiPaths } from 'main/config';
+import { apiPaths, QueryName } from 'main/config';
 import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -42,7 +42,7 @@ export const useRegisterWorkstation = ({
           route: apiPaths.workstation
         });
       callToast.success(`Posto de trabalho ${workstation ? 'editado' : 'cadastrado'} com sucesso!`);
-      queryClient.invalidateQueries({ queryKey: ['workstation'] });
+      queryClient.invalidateQueries({ queryKey: [QueryName.workstation] });
       closeModal();
     } catch (error) {
       resolverError(error);

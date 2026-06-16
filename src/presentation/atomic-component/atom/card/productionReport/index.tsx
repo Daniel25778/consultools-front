@@ -59,10 +59,9 @@ export const ProductionReportCard: FC<ProductionReportCardProps> = ({ production
         </div>
       </div>
       <div className={'flex justify-between items-center'}>
-        {/* <ProductionReportBadge finishedAt={productionReport.finishedAt} /> */}
         <div className={'flex gap-1'}>
           <CalendarMonthOutlined fontSize={'small'} />
-          <p className={'font-bold text-sm text-gray-600'}>
+          <p className={'font-semibold text-sm text-gray-600'}>
             {formatDate(productionReport.createdAt, "dd 'de' MMMM HH:mm", false)}
           </p>
         </div>

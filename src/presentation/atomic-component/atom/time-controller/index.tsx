@@ -33,7 +33,6 @@ export const TimePickerController = <T extends FieldValues>({
           slotProps={{
             textField: {
               error: !!error,
-              helperText: error?.message,
               required,
               fullWidth: true,
               size: 'small'

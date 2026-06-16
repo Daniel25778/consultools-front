@@ -4,7 +4,7 @@ import type { Collaborator } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
-import { apiPaths } from 'main/config';
+import { apiPaths, QueryName } from 'main/config';
 import { callToast, resolverError } from 'main/utils';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -42,7 +42,7 @@ export const useRegisterCollaborator = ({
           route: apiPaths.collaborator
         });
       callToast.success(`Colaborador ${collaborator ? 'editado' : 'cadastrado'} com sucesso!`);
-      queryClient.invalidateQueries({ queryKey: ['collaborator'] });
+      queryClient.invalidateQueries({ queryKey: [QueryName.collaborator] });
       closeModal();
     } catch (error) {
       resolverError(error);

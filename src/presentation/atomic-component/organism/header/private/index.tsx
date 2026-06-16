@@ -40,7 +40,7 @@ export const PrivateHeader: FC = () => {
   return (
     <header
       className={
-        'flex justify-between items-center p-4 border-b z-[999] bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-600 sticky top-0 h-[70px] header'
+        'flex justify-between items-center p-4 bg-white laptop:p-8 border-b z-[999]  border-gray-200 dark:bg-gray-800 dark:border-gray-600 sticky top-0 h-[70px] header'
       }
     >
       <div

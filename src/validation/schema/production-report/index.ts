@@ -1,7 +1,7 @@
 import type { InferType } from 'yup';
 import { number, object, string } from 'yup';
 
-export const productionReportSchema = object().shape({
+const baseSchema = object().shape({
   startTime: string().required(),
   endTime: string().required(),
   production: number().required(),
@@ -11,4 +11,14 @@ export const productionReportSchema = object().shape({
   workstationId: string().required()
 });
 
-export type ProductionReportRequest = InferType<typeof productionReportSchema>;
+export const productionReportSchema = baseSchema.shape({
+  collaboratorId: string().optional()
+});
+
+export const productionReportSchemaWithCollaborator = baseSchema.shape({
+  collaboratorId: string().required()
+});
+
+export type ProductionReportRequest = InferType<typeof productionReportSchema> & {
+  collaboratorId?: string;
+};
