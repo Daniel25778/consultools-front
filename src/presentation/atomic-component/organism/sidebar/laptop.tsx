@@ -1,6 +1,6 @@
 import { usePath } from 'data/hooks';
 import { roleRoutes } from 'domain/enums';
-import { Logo } from 'main/assets';
+import { Logo, LogoSmall } from 'main/assets';
 import { paths } from 'main/config';
 import { sidebarItems } from 'main/mock';
 import { ToggleMenu } from 'presentation/atomic-component/atom';
@@ -29,7 +29,7 @@ export const LaptopSidebar: FC = () => {
     >
       <div
         className={
-          'flex p-4 w-full gap-4 justify-between items-center border-b border-gray-200 dark:border-gray-600 min-h-[70px] max-h-[70px]'
+          'flex p-4 w-full gap-4 justify-between relative items-center border-b border-gray-200 dark:border-gray-600 min-h-[70px] max-h-[70px]'
         }
       >
         <Link
@@ -38,7 +38,11 @@ export const LaptopSidebar: FC = () => {
         >
           <img alt={'Logo'} className={'h-[20px] cursor-pointer'} src={Logo} />
         </Link>
-
+        <img
+          alt={'LogoSmall'}
+          className={`h-[25px] cursor-pointer ${open ? 'hidden' : ''}`}
+          src={LogoSmall}
+        />
         <ToggleMenu />
       </div>
 

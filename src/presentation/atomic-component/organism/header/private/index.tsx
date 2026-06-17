@@ -1,10 +1,8 @@
-import { Role, roleRoutes } from 'domain/enums';
-import { Logo } from 'main/assets';
+import { Role } from 'domain/enums';
 import { apiPaths, paths, QueryName } from 'main/config';
 import { ToggleMenu } from 'presentation/atomic-component/atom';
 import { SearchInput } from 'presentation/atomic-component/molecule';
 import type { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
 
 export const PrivateHeader: FC = () => {
@@ -46,9 +44,16 @@ export const PrivateHeader: FC = () => {
       <div
         className={`hidden laptop:flex ml-[80px] ${sidebarOpen ? 'w-0' : 'w-[200px]'} transition-[width] ease duration-200 overflow-hidden`}
       >
-        <Link to={roleRoutes[user.role]?.replace('redirect', user?.companyId)}>
+        {/* <Link to={roleRoutes[user.role]?.replace('redirect', user?.companyId)}>
           <img alt={'Logo'} className={'h-[20px] cursor-pointer'} src={Logo} />
-        </Link>
+        </Link> */}
+        <p
+          className={
+            'hidden text-xl tablet:flex text-primary dark:text-white font-semibold dark:font-bold'
+          }
+        >
+          Olá, {user.name}
+        </p>
       </div>
 
       <div className={'flex gap-3 laptop:hidden'}>
@@ -62,11 +67,6 @@ export const PrivateHeader: FC = () => {
           queryName={searchConfig.queryName}
           placeholder={searchConfig.placeholder}
         />
-        <p
-          className={'hidden tablet:flex text-primary dark:text-white font-semibold dark:font-bold'}
-        >
-          Olá, {user.name}
-        </p>
       </div>
     </header>
   );
