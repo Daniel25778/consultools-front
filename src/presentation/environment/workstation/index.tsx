@@ -30,7 +30,7 @@ export const WorkstationContent: FC = () => {
       search: search,
       companyId
     },
-    limit: 20,
+    limit: 30,
 
     queryName: QueryName.workstation,
     route: apiPaths.workstation

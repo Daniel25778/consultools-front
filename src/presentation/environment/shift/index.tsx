@@ -27,7 +27,7 @@ export const ShiftContent: FC = () => {
       status,
       name: search
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.shift,
     route: apiPaths.shift
   });

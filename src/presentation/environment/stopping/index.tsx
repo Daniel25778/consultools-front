@@ -32,7 +32,7 @@ export const StoppingContent: FC = () => {
       nature: nature,
       productionReportingId: id
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.stopping,
     route: apiPaths.stopping
   });

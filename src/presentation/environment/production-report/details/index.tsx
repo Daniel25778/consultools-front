@@ -32,7 +32,7 @@ export const ProductionReportDetails: FC = () => {
       />
       <div
         className={
-          'flex flex-col tablet:flex-row w-full bg-white rounded p-6 tablet:p-8 items-start tablet:items-center justify-between gap-6'
+          'flex flex-col tablet:flex-row w-full bg-white min-h-[132px] rounded p-6 tablet:p-8 items-start tablet:items-center justify-between gap-6'
         }
       >
         <div className={'flex flex-col gap-1'}>
@@ -40,16 +40,18 @@ export const ProductionReportDetails: FC = () => {
             <h1 className={'text-primary text-xl tablet:text-2xl font-semibold break-words'}>
               {productionReportQuery?.code}
             </h1>
-            <RegisterProductionReportModal
-              companyId={companyId}
-              productionReport={productionReportQuery}
-              modal={{
-                ...modal,
-                closeModal() {
-                  modal.closeModal();
-                }
-              }}
-            />
+            {productionReportQuery && (
+              <RegisterProductionReportModal
+                companyId={companyId}
+                productionReport={productionReportQuery}
+                modal={{
+                  ...modal,
+                  closeModal() {
+                    modal.closeModal();
+                  }
+                }}
+              />
+            )}
           </div>
           <div className={'flex flex-wrap items-center gap-x-3 gap-y-1'}>
             {user.role !== Role.COLLABORATOR && (

@@ -36,7 +36,7 @@ export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({
 
   const stoppingReasonQuery = useInfiniteScroll<StoppingReason>({
     route: apiPaths.stoppingReason,
-    limit: 20,
+    limit: 30,
     filters: {
       companyId: companyId || user.companyId
     },

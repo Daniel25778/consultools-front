@@ -29,7 +29,7 @@ export const ProductContent: FC = () => {
       search: search,
       companyId
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.product,
     route: apiPaths.product
   });
@@ -42,7 +42,7 @@ export const ProductContent: FC = () => {
       />
       <div
         className={
-          'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'
+          'w-full flex flex-col-reverse items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
         }
       >
         <h2 className={'text-primary text-2xl font-medium'}>Produtos</h2>

@@ -24,7 +24,7 @@ export const WasteTypeContent: FC = () => {
       companyId,
       search: search
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.wasteType,
     route: apiPaths.wasteType
   });

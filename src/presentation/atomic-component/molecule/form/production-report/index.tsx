@@ -36,7 +36,6 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
     formState: { isSubmitting }
   } = useRegisterProductionReport({
     productionReport,
-    companyId: companyId,
     closeModal
   });
 
@@ -46,38 +45,30 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
 
   const shiftQuery = useInfiniteScroll<Shift>({
     route: apiPaths.shift,
-    filters: {
-      companyId
-    },
-    limit: 20,
+    filters: { companyId },
+    limit: 30,
     queryName: QueryName.shift
   });
 
   const collaboratorQuery = useInfiniteScroll<Collaborator>({
     route: apiPaths.collaborator,
-    filters: {
-      companyId
-    },
+    filters: { companyId },
     enabled: needsCollaborator,
-    limit: 20,
+    limit: 30,
     queryName: QueryName.collaborator
   });
 
   const workstationQuery = useInfiniteScroll<Workstation>({
     route: apiPaths.workstation,
-    limit: 20,
-    filters: {
-      companyId
-    },
+    limit: 30,
+    filters: { companyId },
     queryName: QueryName.workstation
   });
 
   const productQuery = useInfiniteScroll<Product>({
     route: apiPaths.product,
-    limit: 20,
-    filters: {
-      companyId
-    },
+    limit: 30,
+    filters: { companyId },
     queryName: QueryName.product
   });
 
@@ -125,7 +116,7 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
           label={'Turno'}
           name={'shiftId'}
           query={shiftQuery}
-          options={listToSelect(shiftQuery.data ?? [])}
+          options={listToSelect(shiftQuery.data ?? [], undefined, productionReport?.shift)}
           placeholder={'Selecione o turno'}
           required
         />
@@ -136,7 +127,11 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
             label={'Colaborador'}
             name={'collaboratorId'}
             query={collaboratorQuery}
-            options={listToSelect(collaboratorQuery.data ?? [])}
+            options={listToSelect(
+              collaboratorQuery.data ?? [],
+              undefined,
+              productionReport?.collaborator
+            )}
             placeholder={'Selecione o colaborador'}
             required
           />
@@ -146,7 +141,11 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
           label={'Posto de trabalho'}
           name={'workstationId'}
           query={workstationQuery}
-          options={listToSelect(workstationQuery.data ?? [])}
+          options={listToSelect(
+            workstationQuery.data ?? [],
+            undefined,
+            productionReport?.workstation
+          )}
           placeholder={'Selecione o posto de trabalho'}
           required
         />
@@ -155,7 +154,7 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
           label={'Produto'}
           name={'productId'}
           query={productQuery}
-          options={listToSelect(productQuery.data ?? [])}
+          options={listToSelect(productQuery.data ?? [], undefined, productionReport?.product)}
           placeholder={'Selecione o produto'}
           required
         />

@@ -23,7 +23,7 @@ export const CompanyContent: FC<CompanyContentProps> = ({ userId }) => {
       status: status,
       userId: userId ?? user?.id
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.company,
     route: apiPaths.company
   });

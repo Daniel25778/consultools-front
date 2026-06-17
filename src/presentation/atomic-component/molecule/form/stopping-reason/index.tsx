@@ -1,8 +1,10 @@
 import { Button } from '@mui/material';
+import { useInfiniteScroll } from 'data/hooks';
 import { useRegisterStoppingReason } from 'data/use-case';
 import { Nature, Status } from 'domain/enums';
-import type { StoppingReason } from 'domain/models';
-import { useFindResponsibleAreaQuery } from 'infra/cache';
+import type { ResponsibleArea, StoppingReason } from 'domain/models';
+import { apiPaths, QueryName } from 'main/config';
+import { listToSelect } from 'main/utils';
 import { SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
@@ -31,7 +33,15 @@ export const RegisterStoppingReasonForm: FC<RegisterStoppingReasonFormProps> = (
 
   const location = window.location.pathname;
   const companyId = location.split('/')[2];
-  const responsibleAreaQuery = useFindResponsibleAreaQuery({ params: { companyId: companyId } });
+
+  const responsibleAreaQuery = useInfiniteScroll<ResponsibleArea>({
+    route: apiPaths.responsibleArea,
+    limit: 30,
+    filters: {
+      companyId
+    },
+    queryName: QueryName.responsibleArea
+  });
 
   useEffect(() => {
     setValue('companyId', companyId);
@@ -67,12 +77,12 @@ export const RegisterStoppingReasonForm: FC<RegisterStoppingReasonFormProps> = (
           control={control}
           label={'Área responsável'}
           name={'responsibleAreaId'}
-          options={
-            responsibleAreaQuery.data?.content?.map((item) => ({
-              label: item.name,
-              value: item.id
-            })) ?? []
-          }
+          query={responsibleAreaQuery}
+          options={listToSelect(
+            responsibleAreaQuery.data ?? [],
+            undefined,
+            stoppingReason?.responsibleArea
+          )}
           placeholder={'Selecione a área responsável'}
           required
         />

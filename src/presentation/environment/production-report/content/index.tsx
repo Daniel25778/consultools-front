@@ -1,8 +1,8 @@
-import { useInfiniteScroll, useModal, useRemoveItems } from 'data/hooks';
+import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
 import { type ProductionReport } from 'domain/models/production-report';
 import { QueryName } from 'main/config';
 import { apiPaths } from 'main/config/paths';
-import { Breadcrumbs } from 'presentation/atomic-component/molecule';
+import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterProductionReportModal } from 'presentation/atomic-component/molecule/modal';
 import { ProductionReportList } from 'presentation/atomic-component/organism';
 import { type FC } from 'react';
@@ -13,6 +13,8 @@ export const ProductionReportContent: FC = () => {
   const { companyId } = useParams() as { companyId: string };
   const { search } = useAppSelector((state) => state.filter.productionReport);
   const modal = useModal();
+  const { search: searchData, setSearchDebounce, searchDebounce } = useSearch(search);
+
   const { user } = useAppSelector((state) => state.persist);
   const { removeItems } = useRemoveItems();
 
@@ -20,11 +22,11 @@ export const ProductionReportContent: FC = () => {
 
   const productionReportQuery = useInfiniteScroll<ProductionReport>({
     filters: {
-      search: search,
+      search: searchData,
       userId,
       companyId: companyId
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.productionReport,
     route: apiPaths.productionReport
   });
@@ -58,6 +60,14 @@ export const ProductionReportContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
+
+        <SearchInputBase
+          value={searchDebounce}
+          onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
+            setSearchDebounce(event.target.value)
+          }
+          placeholder={'Buscar apontamentos'}
+        />
       </div>
       <ProductionReportList productionReport={productionReportQuery} companyId={companyId} />
     </div>

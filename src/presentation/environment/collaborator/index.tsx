@@ -31,7 +31,7 @@ export const CollaboratorContent: FC = () => {
       search: search,
       companyId
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.collaborator,
     route: apiPaths.collaborator
   });

@@ -36,7 +36,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
   const query = useInfiniteScroll<SearchData>({
     filters: { search },
-    limit: 20,
+    limit: 30,
     queryName,
     route
   });

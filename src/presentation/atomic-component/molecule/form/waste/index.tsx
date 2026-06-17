@@ -31,7 +31,7 @@ export const RegisterWasteForm: FC<RegisterWasteFormProps> = ({ closeModal, wast
 
   const wasteTypeQuery = useInfiniteScroll<WasteType>({
     route: apiPaths.wasteType,
-    limit: 20,
+    limit: 30,
     filters: {
       companyId: companyId || user.companyId
     },

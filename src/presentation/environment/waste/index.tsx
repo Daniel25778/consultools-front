@@ -25,7 +25,7 @@ export const WasteContent: FC = () => {
       search: search,
       productionReportingId: id
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.waste,
     route: apiPaths.waste
   });

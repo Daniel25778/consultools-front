@@ -3,6 +3,7 @@ import { useRegisterProduct } from 'data/use-case';
 import { Status } from 'domain/enums';
 import type { Product } from 'domain/models';
 import { useFindMeasurementUnitQuery } from 'infra/cache';
+import { listToSelect } from 'main/utils';
 import { SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
@@ -63,12 +64,11 @@ export const RegisterProductForm: FC<RegisterProductFormProps> = ({ closeModal, 
           control={control}
           label={'Unidade de medida'}
           name={'measurementUnitId'}
-          options={
-            measurementUnitQuery.data?.content?.map((item) => ({
-              label: item.name,
-              value: item.id
-            })) ?? []
-          }
+          options={listToSelect(
+            measurementUnitQuery.data?.content ?? [],
+            undefined,
+            product?.measurementUnit
+          )}
           placeholder={'Selecione a unidade'}
           required
         />

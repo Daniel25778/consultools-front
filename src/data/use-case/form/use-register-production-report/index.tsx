@@ -19,7 +19,6 @@ import {
 
 interface useRegisterProductionReportProps {
   closeModal: () => void;
-  companyId?: string;
   productionReport?: ProductionReportDetails;
 }
 
@@ -27,7 +26,6 @@ const ROLES_WITH_COLLABORATOR = [Role.MANAGER, Role.CONSULTANT];
 
 export const useRegisterProductionReport = ({
   closeModal,
-  companyId,
   productionReport
 }: useRegisterProductionReportProps): formReturn<ProductionReportRequest> => {
   const { user } = useAppSelector((state) => state.persist);
@@ -63,11 +61,11 @@ export const useRegisterProductionReport = ({
           body,
           route: apiPaths.productionReport
         });
-        if (user.role === Role.CONSULTANT || user.role === Role.MANAGER) {
-          navigate(paths.productionReportDetailsCompany(id, companyId!));
-        } else {
-          navigate(paths.productionReportDetails(id));
-        }
+        navigate(
+          user.role === Role.CONSULTANT
+            ? paths.productionReportDetails(id)
+            : paths.productionReportDetailsCompany(id, body.companyId)
+        );
       }
 
       callToast.success(`Apontamento ${productionReport ? 'editado' : 'cadastrado'} com sucesso!`);

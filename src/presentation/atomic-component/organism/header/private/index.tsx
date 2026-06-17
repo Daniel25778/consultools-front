@@ -42,14 +42,14 @@ export const PrivateHeader: FC = () => {
       }
     >
       <div
-        className={`hidden laptop:flex ml-[80px] ${sidebarOpen ? 'w-0' : 'w-[200px]'} transition-[width] ease duration-200 overflow-hidden`}
+        className={`hidden laptop:flex ${sidebarOpen ? 'ml-[270px]' : 'ml-[80px]'} ease-in-out transition-all duration-200`}
       >
         {/* <Link to={roleRoutes[user.role]?.replace('redirect', user?.companyId)}>
           <img alt={'Logo'} className={'h-[20px] cursor-pointer'} src={Logo} />
         </Link> */}
         <p
           className={
-            'hidden text-xl tablet:flex text-primary dark:text-white font-semibold dark:font-bold'
+            'hidden text-xl tablet:flex text-primary dark:text-white font-semibold dark:font-bold truncate max-w-[50dvw]'
           }
         >
           Olá, {user.name}

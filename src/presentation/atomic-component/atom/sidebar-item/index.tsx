@@ -51,7 +51,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
           </span>
 
           <span
-            className={`h-[1.5rem] font-semibold transition-[width,margin] duration-100 ease-in-out overflow-hidden truncate cursor-pointer ${
+            className={`h-[1.5rem] font-semibold transition-[width,margin] duration-200 ease-in-out overflow-hidden truncate cursor-pointer ${
               open ? 'w-[207px]' : 'w-[0px]'
             }`}
           >

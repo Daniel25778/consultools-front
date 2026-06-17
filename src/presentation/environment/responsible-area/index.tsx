@@ -30,7 +30,7 @@ export const ResponsibleAreaContent: FC = () => {
       search: search,
       companyId
     },
-    limit: 20,
+    limit: 30,
 
     queryName: QueryName.responsibleArea,
     route: apiPaths.responsibleArea
@@ -44,7 +44,7 @@ export const ResponsibleAreaContent: FC = () => {
       />
       <div
         className={
-          'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'
+          'w-full flex flex-col-reverse items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
         }
       >
         <h2 className={'text-primary text-2xl font-medium'}>Áreas Responsáveis</h2>

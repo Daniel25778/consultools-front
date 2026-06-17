@@ -30,7 +30,7 @@ export const StoppingReasonContent: FC = () => {
       search: search,
       companyId
     },
-    limit: 20,
+    limit: 30,
     queryName: QueryName.stoppingReason,
     route: apiPaths.stoppingReason
   });
@@ -43,7 +43,7 @@ export const StoppingReasonContent: FC = () => {
       />
       <div
         className={
-          'w-full flex flex-col-reverse items-end gap-4 tablet:flex-row tablet:justify-between'
+          'w-full flex flex-col-reverse items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
         }
       >
         <h2 className={'text-primary text-2xl font-medium'}>Motivos de parada</h2>
