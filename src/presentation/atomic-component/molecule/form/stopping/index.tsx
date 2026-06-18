@@ -3,9 +3,8 @@ import { useInfiniteScroll } from 'data/hooks/use-infinite-scroll';
 import { useRegisterStopping } from 'data/use-case';
 import type { Stopping, StoppingReason } from 'domain/models';
 import { apiPaths, QueryName } from 'main/config';
-import { SelectController } from 'presentation/atomic-component/atom';
+import { DateTimePickerController, SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
-import { TimePickerController } from 'presentation/atomic-component/atom/time-controller';
 import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
@@ -44,15 +43,15 @@ export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({
   });
 
   useEffect(() => {
-    setValue('startTime', stopping?.startTime ?? '');
-    setValue('endTime', stopping?.endTime ?? '');
+    setValue('startDate', stopping?.startDate ?? '');
+    setValue('endDate', stopping?.endDate ?? '');
     setValue('stoppingReasonId', stopping?.stoppingReason?.id ?? '');
     setValue('productionReportingId', id);
   }, [
     setValue,
     stopping?.stoppingReason?.id,
-    stopping?.startTime,
-    stopping?.endTime,
+    stopping?.startDate,
+    stopping?.endDate,
     stopping?.productionReportingId,
     id
   ]);
@@ -60,16 +59,16 @@ export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({
   return (
     <form className={'flex flex-col gap-5 w-full'} onSubmit={handleSubmit(onSubmit)}>
       <div className={'flex flex-col gap-3 w-full'}>
-        <TimePickerController
+        <DateTimePickerController
           control={control}
-          label={'Horário de início'}
-          name={'startTime'}
+          label={'Data de início'}
+          name={'startDate'}
           required
         />
-        <TimePickerController
+        <DateTimePickerController
           control={control}
-          label={'Horário de término'}
-          name={'endTime'}
+          label={'Data de término'}
+          name={'endDate'}
           required
         />
 

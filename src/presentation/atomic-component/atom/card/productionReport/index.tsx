@@ -6,7 +6,7 @@ import {
 } from '@mui/icons-material';
 import type { ProductionReport } from 'domain/models';
 import { apiPaths } from 'main/config';
-import { formatCompactNumber, formatDate, formatHour } from 'main/utils';
+import { formatCompactNumber, formatDate } from 'main/utils';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation/delete';
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,8 @@ export const ProductionReportCard: FC<ProductionReportCardProps> = ({ production
             <span className={'flex flex-wrap text-sm font-semibold gap-1 text-gray-400'}>
               <AccessTimeFilled sx={{ fontSize: '18px' }} />
               <p>
-                {formatHour(productionReport.startTime)} - {formatHour(productionReport.endTime)}
+                {formatDate(productionReport.startDate, 'HH:mm')} -{' '}
+                {formatDate(productionReport.endDate, 'HH:mm')}
               </p>
             </span>
             <p className={'text-gray-400 text-base font-medium'}>•</p>

@@ -2,8 +2,8 @@ import type { InferType } from 'yup';
 import { number, object, string } from 'yup';
 
 const baseSchema = object().shape({
-  startTime: string().required(),
-  endTime: string().required(),
+  startDate: string().required(),
+  endDate: string().required(),
   production: number().required(),
   companyId: string().required(),
   productId: string().required(),

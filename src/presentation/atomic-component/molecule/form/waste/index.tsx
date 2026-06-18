@@ -66,7 +66,7 @@ export const RegisterWasteForm: FC<RegisterWasteFormProps> = ({ closeModal, wast
         />
         <SelectController
           control={control}
-          label={'Área responsável'}
+          label={'Tipo de refugo'}
           name={'wasteTypeId'}
           query={wasteTypeQuery}
           options={

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import dayjs from 'dayjs';
 import { Role } from 'domain/enums';
 import type { ProductionReportDetails } from 'domain/models';
 import type { formReturn } from 'domain/protocol';
@@ -47,7 +48,11 @@ export const useRegisterProductionReport = ({
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ProductionReportRequest> = async ({ collaboratorId, ...rest }) => {
-    const body = needsCollaborator ? { ...rest, collaboratorId } : rest;
+    const body = {
+      ...(needsCollaborator ? { ...rest, collaboratorId } : rest),
+      startDate: dayjs(rest.startDate).toISOString(),
+      endDate: dayjs(rest.endDate).toISOString()
+    };
 
     try {
       if (productionReport) {

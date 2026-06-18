@@ -4,6 +4,7 @@ import { statusOptions, type ResponsibleArea } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { FloatButton } from 'presentation/atomic-component/atom/float-button';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterResponsibleAreaModal } from 'presentation/atomic-component/molecule/modal';
@@ -44,7 +45,7 @@ export const ResponsibleAreaContent: FC = () => {
       />
       <div
         className={
-          'w-full flex flex-col-reverse items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
+          'hidden w-full tablet:flex items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
         }
       >
         <h2 className={'text-primary text-2xl font-medium'}>Áreas Responsáveis</h2>
@@ -57,8 +58,8 @@ export const ResponsibleAreaContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
-        <p className={'text-gray-500 dark:text-gray-400'}>
+      <div className={'flex items-end flex-col gap-4 tablet:flex-row justify-between'}>
+        <p className={'hidden tablet:flex w-full text-gray-500 dark:text-gray-400'}>
           Exibindo {responsibleAreaQuery.data?.length} de um total de{' '}
           {responsibleAreaQuery.pagination?.totalElements}{' '}
           {responsibleAreaQuery.pagination?.totalElements &&
@@ -66,7 +67,18 @@ export const ResponsibleAreaContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
-        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>
+            Áreas Responsáveis
+          </h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {responsibleAreaQuery.data?.length} de {''}
+            {responsibleAreaQuery.pagination?.totalElements}
+          </p>
+        </div>
+        <div className={'flex w-full justify-end items-end gap-4 flex-col tablet:flex-row'}>
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
@@ -74,7 +86,7 @@ export const ResponsibleAreaContent: FC = () => {
             }
             placeholder={'Buscar área responsável'}
           />
-          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          <div className={'flex w-full tablet:min-w-[256px] tablet:max-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -94,6 +106,7 @@ export const ResponsibleAreaContent: FC = () => {
           </div>
         </div>
       </div>
+      <FloatButton modal={modal} />
       <ResponsibleAreaList responsibleAreaQuery={responsibleAreaQuery} />
     </div>
   );
