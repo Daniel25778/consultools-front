@@ -3,7 +3,7 @@ import { useModal, useRemoveItems } from 'data/hooks';
 import { Role } from 'domain/enums';
 import { useFindOneProductionReportQuery } from 'infra/cache';
 import { apiPaths } from 'main/config/paths';
-import { formatCompactNumber, formatHour } from 'main/utils';
+import { formatCompactNumber, formatDate } from 'main/utils';
 import { getProductionReportMenuCards } from 'presentation/atomic-component/atom/card';
 import { MenuCard } from 'presentation/atomic-component/atom/card/menu';
 import { Breadcrumbs } from 'presentation/atomic-component/molecule';
@@ -82,8 +82,15 @@ export const ProductionReportDetails: FC = () => {
             </p>
             <p className={'text-gray-400 text-base font-medium'}>•</p>
             <p className={'text-gray-400 text-base font-medium'}>
-              {formatHour(productionReportQuery?.startTime)} -{' '}
-              {formatHour(productionReportQuery?.endTime)}
+              {formatDate(
+                productionReportQuery?.startDate ? productionReportQuery?.startDate : '',
+                'dd/MM/yyyy HH:mm'
+              )}{' '}
+              -{' '}
+              {formatDate(
+                productionReportQuery?.endDate ? productionReportQuery?.endDate : '',
+                'dd/MM/yyyy HH:mm'
+              )}
             </p>
           </div>
         </div>

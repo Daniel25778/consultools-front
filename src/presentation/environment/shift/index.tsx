@@ -1,8 +1,10 @@
 import { useInfiniteScroll, useModal, useRemoveItems, useSearch } from 'data/hooks';
-import { type Shift } from 'domain/models';
+import type { Status } from 'domain/enums';
+import { statusOptions, type Shift } from 'domain/models';
 import { apiPaths } from 'main/config';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterShiftModal } from 'presentation/atomic-component/molecule/modal';
 import { ShiftList } from 'presentation/atomic-component/organism';
@@ -38,7 +40,7 @@ export const ShiftContent: FC = () => {
         replaceItems={{ [companyId]: 'Detalhes de empresa' }}
         removeItems={removeItems}
       />
-      <div className={'w-full flex flex-col gap-4  tablet:flex-row tablet:justify-between'}>
+      <div className={'hidden w-full tablet:flex items-center justify-between'}>
         <h2 className={'text-primary text-2xl font-medium w-full'}>Turnos</h2>
         <div className={'flex items-end justify-end w-full'}>
           <RegisterShiftModal modal={modal} />
@@ -46,24 +48,32 @@ export const ShiftContent: FC = () => {
       </div>
       <div
         className={
-          'flex justify-end items-end gap-4 tablet:gap-0 tablet:justify-between flex-col-reverse tablet:flex-row'
+          'flex justify-end items-end gap-4 tablet:gap-0 tablet:justify-between flex-col tablet:flex-row'
         }
       >
-        <p className={'text-gray-500 dark:text-gray-400'}>
+        <p className={'hidden tablet:flex  w-full text-gray-500 dark:text-gray-400'}>
           Exibindo {shiftQuery.data?.length} de um total de {shiftQuery.pagination?.totalElements}{' '}
           {shiftQuery.pagination?.totalElements && shiftQuery.pagination?.totalElements > 1
             ? 'itens'
             : 'item'}
         </p>
-
-        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>Turnos</h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {shiftQuery.data?.length} de {''}
+            {shiftQuery.pagination?.totalElements}
+          </p>
+        </div>
+        <div className={'flex w-full justify-end items-end gap-4 flex-col tablet:flex-row'}>
           <SearchInputBase
             value={searchDebounce}
             onChange={(event) => setSearchDebounce(event.target.value)}
             placeholder={'Buscar turno'}
           />
 
-          {/* <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          <div className={'flex w-full tablet:min-w-[256px] tablet:max-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -80,7 +90,7 @@ export const ShiftContent: FC = () => {
               }}
               placeholder={'Filtrar por status'}
             />
-          </div> */}
+          </div>
         </div>
       </div>
       <ShiftList shiftQuery={shiftQuery} />

@@ -11,9 +11,12 @@ import {
 } from 'domain/models';
 import { QueryName, apiPaths } from 'main/config';
 import { listToSelect } from 'main/utils';
-import { InputController, SelectController } from 'presentation/atomic-component/atom';
+import {
+  DateTimePickerController,
+  InputController,
+  SelectController
+} from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
-import { TimePickerController } from 'presentation/atomic-component/atom/time-controller';
 import { useEffect, type FC } from 'react';
 import { useAppSelector } from 'store/index';
 
@@ -74,9 +77,9 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
 
   useEffect(() => {
     setValue('companyId', companyId || user.companyId);
-    setValue('endTime', productionReport?.endTime ?? '');
+    setValue('endDate', productionReport?.endDate ?? '');
     setValue('production', productionReport?.production ?? 0);
-    setValue('startTime', productionReport?.startTime ?? '');
+    setValue('startDate', productionReport?.startDate ?? '');
     setValue('shiftId', productionReport?.shift?.id ?? '');
     setValue('collaboratorId', productionReport?.collaborator?.id ?? '');
     setValue('workstationId', productionReport?.workstation?.id ?? '');
@@ -90,8 +93,8 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
     productionReport?.workstation?.id,
     productionReport?.product?.id,
     productionReport?.id,
-    productionReport?.startTime,
-    productionReport?.endTime,
+    productionReport?.startDate,
+    productionReport?.endDate,
     companyId,
     productionReport?.production
   ]);
@@ -108,8 +111,8 @@ export const RegisterProductionReportForm: FC<RegisterProductionReportFormProps>
           inputProps={{ max: 2147483647, min: 1 }}
           required
         />
-        <TimePickerController control={control} label={'Horário de início'} name={'startTime'} />
-        <TimePickerController control={control} label={'Horário de término'} name={'endTime'} />
+        <DateTimePickerController control={control} label={'Data de início'} name={'startDate'} />
+        <DateTimePickerController control={control} label={'Data de término'} name={'endDate'} />
 
         <SelectController
           control={control}

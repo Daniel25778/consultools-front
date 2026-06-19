@@ -32,7 +32,7 @@ export const RegisterResponsibleAreaModal: FC<RegisterResponsibleAreaModalProps>
         ) : (
           <Button onClick={openModal} variant={'contained'} className={'gap-4'}>
             <Add className={'hover:cursor-pointer text-gray-500'} />
-            <span>Novo posto de trabalho</span>
+            <span>Novo área responsável</span>
           </Button>
         )
       }
@@ -41,7 +41,7 @@ export const RegisterResponsibleAreaModal: FC<RegisterResponsibleAreaModalProps>
       openModal={openModal}
       size={'small'}
       subtitle={'Preencha o formulário abaixo.'}
-      title={'Novo posto de trabalho'}
+      title={'Nova área responsável'}
     >
       <RegisterResponsibleAreaForm closeModal={closeModal} responsibleArea={responsibleArea} />
     </Modal>

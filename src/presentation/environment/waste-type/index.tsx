@@ -3,6 +3,7 @@ import type { WasteType } from 'domain/models/waste-type';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { FloatButton } from 'presentation/atomic-component/atom';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterWasteTypeModal } from 'presentation/atomic-component/molecule/modal/register-waste-type';
 import { WasteTypeList } from 'presentation/atomic-component/organism/list/waste-type';
@@ -35,7 +36,7 @@ export const WasteTypeContent: FC = () => {
         replaceItems={{ [companyId]: 'Detalhes de empresa' }}
         removeItems={removeItems}
       />
-      <div className={'w-full flex flex-col gap-4  tablet:flex-row tablet:justify-between'}>
+      <div className={'hidden w-full tablet:flex items-center justify-between'}>
         <h2 className={'text-primary text-2xl font-medium w-full'}>Tipos de refugo</h2>
         <div className={'flex items-end justify-end w-full'}>
           <RegisterWasteTypeModal modal={modal} />
@@ -43,22 +44,34 @@ export const WasteTypeContent: FC = () => {
       </div>
       <div
         className={
-          'flex justify-end w-full items-end gap-4 tablet:gap-0 tablet:justify-between flex-col-reverse tablet:flex-row'
+          'flex justify-end w-full items-end gap-4 tablet:gap-0 tablet:justify-between flex-col tablet:flex-row'
         }
       >
-        <p className={'text-gray-500 dark:text-gray-400'}>
+        <p className={'hidden tablet:flex text-gray-500 dark:text-gray-400'}>
           Exibindo {wasteTypeQuery.data?.length} de um total de{' '}
           {wasteTypeQuery.pagination?.totalElements}{' '}
           {wasteTypeQuery.pagination?.totalElements && wasteTypeQuery.pagination?.totalElements > 1
             ? 'itens'
             : 'item'}
         </p>
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>
+            Tipos de refugo
+          </h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {wasteTypeQuery.data?.length} de {''}
+            {wasteTypeQuery.pagination?.totalElements}
+          </p>
+        </div>
         <SearchInputBase
           value={searchDebounce}
           onChange={(event) => setSearchDebounce(event.target.value)}
           placeholder={'Buscar tipos de refugo'}
         />
       </div>
+      <FloatButton modal={modal} />
       <WasteTypeList wasteTypeQuery={wasteTypeQuery} />
     </div>
   );

@@ -11,8 +11,8 @@ export interface Stopping {
   stoppingReason: StoppingReason;
   createdAt: string;
   updatedAt: string;
-  endTime: string;
-  startTime: string;
+  endDate: string;
+  startDate: string;
   productionReportingId: string;
   stoppingReasonId: string;
 }

@@ -13,8 +13,8 @@ export interface FindProductionReportQuery extends Pagination {
 export interface ProductionReportDetails {
   id: string;
   date: string;
-  startTime: string;
-  endTime: string;
+  startDate: string;
+  endDate: string;
   finished: boolean;
   production: number;
   workstation: Workstation;
@@ -31,8 +31,8 @@ export interface ProductionReportDetails {
 export interface ProductionReport {
   id: string;
   date: string;
-  startTime: string;
-  endTime: string;
+  startDate: string;
+  endDate: string;
   code: string;
   finishedAt: Date | null;
   production: number;

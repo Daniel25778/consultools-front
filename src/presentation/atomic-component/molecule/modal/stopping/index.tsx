@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { type useModalProps } from 'data/hooks';
 import { Nature, natureTranslate } from 'domain/enums';
 import type { Stopping } from 'domain/models';
-import { formatHour } from 'main/utils';
+import { formatDate } from 'main/utils';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import type { FC } from 'react';
 
@@ -48,12 +48,12 @@ export const StoppingModal: FC<StoppingModalProps> = ({ modal, openModalElement,
           <p>{stopping?.stoppingReason?.description}</p>
         </div>
         <div className={'flex flex-col gap-2'}>
-          <h1 className={'text-primary font-semibold'}>Horário de início</h1>
-          <p>{formatHour(stopping?.startTime)}</p>
+          <h1 className={'text-primary font-semibold'}>Data de início</h1>
+          <p>{formatDate(stopping?.startDate, 'dd/MM/yyyy HH:mm')}</p>
         </div>
         <div className={'flex flex-col gap-2'}>
-          <h1 className={'text-primary font-semibold'}>Horário de fim</h1>
-          <p>{formatHour(stopping?.endTime)}</p>
+          <h1 className={'text-primary font-semibold'}>Data de fim</h1>
+          <p>{formatDate(stopping?.endDate, 'dd/MM/yyyy HH:mm')}</p>
         </div>
       </div>
       <div

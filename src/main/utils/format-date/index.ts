@@ -9,10 +9,13 @@ export const formatDate = (
   try {
     if (date === null) return '-';
 
-    const newDate =
-      typeof date === 'string' && formatToUTC ? `${date?.slice(0, 10)} 04:00:00` : date;
+    let newDate = date;
 
-    return format(new Date(newDate ?? null), formatType ?? "dd 'de' MMMM 'de' yyyy", {
+    if (typeof date === 'string' && formatToUTC) {
+      newDate = date.includes('T') ? date.replace('T', ' ') : `${date.slice(0, 10)} 00:00:00`;
+    }
+
+    return format(new Date(newDate), formatType ?? "dd 'de' MMMM 'de' yyyy", {
       locale: ptBR
     });
   } catch {

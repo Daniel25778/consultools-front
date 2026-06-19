@@ -4,6 +4,7 @@ import { statusOptions, type StoppingReason } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { FloatButton } from 'presentation/atomic-component/atom/float-button';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterStoppingReasonModal } from 'presentation/atomic-component/molecule/modal';
@@ -41,11 +42,7 @@ export const StoppingReasonContent: FC = () => {
         replaceItems={{ [companyId]: 'Detalhes de empresa' }}
         removeItems={removeItems}
       />
-      <div
-        className={
-          'w-full flex flex-col-reverse items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
-        }
-      >
+      <div className={'hidden w-full tablet:flex items-center justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Motivos de parada</h2>
         <RegisterStoppingReasonModal
           modal={{
@@ -56,8 +53,8 @@ export const StoppingReasonContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
-        <p className={'text-gray-500 dark:text-gray-400'}>
+      <div className={'flex items-end flex-col gap-4 tablet:flex-row justify-between'}>
+        <p className={'hidden tablet:flex  w-full text-gray-500 dark:text-gray-400'}>
           Exibindo {stoppingReasonQuery.data?.length} de um total de{' '}
           {stoppingReasonQuery.pagination?.totalElements}{' '}
           {stoppingReasonQuery.pagination?.totalElements &&
@@ -65,8 +62,19 @@ export const StoppingReasonContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>
+            Motivos de parada
+          </h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {stoppingReasonQuery.data?.length} de {''}
+            {stoppingReasonQuery.pagination?.totalElements}
+          </p>
+        </div>
 
-        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+        <div className={'flex w-full justify-end items-end gap-4 flex-col tablet:flex-row'}>
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
@@ -74,7 +82,7 @@ export const StoppingReasonContent: FC = () => {
             }
             placeholder={'Buscar motivos de parada'}
           />
-          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          <div className={'flex w-full tablet:min-w-[256px] tablet:max-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -94,6 +102,7 @@ export const StoppingReasonContent: FC = () => {
           </div>
         </div>
       </div>
+      <FloatButton modal={modal} />
       <StoppingReasonList stoppingReasonQuery={stoppingReasonQuery} />
     </div>
   );

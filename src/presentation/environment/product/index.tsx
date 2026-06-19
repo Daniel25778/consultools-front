@@ -3,6 +3,7 @@ import { Status } from 'domain/enums';
 import { statusOptions, type Product } from 'domain/models';
 import { apiPaths, QueryName } from 'main/config';
 import { setFilter } from 'main/utils';
+import { FloatButton } from 'presentation/atomic-component/atom';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterProductModal } from 'presentation/atomic-component/molecule/modal';
@@ -40,11 +41,7 @@ export const ProductContent: FC = () => {
         replaceItems={{ [companyId]: 'Detalhes de empresa' }}
         removeItems={removeItems}
       />
-      <div
-        className={
-          'w-full flex flex-col-reverse items-end tablet:items-start gap-4 tablet:flex-row tablet:justify-between'
-        }
-      >
+      <div className={'hidden w-full tablet:flex items-center justify-between'}>
         <h2 className={'text-primary text-2xl font-medium'}>Produtos</h2>
         <RegisterProductModal
           modal={{
@@ -55,16 +52,24 @@ export const ProductContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row justify-between'}>
-        <p className={'text-gray-500 dark:text-gray-400'}>
+      <div className={'flex items-end flex-col gap-4 tablet:flex-row justify-between'}>
+        <p className={'hidden tablet:flex w-full text-gray-500 dark:text-gray-400'}>
           Exibindo {productQuery.data?.length} de um total de{' '}
           {productQuery.pagination?.totalElements}{' '}
           {productQuery.pagination?.totalElements && productQuery.pagination?.totalElements > 1
             ? 'itens'
             : 'item'}
         </p>
-
-        <div className={'flex items-end gap-4 flex-col-reverse tablet:flex-row'}>
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>Produtos</h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {productQuery.data?.length} de {''}
+            {productQuery.pagination?.totalElements}
+          </p>
+        </div>
+        <div className={'flex w-full justify-end items-end gap-4 flex-col tablet:flex-row'}>
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
@@ -72,7 +77,7 @@ export const ProductContent: FC = () => {
             }
             placeholder={'Buscar produtos'}
           />
-          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          <div className={'flex w-full tablet:min-w-[256px] tablet:max-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -92,6 +97,7 @@ export const ProductContent: FC = () => {
           </div>
         </div>
       </div>
+      <FloatButton modal={modal} />
       <ProductList productQuery={productQuery} />
     </div>
   );

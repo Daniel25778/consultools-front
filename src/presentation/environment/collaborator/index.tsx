@@ -4,6 +4,7 @@ import { statusOptions, type Collaborator } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { FloatButton } from 'presentation/atomic-component/atom';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterCollaboratorModal } from 'presentation/atomic-component/molecule/modal/register-collaborator';
@@ -42,7 +43,11 @@ export const CollaboratorContent: FC = () => {
         replaceItems={{ [companyId]: 'Detalhes de empresa' }}
         removeItems={removeItems}
       />
-      <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
+      <div
+        className={
+          'hidden tablet:flex w-full flex-col gap-4 tablet:flex-row tablet:justify-between'
+        }
+      >
         <h2 className={'text-primary text-2xl font-medium'}>Colaboradores</h2>
         <div>
           <RegisterCollaboratorModal
@@ -55,8 +60,8 @@ export const CollaboratorContent: FC = () => {
           />
         </div>
       </div>
-      <div className={'flex flex-col-reverse  gap-4 items-end justify-between tablet:flex-row'}>
-        <p className={'text-gray-500 dark:text-gray-400 w-full'}>
+      <div className={'flex flex-col gap-4 items-end justify-between tablet:flex-row'}>
+        <p className={'hidden tablet:flex text-gray-500 dark:text-gray-400 w-full'}>
           Exibindo {collaboratorQuery.data?.length} de um total de{' '}
           {collaboratorQuery.pagination?.totalElements}{' '}
           {collaboratorQuery.pagination?.totalElements &&
@@ -64,9 +69,16 @@ export const CollaboratorContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
-        <div
-          className={'flex w-full justify-end items-end  gap-4 flex-col-reverse tablet:flex-row'}
-        >
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>Colaboradores</h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {collaboratorQuery.data?.length} de {''}
+            {collaboratorQuery.pagination?.totalElements}
+          </p>
+        </div>
+        <div className={'flex w-full justify-end items-end  gap-4 flex-col tablet:flex-row'}>
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
@@ -74,7 +86,7 @@ export const CollaboratorContent: FC = () => {
             }
             placeholder={'Buscar colaboradores'}
           />
-          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          <div className={'flex w-full tablet:min-w-[256px] tablet:max-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -94,6 +106,7 @@ export const CollaboratorContent: FC = () => {
           </div>
         </div>
       </div>
+      <FloatButton modal={modal} />
       <CollaboratorList collaboratorQuery={collaboratorQuery} />
     </div>
   );

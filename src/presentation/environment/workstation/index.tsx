@@ -4,6 +4,7 @@ import { statusOptions, type Workstation } from 'domain/models';
 import { apiPaths } from 'main/config/paths';
 import { QueryName } from 'main/config/query-list';
 import { setFilter } from 'main/utils';
+import { FloatButton } from 'presentation/atomic-component/atom/float-button';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { Breadcrumbs, SearchInputBase } from 'presentation/atomic-component/molecule';
 import { RegisterWorkstationModal } from 'presentation/atomic-component/molecule/modal';
@@ -42,7 +43,11 @@ export const WorkstationContent: FC = () => {
         replaceItems={{ [companyId]: 'Detalhes de empresa' }}
         removeItems={removeItems}
       />
-      <div className={'w-full flex flex-col gap-4 tablet:flex-row tablet:justify-between'}>
+      <div
+        className={
+          'w-full hidden tablet:flex flex-col gap-4 tablet:flex-row tablet:justify-between'
+        }
+      >
         <h2 className={'text-primary text-2xl font-medium'}>Postos de trabalho</h2>
         <RegisterWorkstationModal
           modal={{
@@ -53,8 +58,8 @@ export const WorkstationContent: FC = () => {
           }}
         />
       </div>
-      <div className={'flex items-end flex-col-reverse gap-4 tablet:flex-row'}>
-        <p className={'text-gray-500 dark:text-gray-400 w-full'}>
+      <div className={'flex items-end flex-col gap-4 tablet:flex-row'}>
+        <p className={'hidden tablet:flex text-gray-500 dark:text-gray-400 w-full'}>
           Exibindo {workstationQuery.data?.length} de um total de{' '}
           {workstationQuery.pagination?.totalElements}{' '}
           {workstationQuery.pagination?.totalElements &&
@@ -62,9 +67,18 @@ export const WorkstationContent: FC = () => {
             ? 'itens'
             : 'item'}
         </p>
-        <div
-          className={'flex  w-full justify-end items-end gap-4 flex-col-reverse tablet:flex-row'}
-        >
+        <div className={'flex justify-between w-full tablet:hidden'}>
+          <h2 className={'flex tablet:hidden text-primary text-2xl font-medium'}>
+            Postos de trabalho
+          </h2>
+          <p
+            className={'flex tablet:hidden text-primary text-lg font-semibold dark:text-gray-400 '}
+          >
+            {workstationQuery.data?.length} de {''}
+            {workstationQuery.pagination?.totalElements}
+          </p>
+        </div>
+        <div className={'flex w-full justify-end items-end gap-4 flex-col tablet:flex-row'}>
           <SearchInputBase
             value={searchDebounce}
             onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement, Element>) =>
@@ -72,7 +86,7 @@ export const WorkstationContent: FC = () => {
             }
             placeholder={'Buscar posto de trabalho'}
           />
-          <div className={'flex min-w-[200px] tablet:min-w-[256px]'}>
+          <div className={'flex w-full tablet:min-w-[256px] tablet:max-w-[256px]'}>
             <Select
               id={''}
               options={statusOptions}
@@ -92,6 +106,7 @@ export const WorkstationContent: FC = () => {
           </div>
         </div>
       </div>
+      <FloatButton modal={modal} />
       <WorkstationList workstationQuery={workstationQuery} />
     </div>
   );
