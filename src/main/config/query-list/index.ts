@@ -11,6 +11,8 @@ export type QueryList =
   | 'stopping'
   | 'waste'
   | 'productionReport'
+  | 'dashboardTypes'
+  | 'dashboard'
   | 'shift'
   | 'measurementUnit';
 
@@ -24,6 +26,8 @@ export enum QueryName {
   shift = 'shift',
   stoppingReason = 'stoppingReason',
   waste = 'waste',
+  dashboardTypes = 'dashboardTypes',
+  dashboard = 'dashboard',
   responsibleArea = 'responsibleArea',
   product = 'product',
   user = 'user',

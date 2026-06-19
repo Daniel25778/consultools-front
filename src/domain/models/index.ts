@@ -1,6 +1,7 @@
 export * from './collaborator';
 export * from './company';
 export * from './company-status';
+export * from './dashboard';
 export * from './product';
 export * from './production-report';
 export * from './responsible-area';

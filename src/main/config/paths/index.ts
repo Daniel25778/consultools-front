@@ -71,5 +71,7 @@ export const apiPaths = {
   user: '/user',
   requestCode: '/request-code',
   verifyCode: '/verify-code',
-  changePassword: '/change-password'
+  changePassword: '/change-password',
+  dashboard: '/dashboard',
+  dashboardTypes: '/dashboard/types'
 };

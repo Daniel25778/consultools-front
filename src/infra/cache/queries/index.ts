@@ -1,4 +1,5 @@
 export * from './company';
+export * from './dashboard';
 export * from './default-query';
 export * from './measurement';
 export * from './production-report';
