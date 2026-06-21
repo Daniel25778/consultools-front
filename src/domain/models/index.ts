@@ -1,3 +1,4 @@
+export * from './chart-props';
 export * from './collaborator';
 export * from './company';
 export * from './company-status';

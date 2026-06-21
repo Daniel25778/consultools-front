@@ -28,6 +28,7 @@ export const CompanyContent: FC<CompanyContentProps> = ({ userId }) => {
     queryName: QueryName.company,
     route: apiPaths.company
   });
+
   return (
     <div className={'w-full flex-col mx-auto gap-6 dark:bg-gray-800 rounded-md flex '}>
       <div className={'hidden w-full tablet:flex items-center justify-between'}>

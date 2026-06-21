@@ -16,6 +16,7 @@
     "@mui/icons-material": "^7.3.8",
     "@mui/lab": "^7.0.1-beta.22",
     "@mui/material": "^7.3.8",
+    "@mui/x-charts": "^9.6.0",
     "@mui/x-date-pickers": "^9.3.0",
     "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.1",

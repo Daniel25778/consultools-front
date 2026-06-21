@@ -5,14 +5,13 @@ import { Role, Status, statusTranslate } from 'domain/enums';
 import { useFindOneCompanyQuery } from 'infra/cache';
 import { apiPaths } from 'main/config/paths';
 import { formatCNPJ, setFilter } from 'main/utils';
-import { MenuCard } from 'presentation/atomic-component/atom/card/menu';
 import { Breadcrumbs } from 'presentation/atomic-component/molecule';
+import { DashboardGrid } from 'presentation/atomic-component/molecule/dashboard/grid';
 import { RegisterCompanyModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation';
 import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUserLogged } from 'store/persist/selector';
-import { getCompanyMenuCards } from '../../../../main/mock/menu';
 
 export const CompanyDetails: FC = () => {
   const { companyId } = useParams() as { companyId: string };
@@ -26,8 +25,6 @@ export const CompanyDetails: FC = () => {
       userId: companyQuery?.id ? companyQuery.id : undefined
     });
   }, [companyQuery?.id]);
-
-  const menuCards = getCompanyMenuCards(companyId);
 
   return (
     <div className={'flex w-full flex-col  gap-5 '}>
@@ -93,21 +90,7 @@ export const CompanyDetails: FC = () => {
           </div>
         )}
       </div>
-      <div
-        className={
-          'grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-4 desktop:grid-cols-5 gap-5 w-full'
-        }
-      >
-        {menuCards.map((card) => (
-          <MenuCard
-            key={card.title}
-            title={card.title}
-            description={card.description}
-            icon={card.icon}
-            path={card.path}
-          />
-        ))}
-      </div>
+      <DashboardGrid companyId={companyId} />
     </div>
   );
 };
