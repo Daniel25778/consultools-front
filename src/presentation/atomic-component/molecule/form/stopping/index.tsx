@@ -3,6 +3,7 @@ import { useInfiniteScroll } from 'data/hooks/use-infinite-scroll';
 import { useRegisterStopping } from 'data/use-case';
 import type { Stopping, StoppingReason } from 'domain/models';
 import { apiPaths, QueryName } from 'main/config';
+import { listToSelect } from 'main/utils';
 import { DateTimePickerController, SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { useEffect, type FC } from 'react';
@@ -78,10 +79,7 @@ export const RegisterStoppingForm: FC<RegisterStoppingFormProps> = ({
           name={'stoppingReasonId'}
           query={stoppingReasonQuery}
           options={
-            stoppingReasonQuery.data?.map((item) => ({
-              label: item.name,
-              value: item.id
-            })) ?? []
+            listToSelect(stoppingReasonQuery.data ?? [], undefined, stopping?.stoppingReason) ?? []
           }
           placeholder={'Selecione o motivo de parada'}
           required

@@ -3,6 +3,7 @@ import { useInfiniteScroll } from 'data/hooks/use-infinite-scroll';
 import { useRegisterWaste } from 'data/use-case';
 import type { Waste, WasteType } from 'domain/models';
 import { apiPaths, QueryName } from 'main/config';
+import { listToSelect } from 'main/utils/convert-list';
 import { InputController, SelectController } from 'presentation/atomic-component/atom';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { useEffect, type FC } from 'react';
@@ -69,12 +70,7 @@ export const RegisterWasteForm: FC<RegisterWasteFormProps> = ({ closeModal, wast
           label={'Tipo de refugo'}
           name={'wasteTypeId'}
           query={wasteTypeQuery}
-          options={
-            wasteTypeQuery.data?.map((item) => ({
-              label: item.name,
-              value: item.id
-            })) ?? []
-          }
+          options={listToSelect(wasteTypeQuery.data ?? [], undefined, waste?.wasteType) ?? []}
           placeholder={'Selecione o tipo de refugo'}
           required
         />

@@ -2,6 +2,7 @@ import { ArrowRightAlt } from '@mui/icons-material';
 import { useModal } from 'data/hooks';
 import type { Stopping } from 'domain/models';
 import { apiPaths } from 'main/config';
+import { formatDate } from 'main/utils';
 import { RegisterStoppingModal, StoppingModal } from 'presentation/atomic-component/molecule/modal';
 import { DeleteConfirmationModal } from 'presentation/atomic-component/molecule/modal/action-confirmation/delete';
 import type { FC } from 'react';
@@ -24,7 +25,7 @@ export const StoppingCard: FC<StoppingCardProps> = ({ stopping, companyId }) => 
         <div className={'flex flex-col gap-1'}>
           <h3 className={'text-lg font-semibold text-primary'}>{stopping.stoppingReason?.name}</h3>
           <p className={'text-sm text-gray-400 line-clamp-1'}>
-            {stopping.stoppingReason?.description}
+            {formatDate(stopping.startDate, 'HH:mm')} - {formatDate(stopping.endDate, 'HH:mm')}
           </p>
         </div>
         <div className={'flex gap-2'}>
