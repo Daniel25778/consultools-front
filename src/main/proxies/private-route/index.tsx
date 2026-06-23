@@ -5,12 +5,12 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'store/index';
-import { logout, setRedirectPath } from 'store/persist/slice';
+import { logout } from 'store/persist/slice';
 
 export const PrivateRoute: FC = () => {
   const isExpired = useTokenIsExpired();
 
-  const { accessToken, user } = useAppSelector((state) => state.persist);
+  const { accessToken, user, isRedirect } = useAppSelector((state) => state.persist);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -19,14 +19,16 @@ export const PrivateRoute: FC = () => {
   useEffect(() => {
     const checkToken = (): void => {
       if (isExpired || accessToken === null || user === null) {
-        dispatch(setRedirectPath(location.pathname));
-        dispatch(logout());
+        if (!isRedirect) {
+          dispatch(logout(location.pathname));
+        }
         navigate(paths.login);
       }
     };
 
     checkToken();
-  }, [isExpired, accessToken, location, user, dispatch, navigate]);
+  }, [isExpired, accessToken, location, user, dispatch, navigate, isRedirect]);
+
   if (isExpired || !user) return null;
 
   return <Outlet />;

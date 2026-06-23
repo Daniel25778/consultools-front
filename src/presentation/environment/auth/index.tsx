@@ -1,3 +1,4 @@
+import { Terms } from 'presentation/atomic-component/atom';
 import { UserLoginForm } from 'presentation/atomic-component/molecule/form';
 import type { FC } from 'react';
 
@@ -11,19 +12,7 @@ export const AuthContent: FC = () => {
     >
       <img alt={'Consultools Logo'} className={'mx-auto w-28 tablet:w-auto'} src={'/logo.png'} />
       <UserLoginForm />
-      <div className={'flex flex-col w-full items-center px-0 tablet:px-14'}>
-        <span className={'text-center text-gray-500 dark:text-gray-400'}>
-          Ao acessar o sistema, você concorda com nossos{' '}
-          <a href={'/'} className={'text-primary underline'}>
-            Termos de Uso
-          </a>{' '}
-          e{' '}
-          <a href={'/'} className={'text-primary underline'}>
-            Política de Privacidade
-          </a>
-          .
-        </span>
-      </div>
+      <Terms />
     </div>
   );
 };

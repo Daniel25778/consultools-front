@@ -1,12 +1,13 @@
-import { Button } from '@mui/material';
+import { Role } from 'domain/enums';
 import { routePaths } from 'main/config';
-import { PrivateRoute, PublicRoute } from 'main/proxies';
+import { CheckRole, HomeRoute, NotFound, PrivateRoute, PublicRoute } from 'main/proxies';
 import { MainTemplate, PublicTemplate } from 'presentation/atomic-component/template';
 import {
   AuthContent,
   ChangePasswordContent,
   ConsultantContent,
   EnterCodeContent,
+  PrivacyPolicyContent,
   ProductContent,
   ProductionReportContent,
   ProductionReportDetails,
@@ -14,7 +15,8 @@ import {
   ResponsibleAreaContent,
   ShiftContent,
   StoppingContent,
-  StoppingReasonContent
+  StoppingReasonContent,
+  TermsOfUseContent
 } from 'presentation/environment';
 import { CollaboratorContent } from 'presentation/environment/collaborator';
 import { CompanyDetails } from 'presentation/environment/company';
@@ -31,6 +33,7 @@ const RouterConfig: FC = () => (
   <BrowserRouter>
     <Suspense fallback={<Outlet />}>
       <Routes>
+        <Route element={<HomeRoute />} path={routePaths.home} />
         {/* Public routes */}
         <Route element={<PublicRoute />}>
           <Route element={<PublicTemplate />}>
@@ -38,58 +41,62 @@ const RouterConfig: FC = () => (
             <Route element={<RequestCodeContent />} path={routePaths.requestCode} />
             <Route element={<EnterCodeContent />} path={routePaths.enterCode} />
             <Route element={<ChangePasswordContent />} path={routePaths.changePassword} />
+            <Route element={<TermsOfUseContent />} path={routePaths.termsOfUse} />
+            <Route element={<PrivacyPolicyContent />} path={routePaths.privacyPolicy} />
           </Route>
         </Route>
 
         {/* Private routes */}
         <Route element={<PrivateRoute />}>
           <Route element={<MainTemplate />}>
-            <Route element={<ConsultantContent />} path={routePaths.consultant} />
-            <Route element={<ConsultantDetails />} path={routePaths.consultantDetails} />
-            <Route element={<CompanyContent />} path={routePaths.company} />
-            <Route element={<CompanyDetails />} path={routePaths.companyDetails} />
-            <Route element={<ProductionReportContent />} path={routePaths.productionReport} />
-            <Route
-              element={<ProductionReportContent />}
-              path={routePaths.productionReportCompany}
-            />
-            <Route element={<StoppingContent />} path={routePaths.stopping} />
-            <Route element={<StoppingContent />} path={routePaths.stoppingCompany} />
+            <Route element={<CheckRole roles={[Role.ADMIN]} />}>
+              <Route element={<ConsultantContent />} path={routePaths.consultant} />
+              <Route element={<ConsultantDetails />} path={routePaths.consultantDetails} />
+            </Route>
 
-            <Route element={<WasteContent />} path={routePaths.waste} />
-            <Route element={<WasteContent />} path={routePaths.wasteCompany} />
+            <Route element={<CheckRole roles={[Role.CONSULTANT]} />}>
+              <Route element={<CompanyContent />} path={routePaths.company} />
+            </Route>
 
-            <Route element={<WorkstationContent />} path={routePaths.workstation} />
-            <Route element={<WasteTypeContent />} path={routePaths.wasteType} />
-            <Route element={<CollaboratorContent />} path={routePaths.collaborator} />
-            <Route element={<ProductContent />} path={routePaths.product} />
-            <Route element={<ShiftContent />} path={routePaths.shift} />
-            <Route element={<StoppingReasonContent />} path={routePaths.stoppingReason} />
-            <Route element={<ResponsibleAreaContent />} path={routePaths.responsibleArea} />
+            <Route element={<CheckRole roles={[Role.CONSULTANT, Role.MANAGER]} />}>
+              <Route element={<CompanyDetails />} path={routePaths.companyDetails} />
+              <Route
+                element={<ProductionReportContent />}
+                path={routePaths.productionReportCompany}
+              />
+              <Route element={<StoppingContent />} path={routePaths.stoppingCompany} />
 
-            <Route
-              element={<ProductionReportDetails />}
-              path={routePaths.productionReportDetails}
-            />
-            <Route
-              element={<ProductionReportDetails />}
-              path={routePaths.productionReportDetailsCompany}
-            />
+              <Route element={<WasteContent />} path={routePaths.wasteCompany} />
+
+              <Route element={<WorkstationContent />} path={routePaths.workstation} />
+              <Route element={<WasteTypeContent />} path={routePaths.wasteType} />
+              <Route element={<CollaboratorContent />} path={routePaths.collaborator} />
+              <Route element={<ProductContent />} path={routePaths.product} />
+              <Route element={<ShiftContent />} path={routePaths.shift} />
+              <Route element={<StoppingReasonContent />} path={routePaths.stoppingReason} />
+              <Route element={<ResponsibleAreaContent />} path={routePaths.responsibleArea} />
+              <Route
+                element={<ProductionReportDetails />}
+                path={routePaths.productionReportDetailsCompany}
+              />
+            </Route>
+
+            <Route element={<CheckRole roles={[Role.COLLABORATOR]} />}>
+              <Route element={<ProductionReportContent />} path={routePaths.productionReport} />
+              <Route element={<StoppingContent />} path={routePaths.stopping} />
+              <Route element={<WasteContent />} path={routePaths.waste} />
+              <Route
+                element={<ProductionReportDetails />}
+                path={routePaths.productionReportDetails}
+              />
+            </Route>
             {/*  */}
             {/*  */}
           </Route>
         </Route>
 
         <Route>
-          <Route
-            element={
-              <div className={'flex flex-col gap-2 items-center justify-center w-full h-screen'}>
-                Página não encontrada
-                <Button onClick={(): void => window.history.back()}>Voltar</Button>
-              </div>
-            }
-            path={'*'}
-          />
+          <Route element={<NotFound />} path={'*'} />
         </Route>
       </Routes>
     </Suspense>

@@ -9,6 +9,7 @@ interface PersistState {
   theme: 'dark' | 'light';
   sidebarOpen: boolean;
   redirectPath: string | null;
+  isRedirect: boolean;
 }
 
 const initialState: PersistState = {
@@ -17,16 +18,19 @@ const initialState: PersistState = {
   redirectPath: null,
   theme: 'light',
   sidebarOpen: false,
-  user: null as unknown as User
+  user: null as unknown as User,
+  isRedirect: false
 };
 
 const persistSlice = createSlice({
   initialState,
   name: 'persist',
   reducers: {
-    logout(state: PersistState) {
+    logout(state: PersistState, action: PayloadAction<string | undefined>) {
       state.user = null as unknown as User;
       state.accessToken = null;
+      state.redirectPath = action.payload || null;
+      state.isRedirect = !action.payload;
     },
     setAuth(state: PersistState, action: PayloadAction<{ user: User; token: string }>) {
       state.user = action.payload.user;
@@ -46,11 +50,23 @@ const persistSlice = createSlice({
     },
     setUser(state: PersistState, action: PayloadAction<User>) {
       state.user = action.payload;
+    },
+    setIsRedirect(state: PersistState, action: PayloadAction<boolean>) {
+      state.isRedirect = action.payload;
     }
   }
 });
 
 export const {
   reducer: persistReducer,
-  actions: { logout, setUser, setTheme, setIsLoading, setRedirectPath, setSidebarOpen, setAuth }
+  actions: {
+    logout,
+    setUser,
+    setTheme,
+    setIsLoading,
+    setRedirectPath,
+    setSidebarOpen,
+    setAuth,
+    setIsRedirect
+  }
 } = persistSlice;

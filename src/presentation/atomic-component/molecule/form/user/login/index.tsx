@@ -27,9 +27,7 @@ export const UserLoginForm: FC = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className={'flex flex-col gap-4'}>
-        <h2 className={'font-semibold text-2xl tablet:text-3xl text-primary'}>
-          Seja bem vindo de volta!
-        </h2>
+        <h2 className={'font-semibold text-2xl tablet:text-3xl text-primary'}>Seja bem vindo!</h2>
         <p>Entre em sua conta com e-mail e senha </p>
       </div>
 
@@ -78,13 +76,13 @@ export const UserLoginForm: FC = () => {
           label={'Entrar no sistema'}
           loadingColor={colors.white}
         />
-        <FormButton
+        {/* <FormButton
           isSubmitting={false}
           color={'secondary'}
           label={'Fazer nova assinatura'}
           loadingColor={colors.white}
           labelColor={'primary'}
-        />
+        /> */}
       </div>
     </form>
   );

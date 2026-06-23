@@ -5,7 +5,7 @@ import type { Collaborator } from 'domain/models';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
 import { SwitchController } from 'presentation/atomic-component/atom/switch-controller';
-import { useEffect, type FC } from 'react';
+import { useEffect, type ChangeEvent, type FC } from 'react';
 
 interface RegisterCollaboratorFormProps {
   closeModal: () => void;
@@ -42,6 +42,10 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
     }
   }, [setValue, collaborator, companyId]);
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('role', (event.target as HTMLInputElement).value as Role);
+  };
+
   return (
     <form className={'flex flex-col gap-5 w-full'} onSubmit={handleSubmit(onSubmit)}>
       <div className={'flex flex-col gap-3 w-full'}>
@@ -74,7 +78,7 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
         />
 
         <FormControl>
-          <RadioGroup defaultValue={Role.COLLABORATOR}>
+          <RadioGroup defaultValue={Role.COLLABORATOR} onChange={handleChange}>
             <FormControlLabel
               value={Role.COLLABORATOR}
               control={<Radio color={'primary'} />}

@@ -1,15 +1,22 @@
 export enum routePaths {
   login = '/',
+  home = '/home',
+  requestCode = '/solicitar-codigo',
+  enterCode = '/inserir-codigo',
+  changePassword = '/alterar-senha',
+  termsOfUse = '/termos-de-uso',
+  privacyPolicy = '/politica-de-privacidade',
+
+  // ADMIN
   consultant = '/consultores',
   consultantDetails = '/consultores/:id',
-  companyDetails = '/empresas/:companyId',
+
+  // CONSULTANT
   company = '/empresas',
-  shift = '/empresas/:companyId/turno',
-  productionReport = '/apontamento',
-  productionReportDetails = '/apontamento/:id',
-  stopping = '/apontamento/:id/paradas',
+
+  // CONSULTANT | MANAGER
+  companyDetails = '/empresas/:companyId',
   stoppingCompany = '/empresas/:companyId/apontamento/:id/paradas',
-  waste = '/apontamento/:id/refugos',
   wasteCompany = '/empresas/:companyId/apontamento/:id/refugos',
   stoppingReason = '/empresas/:companyId/motivos-de-parada',
   responsibleArea = '/empresas/:companyId/areas-responsaveis',
@@ -19,13 +26,22 @@ export enum routePaths {
   productionReportCompany = '/empresas/:companyId/apontamento',
   productionReportDetailsCompany = '/empresas/:companyId/apontamento/:id',
   wasteType = '/empresas/:companyId/tipos-de-refugo',
-  requestCode = '/solicitar-codigo',
-  enterCode = '/inserir-codigo',
-  changePassword = '/alterar-senha'
+  shift = '/empresas/:companyId/turno',
+
+  // COLLABORATOR
+  productionReport = '/apontamento',
+  productionReportDetails = '/apontamento/:id',
+  stopping = '/apontamento/:id/paradas',
+  waste = '/apontamento/:id/refugos'
 }
 
 export const paths = {
   login: '/',
+  privacyPolicy: '/politica-de-privacidade',
+  termsOfUse: '/termos-de-uso',
+  requestCode: '/solicitar-codigo',
+  enterCode: '/inserir-codigo',
+  changePassword: '/alterar-senha',
   consultant: '/consultores',
   consultantDetails: (id: number | string): string => `/consultores/${id}`,
   companyDetails: (id: number | string): string => `/empresas/${id}`,
@@ -48,9 +64,7 @@ export const paths = {
   stoppingReason: (id: number | string): string => `/empresas/${id}/motivos-de-parada`,
   productionReport: '/apontamento',
   company: '/empresas',
-  requestCode: '/solicitar-codigo',
-  enterCode: '/inserir-codigo',
-  changePassword: '/alterar-senha'
+  home: '/home'
 };
 
 export const apiPaths = {

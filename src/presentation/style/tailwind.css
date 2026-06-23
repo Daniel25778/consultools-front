@@ -83,3 +83,9 @@ html[data-mode='dark'] ::-webkit-scrollbar-thumb {
   margin: 2px 0px;
   background-color: transparent;
 }
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 136;
+  }
+}

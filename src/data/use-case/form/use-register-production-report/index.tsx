@@ -67,7 +67,7 @@ export const useRegisterProductionReport = ({
           route: apiPaths.productionReport
         });
         navigate(
-          user.role === Role.CONSULTANT
+          user.role === Role.COLLABORATOR
             ? paths.productionReportDetails(id)
             : paths.productionReportDetailsCompany(id, body.companyId)
         );
