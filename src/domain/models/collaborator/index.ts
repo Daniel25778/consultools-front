@@ -1,4 +1,4 @@
-import { Status } from 'domain/enums';
+import { Role, Status } from 'domain/enums';
 import type { FilterPagination, Pagination } from 'domain/protocol/pagination';
 import type { FilterSort } from 'domain/protocol/sort';
 
@@ -13,6 +13,7 @@ export interface Collaborator {
   cpf: string;
   status: Status;
   userId: string;
+  role: Role;
   companyId: string;
   createdAt: string;
   updatedAt: string;

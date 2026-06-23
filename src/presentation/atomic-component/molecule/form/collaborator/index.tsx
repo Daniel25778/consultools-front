@@ -1,6 +1,6 @@
-import { Button } from '@mui/material';
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { useRegisterCollaborator } from 'data/use-case';
-import { Status } from 'domain/enums';
+import { Role, Status } from 'domain/enums';
 import type { Collaborator } from 'domain/models';
 import { FormButton } from 'presentation/atomic-component/atom/form-button';
 import { InputController } from 'presentation/atomic-component/atom/input-controller';
@@ -33,11 +33,12 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
   useEffect(() => {
     setValue('companyId', companyId);
     if (collaborator) {
-      const { name, email, cpf, status } = collaborator as Collaborator;
+      const { name, email, cpf, status, role } = collaborator as Collaborator;
       setValue('name', name);
       setValue('email', email);
       setValue('cpf', cpf);
       setValue('status', status);
+      setValue('role', role);
     }
   }, [setValue, collaborator, companyId]);
 
@@ -71,6 +72,21 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
           required
           type={'text'}
         />
+
+        <FormControl>
+          <RadioGroup defaultValue={Role.COLLABORATOR}>
+            <FormControlLabel
+              value={Role.COLLABORATOR}
+              control={<Radio color={'primary'} />}
+              label={'Colaborador'}
+            />
+            <FormControlLabel
+              value={Role.MANAGER}
+              control={<Radio color={'primary'} />}
+              label={'Gerente'}
+            />
+          </RadioGroup>
+        </FormControl>
 
         <div className={'flex w-full items-center justify-between'}>
           <p className={'w-full'}>Situação atual do colaborador</p>

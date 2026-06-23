@@ -30,7 +30,7 @@ export const RegisterCompanyForm: FC<RegisterCompanyFormProps> = ({ closeModal, 
       setValue('name', name);
       setValue('cnpj', cnpj);
       setValue('status', status);
-    }
+    } else setValue('status', Status.ENABLED);
   }, [setValue, company]);
 
   return (
