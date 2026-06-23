@@ -39,7 +39,7 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
       setValue('cpf', cpf);
       setValue('status', status);
       setValue('role', role);
-    }
+    } else setValue('role', Role.COLLABORATOR);
   }, [setValue, collaborator, companyId]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
