@@ -21,6 +21,7 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
     onSubmit,
     setValue,
     control,
+    watch,
     formState: { isSubmitting }
   } = useRegisterCollaborator({
     collaborator,
@@ -29,6 +30,7 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
 
   const location = window.location.pathname;
   const companyId = location.split('/')[2];
+  const role = watch('role');
 
   useEffect(() => {
     setValue('companyId', companyId);
@@ -81,12 +83,12 @@ export const RegisterCollaboratorForm: FC<RegisterCollaboratorFormProps> = ({
           <RadioGroup defaultValue={Role.COLLABORATOR} onChange={handleChange}>
             <FormControlLabel
               value={Role.COLLABORATOR}
-              control={<Radio color={'primary'} />}
+              control={<Radio color={'primary'} checked={role === Role.COLLABORATOR} />}
               label={'Colaborador'}
             />
             <FormControlLabel
               value={Role.MANAGER}
-              control={<Radio color={'primary'} />}
+              control={<Radio color={'primary'} checked={role === Role.MANAGER} />}
               label={'Gerente'}
             />
           </RadioGroup>
